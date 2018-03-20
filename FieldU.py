@@ -3,9 +3,9 @@
 #
 
 class Field:
-	def __init__:
-		matrix   		= [][]
-		nLines  		= 0
-		nColumns 		= 0
-		lstCartorio = []
-		lstWalls 		= []
+	def __init__(self, l, c):
+		self.matrix   	 = [l][c]
+		self.nLines  		 = l
+		self.nColumns 	 = c
+		self.lstCartorio = []
+		self.lstWalls 	 = []

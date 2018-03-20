@@ -1,0 +1,8 @@
+cNORTE 	  = 0
+cNORDESTE = 1	
+cLESTE 	  = 2
+cSUDESTE  = 3
+cSUL			= 4
+cSUDOESTE = 5
+cOESTE 	  = 6
+cNOROESTE = 7

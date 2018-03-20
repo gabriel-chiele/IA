@@ -1,7 +1,8 @@
-import AgentU.py
-import FieldU.py
-import UtilsU.py
+from AgentU import *
+import FieldU
+import UtilsU
 
 if __name__ == '__main__':
-	print('SIMULACAO DE IA')
+	ag = Agent()
+	print(ag.nFacing)
 	

@@ -2,5 +2,9 @@
 # Definição de métodos utilitários
 #
 
-def LoadField:
-	file flInput
+from enum import Enum
+
+def LoadField():
+	print('')
+	#file fInput
+
