@@ -1,0 +1,23 @@
+Vários tipos de linguagem - incluindo python
+https://rosettacode.org/wiki/Stable_marriage_problem
+
+Variação python do código acima
+https://gist.github.com/joyrexus/9967709
+
+Terceira versão (preferencialmente olhar os links anteriores)
+https://github.com/clcain/python-stable-marriage
+
+Tutorial python do problema
+http://www.vitoshacademy.com/python-algorithms-stable-matching-problem/
+
+Versão compacta
+https://courses.cs.washington.edu/courses/cse143/09wi/python/3/stablemarriagemain.py
+
+Video aula explicativa - ingles e python
+https://www.youtube.com/watch?v=FhRf0j068ZA
+
+Artigo explicando formas de implementação
+https://cpsc.yale.edu/sites/default/files/files/tr407.pdf
+
+Livro sobre o mesmo
+http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15251-f10/Site/Materials/Lectures/Lecture21/lecture21.pdf
