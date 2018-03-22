@@ -4,10 +4,16 @@ import UtilsU
 
 if __name__ == '__main__':
 	options = UtilsU.ParseOption()
-	UtilsU.LoadFile(options.filename)
 	
-	if options == nil:
-		EndCredits()
+	if options == None:
+		EndCredits(True)
 		sys.exit()
 
-	Field = UtilsU.GenerateField(options.size,options.cartorios)
+	conf = UtilsU.LoadFile(options.filename)
+
+	if not (conf == None):	
+		Field = UtilsU.GenerateField(options.size, conf.nCartoriosNumber)
+	else:
+		print('Arquivo de configuracao da simulacao invalido!')
+
+	EndCredits(False);

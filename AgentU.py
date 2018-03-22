@@ -6,12 +6,12 @@ from UtilsU     import *
 from ConstantsU import *
 
 class Agent:
-	def __init__(self):
-		self.nID 					 = 0	
-		self.lstPrefereces = []
+	def __init__(self, ID, pref, gender):
+		self.nID 					 = ID	
+		self.lstPrefereces = pref
 		self.bMarried 		 = False
 		self.nCoupleID		 = 0
-		self.cGender			 = ''
+		self.cGender			 = gender
 		self.tpPos	 			 = (0,0)
 		self.lstCartorios	 = []
 		self.nFacing			 = cNORTE
