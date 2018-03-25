@@ -14,17 +14,17 @@ c_Couple   = 4
 #
 #	constantes de direção
 #
-c_NORTE 	  = 0
+c_NORTE 	= 0
 c_NORDESTE  = 1	
-c_LESTE 	  = 2
-c_SUDESTE   = 3
-c_SUL			  = 4
+c_LESTE 	= 2
+c_SUDESTE 	= 3
+c_SUL		= 4
 c_SUDOESTE  = 5
-c_OESTE 	  = 6
+c_OESTE 	= 6
 c_NOROESTE  = 7
 
 #
 #	constantes de genero
 #
-c_MALE   = 'M'
-c_FEMALE = 'F'
+c_MALE 		= 'M'
+c_FEMALE	= 'F'

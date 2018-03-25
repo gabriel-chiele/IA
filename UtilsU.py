@@ -42,6 +42,7 @@ def LoadFile(filename):
 	line = ''
 	nLineNumber = 0
 
+	print('Lendo as configuracoes da simulacao...')
 	while ((nLineNumber == 0) or not (line == '')  ):
 		lstLines = line.split(' ')
 		
@@ -61,12 +62,19 @@ def LoadFile(filename):
 
 		nLineNumber = nLineNumber + 1
 
+	PrintConf(conf)
 	return conf
 
 def GenerateField(size, cartorios):
-	field = Field(size)
-	#	field.mGround[][] = c_Cartorio
+	print('Gerando o mapa...')
+	field = Field(size, cartorios)
 	return field
+
+def PrintConf(conf):
+	print('Numero de casais: %i', nCouplesNumber)
+	print('Numero de cartorios: %i', nCartoriosNumber)
+	for agente in conf.lst
+		print('Agente: ' + agente.ToString(agente))
 
 def EndCredits(short):
 	if not short:
@@ -78,6 +86,3 @@ def EndCredits(short):
 		sleep(1)
 
 	print('Simulacao encerrada!')
-
-
-
