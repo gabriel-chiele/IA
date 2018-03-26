@@ -1,5 +1,5 @@
 #
-# Definição de métodos utilitários
+# Definicao de metodos utilitarios
 #
 
 import sys
@@ -10,8 +10,6 @@ from AgentU import *
 from ConfigU import *
 from ConstantsU import *
 
-
-# DEFINE UM PARSER E RETORNA AS OPÇÕES #
 def ParseOption():
 	err = False
 	parser = OptionParser()

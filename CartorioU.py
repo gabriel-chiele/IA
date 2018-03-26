@@ -1,5 +1,5 @@
 #
-#	Definição da classe cartorio
+#	Definicao da classe cartorio
 #
 from random import choice
 from random import randrange

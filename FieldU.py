@@ -1,5 +1,5 @@
 #
-# Definição da classe campo
+# Definicao da classe campo
 #
 
 from ConstantsU import *

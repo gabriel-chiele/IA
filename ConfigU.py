@@ -1,5 +1,5 @@
 #
-#	Definição da classe de consfigurações da simulação
+#	Definicao da classe de consfiguracoes da simulacao
 #
 
 class Config:

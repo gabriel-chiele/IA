@@ -1,5 +1,5 @@
 #
-# Definição da classe parede
+# Definicao da classe parede
 #
 
 from ConstantsU import *

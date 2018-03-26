@@ -1,5 +1,5 @@
 #
-#	Definição da classe agente
+#	Definicao da classe agente
 #
 from ConstantsU	import *
 

@@ -1,9 +1,9 @@
 #
-#	Definição de constantes
+#	Definicao de constantes
 #
 
 #
-#	constantes representação dos objetos
+#	constantes representacao dos objetos
 #
 c_Clear    = 0
 c_Cartorio = 1
@@ -12,7 +12,7 @@ c_Agent    = 3
 c_Couple   = 4
 
 #
-#	constantes de direção
+#	constantes de direcao
 #
 c_NORTE 	= 0
 c_NORDESTE  = 1	
