@@ -16,4 +16,6 @@ if __name__ == '__main__':
 	else:
 		print('Arquivo de configuracao da simulacao invalido!')
 
+	Field.PrintMap();
+
 	UtilsU.EndCredits(False);

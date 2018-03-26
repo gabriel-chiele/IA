@@ -2,14 +2,16 @@
 # Definicao da classe campo
 #
 
+import numpy
+
 from ConstantsU import *
 from CartorioU 	import *
-from WallU 		import *
+from WallU 	import *
 
 class Field:
 	def __init__(self, s, c):
-		self.nSize			= s
-		self.mGround		= [[c_Clear] * s] * s
+		self.nSize		= s
+		self.mGround		= numpy.zeros(shape=(s,s))
 		self.nWallsQtd 		= self.nSize // 5
 		self.lstWalls		= []
 		self.lstCartorios 	= []
@@ -43,5 +45,22 @@ class Field:
 		print('')
 
 	def PrintMap(self):
+		str = (self.nSize * '*' * 4) + '**'
+		print(str)
 		for i in range(self.nSize):
-			print(self.mGround[i])
+			str = '*'
+			for j in range(self.nSize):
+				if (self.mGround[i][j] == c_Clear):
+					str = str + '    '
+				elif (self.mGround[i][j] == c_Cartorio):
+					str = str + ' CT '
+				elif (self.mGround[i][j] == c_Wall):
+					str = str + ' || '
+				elif (self.mGround[i][j] == c_Agent):
+					str = str + ' AG '
+				elif (self.mGround[i][j] == c_Couple):
+					str = str + ' CP '
+			str = str + '*'
+			print(str)
+		str = (self.nSize * '*' * 4) + '**'
+		print(str)
