@@ -15,16 +15,20 @@ def ParseOption():
 	parser = OptionParser()
 	parser.add_option("-f", "--input_file", dest="filename", help='caminho do arquivo de entrada')
 	parser.add_option("-s", "--size", dest="size", type="int", help='tamanho da matriz')
-  
+	parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help='ativa modo verbose')  
+
 	options, args = parser.parse_args()
 
-	if not (len(sys.argv) != 5):
+	if (not (len(sys.argv) < 5)) and (not (len(sys.argv) > 6)):
 		if options.filename == '':
 			parser.error('Caminho do arquivo nao pode ser vazio')
 			err = True
 		if options.size < 2:
 			parser.error('O tamanho da matriz deve ser no minimo 2')
 			err = True
+	elif (len(sys.argv) > 6):
+		parser.error('Parametros desconhecidos')
+		err = True
 	else:
 		parser.error('Faltando parametros! -h para ver a ajuda')
 		err = True
