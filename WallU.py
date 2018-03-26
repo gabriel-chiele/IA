@@ -3,13 +3,16 @@
 #
 
 from ConstantsU import *
+from random		import choice
+from random 	import randrange
 
 class Wall:
-	def __init__(self, nFieldSize, nWallSize):
-		self.nWallSize = (nWallSize // 2) + 1
-		self.CalculatePosicion(nFieldSize)
+	def __init__(self, nFieldSize):
+		self.nWallSize = (nFieldSize // 2) + 1
+		self.lstPos = []
+		self.CalculatePosition(nFieldSize)
 
-	def CalculatePosicion(self, nFieldSize)
+	def CalculatePosition(self, nFieldSize):
 		bFit = False
 
 		while not (bFit):
@@ -20,25 +23,25 @@ class Wall:
 
 			nSizeVariation = randrange(2)
 
-			if nDir = c_NORTE:
+			if nDir == c_NORTE:
 				if ((nX - (self.nWallSize - nSizeVariation)) <  0):
 					bFit = True
-			else if nDir = c_SUL:
+			elif nDir == c_SUL:
 				if ((nX + (self.nWallSize - nSizeVariation)) <  nFieldSize):
 					bFit = True
-			else if nDir = c_LESTE:
+			elif nDir == c_LESTE:
 				if ((nY + (self.nWallSize - nSizeVariation)) <  nFieldSize):
 					bFit = True
-			else if nDir = c_OESTE:
+			elif nDir == c_OESTE:
 				if ((nY - (self.nWallSize - nSizeVariation)) <  0):
 					bFit = True
 
 		for i in range(self.nWallSize - nSizeVariation):
-			if nDir = c_NORTE:
-				self.lstPos.append(nX - i, nY)
-			else if nDir = c_SUL:
-				self.lstPos.append(nX + i, nY)
-			else if nDir = c_LESTE:
-				self.lstPos.append(nX, nY + i)
-			else if nDir = c_OESTE:
-				self.lstPos.append(nX, nY - i)
+			if nDir == c_NORTE:
+				self.lstPos.append(tuple((nX - i, nY)))
+			elif nDir == c_SUL:
+				self.lstPos.append(tuple((nX + i, nY)))
+			elif nDir == c_LESTE:
+				self.lstPos.append(tuple((nX, nY + i)))
+			elif nDir == c_OESTE:
+				self.lstPos.append(tuple((nX, nY - i)))

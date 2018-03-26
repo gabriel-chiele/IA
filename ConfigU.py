@@ -4,8 +4,8 @@
 
 class Config:
 	def __init__(self, cn1, cn2):
-		self.nCouplesNumber		= 0
-		self.nCartoriosNumber	= 0
+		self.nCouplesNumber		= cn1
+		self.nCartoriosNumber	= cn2
 		self.lstAgents			= []
 
 	def AddAgent(self, ag):

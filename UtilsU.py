@@ -7,6 +7,9 @@ from time import sleep
 from FieldU import Field
 from optparse import OptionParser
 from AgentU import *
+from ConfigU import *
+from ConstantsU import *
+
 
 # DEFINE UM PARSER E RETORNA AS OPÇÕES #
 def ParseOption():
@@ -39,30 +42,34 @@ def LoadFile(filename):
 	except:
 		return None
 
-	line = ''
 	nLineNumber = 0
-
 	print('Lendo as configuracoes da simulacao...')
-	while ((nLineNumber == 0) or not (line == '')  ):
+	while (True):
+		line = fFile.readline()
+		if (line == ''):
+			break
+
+		line = line[:-1]
 		lstLines = line.split(' ')
 		
 		if nLineNumber == 0:
-			nCouplesNumber = lstLines[0]
-			nCartoriosNumber = lstLines[1]
+			nCouplesNumber = int(lstLines[0])
+			nCartoriosNumber = int(lstLines[1])
 			conf = Config(nCouplesNumber,nCartoriosNumber)
 		else:
-			pref = lstLines[1: nCouplesNumber]
-			if (lstLines[0] < (nCouplesNumber + 1)):
+			pref = lstLines[1:]
+			if (nLineNumber < (nCouplesNumber + 1)):
 				gender = c_MALE
 			else:
 				gender = c_FEMALE
 	
-			ag = Agent(lstLines[0], pref, c_FEMALE)
+			ag = Agent(int(lstLines[0]), pref, gender)
 			conf.AddAgent(ag)
 
 		nLineNumber = nLineNumber + 1
 
 	PrintConf(conf)
+	fFile.close()
 	return conf
 
 def GenerateField(size, cartorios):
@@ -71,10 +78,10 @@ def GenerateField(size, cartorios):
 	return field
 
 def PrintConf(conf):
-	print('Numero de casais: %i', nCouplesNumber)
-	print('Numero de cartorios: %i', nCartoriosNumber)
-	for agente in conf.lst
-		print('Agente: ' + agente.ToString(agente))
+	print('Numero de casais: %i' % conf.nCouplesNumber)
+	print('Numero de cartorios: %i' % conf.nCartoriosNumber)
+	for agente in conf.lstAgents:
+		print('Agente: ' + agente.ToString())
 
 def EndCredits(short):
 	if not short:
