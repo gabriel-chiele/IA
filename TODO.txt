@@ -1,0 +1,5 @@
+###################################  TODO  ###################################
+- Utilizar numpy para criar as matrizes, pois do modo como esta todas as linhas são cópias da primeira
+- Posicionar os agentes no mapa
+- implementar a máquina de estados de movimentação dos agentes
+- implementar o sistema de turnos dos agentes (multithread com mutex)
