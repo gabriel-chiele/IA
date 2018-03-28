@@ -3,19 +3,22 @@
 #
 
 import sys
-from time import sleep
-from FieldU import Field
-from optparse import OptionParser
-from AgentU import *
-from ConfigU import *
-from ConstantsU import *
+import AgentU
+import ConfigU
+import ConstantsU
+import GlobalsU
+
+from time 		import sleep
+from FieldU 	import Field
+from optparse 	import OptionParser
+from random		import randrange
 
 def ParseOption():
 	err = False
 	parser = OptionParser()
 	parser.add_option("-f", "--input_file", dest="filename", help='caminho do arquivo de entrada')
 	parser.add_option("-s", "--size", dest="size", type="int", help='tamanho da matriz')
-	parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help='ativa modo verbose')  
+	parser.add_option("-v", "--verbose", dest="verbose" , action="store_true", help='ativa modo verboso', default=False)  
 
 	options, args = parser.parse_args()
 
@@ -23,8 +26,8 @@ def ParseOption():
 		if options.filename == '':
 			parser.error('Caminho do arquivo nao pode ser vazio')
 			err = True
-		if options.size < 2:
-			parser.error('O tamanho da matriz deve ser no minimo 2')
+		if options.size < 5:
+			parser.error('O tamanho da matriz deve ser no minimo 5')
 			err = True
 	elif (len(sys.argv) > 6):
 		parser.error('Parametros desconhecidos')
@@ -38,9 +41,9 @@ def ParseOption():
 	else:
 		return None
 
-def LoadFile(filename):
+def LoadConfigurations(options):
 	try:
-		fFile = open(filename, 'r')
+		fFile = open(options.filename, 'r')
 	except:
 		return None
 
@@ -57,36 +60,25 @@ def LoadFile(filename):
 		if nLineNumber == 0:
 			nCouplesNumber = int(lstLines[0])
 			nCartoriosNumber = int(lstLines[1])
-			conf = Config(nCouplesNumber,nCartoriosNumber)
+			conf = ConfigU.Config(options.size, nCouplesNumber,nCartoriosNumber)
 		else:
 			pref = lstLines[1:]
 			if (nLineNumber < (nCouplesNumber + 1)):
-				gender = c_MALE
+				gender = ConstantsU.c_MALE
 			else:
-				gender = c_FEMALE
+				gender = ConstantsU.c_FEMALE
 	
-			ag = Agent(int(lstLines[0]), pref, gender)
+			ag = AgentU.Agent(int(lstLines[0]), pref, gender)
 			conf.AddAgent(ag)
 
 		nLineNumber = nLineNumber + 1
 
-	PrintConf(conf)
 	fFile.close()
+	GlobalsU.setVerbose(options.verbose)
 	return conf
 
-def GenerateField(size, cartorios):
-	print('Gerando o mapa...')
-	field = Field(size, cartorios)
-	return field
-
-def PrintConf(conf):
-	print('Numero de casais: %i' % conf.nCouplesNumber)
-	print('Numero de cartorios: %i' % conf.nCartoriosNumber)
-	for agente in conf.lstAgents:
-		print('Agente: ' + agente.ToString())
-
-def EndCredits(short):
-	if not short:
+def EndCredits():
+	if GlobalsU.Verbose():
 		print('Encerrando simulacao em\n3 ...')
 		sleep(1)
 		print('2 ...')

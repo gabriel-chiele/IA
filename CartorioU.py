@@ -1,8 +1,7 @@
 #
 #	Definicao da classe cartorio
 #
-from random import choice
-from random import randrange
+from random import choice, randrange
 
 class Cartorio:
 	def __init__(self, nWallsQtd, lstWalls, nFieldSize):

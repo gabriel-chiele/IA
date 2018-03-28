@@ -3,40 +3,55 @@
 #
 
 import numpy
+import ConstantsU
+import CartorioU
+import WallU
+import GlobalsU
 
-from ConstantsU import *
-from CartorioU 	import *
-from WallU 	import *
+from random import randrange
 
 class Field:
-	def __init__(self, s, c):
-		self.nSize		= s
-		self.mGround		= numpy.zeros(shape=(s,s))
+	def __init__(self, conf):
+		print('Gerando o mapa...')
+		self.nSize			= conf.size
+		self.mGround		= numpy.zeros(shape=(conf.size, conf.size))
 		self.nWallsQtd 		= self.nSize // 5
 		self.lstWalls		= []
 		self.lstCartorios 	= []
 
 		self.GenerateWalls()
-		self.GenerateCartorios(c)
+		self.GenerateCartorios(conf.nCartoriosNumber)
+		self.PlaceAgents(conf)
 
 	def GenerateWalls(self):
 		print('Gerando as paredes...')
 		for i in range(self.nWallsQtd):
-			self.lstWalls.append(Wall(self.nSize))
+			self.lstWalls.append(WallU.Wall(self.nSize))
 
 		print('Posicionando as paredes...')
 		for wall in self.lstWalls:
 			for pos in wall.lstPos:
-				self.mGround[pos[0]][pos[1]] = c_Wall
+				self.SetPosition(pos, ConstantsU.c_Wall)
 
 	def GenerateCartorios(self, nCartorios):
 		print('Gerando os cartorios...')
 		for i in range(nCartorios):
-			self.lstCartorios.append(Cartorio(self.nWallsQtd, self.lstWalls, self.nSize))
+			self.lstCartorios.append(CartorioU.Cartorio(self.nWallsQtd, self.lstWalls, self.nSize))
 
 		print('Posicionando cartorios...')
 		for cartorio in self.lstCartorios:
-			self.mGround[cartorio.tpPos[0]][cartorio.tpPos[1]] = c_Cartorio
+			self.SetPosition(cartorio.tpPos, ConstantsU.c_Cartorio)
+
+	def PlaceAgents(self, conf):
+		print('Posicionando Agentes...')
+		for agent in conf.lstAgents:
+			bOK = False
+			while not bOK:
+				tpPos = (randrange(self.nSize), randrange(self.nSize))
+				if (self.GetPosition(tpPos) == ConstantsU.c_Clear):
+					self.SetPosition(tpPos, ConstantsU.c_Agent)
+					agent.tpPos = tpPos
+					bOK = True
 
 	def VerifyWallPositions(self):
 		print('')
@@ -45,22 +60,29 @@ class Field:
 		print('')
 
 	def PrintMap(self):
-		str = (self.nSize * '*' * 4) + '**'
-		print(str)
-		for i in range(self.nSize):
-			str = '*'
-			for j in range(self.nSize):
-				if (self.mGround[i][j] == c_Clear):
-					str = str + '    '
-				elif (self.mGround[i][j] == c_Cartorio):
-					str = str + ' CT '
-				elif (self.mGround[i][j] == c_Wall):
-					str = str + ' || '
-				elif (self.mGround[i][j] == c_Agent):
-					str = str + ' AG '
-				elif (self.mGround[i][j] == c_Couple):
-					str = str + ' CP '
-			str = str + '*'
+		if (GlobalsU.Verbose()):
+			str = (self.nSize * '*' * 4) + '**'
 			print(str)
-		str = (self.nSize * '*' * 4) + '**'
-		print(str)
+			for i in range(self.nSize):
+				str = '*'
+				for j in range(self.nSize):
+					if (self.GetPosition((i, j)) == ConstantsU.c_Clear):
+						str = str + '    '
+					elif (self.GetPosition((i, j)) == ConstantsU.c_Cartorio):
+						str = str + ' CT '
+					elif (self.GetPosition((i, j)) == ConstantsU.c_Wall):
+						str = str + ' || '
+					elif (self.GetPosition((i, j)) == ConstantsU.c_Agent):
+						str = str + ' AG '
+					elif (self.GetPosition((i, j)) == ConstantsU.c_Couple):
+						str = str + ' CP '
+				str = str + '*'
+				print(str)
+			str = (self.nSize * '*' * 4) + '**'
+			print(str)
+
+	def GetPosition(self, tpPos):
+		return self.mGround.item(tpPos[0], tpPos[1])
+
+	def SetPosition(self, tpPos, obj):
+		self.mGround[tpPos[0]][tpPos[1]] = obj

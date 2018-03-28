@@ -4,8 +4,12 @@ em ordem de prioridades.
 OBS: Lista propensa a alteração ao decorrer da implementação
 
 ###################################  TODO  ###################################
-- Posicionar os agentes no mapa
-- corrigir os imports
-- criar arquivo de globais -> criar global bVerbose
+- implementar verificação de consistencia de entrada
+	EX.: mapa pequeno para um numero grande de agentes ou cartorios
+- implementar sistema de verificação das posições dos objetos no mapa
+	- VerifyWallPositions
+	- VerifyCartoriosPositions
 - implementar a máquina de estados de movimentação dos agentes
 - implementar o sistema de turnos dos agentes (multithread com mutex)
+
+- realizar testes com outros arquivos de input e tamanho de mapa

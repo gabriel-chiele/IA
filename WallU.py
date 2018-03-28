@@ -2,9 +2,9 @@
 # Definicao da classe parede
 #
 
-from ConstantsU import *
-from random		import choice
-from random 	import randrange
+import ConstantsU
+
+from random	import choice, randrange
 
 class Wall:
 	def __init__(self, nFieldSize):
@@ -16,32 +16,32 @@ class Wall:
 		bFit = False
 
 		while not (bFit):
-			nDir = choice([c_NORTE, c_SUL, c_LESTE, c_OESTE])
+			nDir = choice([ConstantsU.c_NORTE, ConstantsU.c_SUL, ConstantsU.c_LESTE, ConstantsU.c_OESTE])
 			
 			nX = randrange(nFieldSize - 1)
 			nY = randrange(nFieldSize - 1)
 
-			nSizeVariation = randrange(2)
+			nSizeVariation = randrange(ConstantsU.c_SIZE_VARIATION)
 
-			if nDir == c_NORTE:
+			if nDir == ConstantsU.c_NORTE:
 				if ((nX - (self.nWallSize - nSizeVariation)) <  0):
 					bFit = True
-			elif nDir == c_SUL:
+			elif nDir == ConstantsU.c_SUL:
 				if ((nX + (self.nWallSize - nSizeVariation)) <  nFieldSize):
 					bFit = True
-			elif nDir == c_LESTE:
+			elif nDir == ConstantsU.c_LESTE:
 				if ((nY + (self.nWallSize - nSizeVariation)) <  nFieldSize):
 					bFit = True
-			elif nDir == c_OESTE:
+			elif nDir == ConstantsU.c_OESTE:
 				if ((nY - (self.nWallSize - nSizeVariation)) <  0):
 					bFit = True
 
 		for i in range(self.nWallSize - nSizeVariation):
-			if nDir == c_NORTE:
+			if nDir == ConstantsU.c_NORTE:
 				self.lstPos.append(tuple((nX - i, nY)))
-			elif nDir == c_SUL:
+			elif nDir == ConstantsU.c_SUL:
 				self.lstPos.append(tuple((nX + i, nY)))
-			elif nDir == c_LESTE:
+			elif nDir == ConstantsU.c_LESTE:
 				self.lstPos.append(tuple((nX, nY + i)))
-			elif nDir == c_OESTE:
+			elif nDir == ConstantsU.c_OESTE:
 				self.lstPos.append(tuple((nX, nY - i)))

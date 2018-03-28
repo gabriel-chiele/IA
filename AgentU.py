@@ -1,7 +1,7 @@
 #
 #	Definicao da classe agente
 #
-from ConstantsU	import *
+import ConstantsU
 
 class Agent:
 	def __init__(self, ID, pref, gender):
@@ -12,7 +12,7 @@ class Agent:
 		self.cGender		= gender
 		self.tpPos			= (0,0)
 		self.lstCartorios	= []
-		self.nFacing		= c_NORTE
+		self.nFacing		= ConstantsU.c_NORTE
 
 	def ToString(self):
 		return str(self.nID) + ' - ' + self.cGender + ' - '  + str(self.lstPreferences)
