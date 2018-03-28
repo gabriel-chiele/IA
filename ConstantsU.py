@@ -1,5 +1,5 @@
 #
-#	Definicao de constantes
+#	Modulo de constante
 #
 
 #

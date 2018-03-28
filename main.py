@@ -1,3 +1,7 @@
+#
+# Main
+#
+
 import AgentU
 import FieldU
 import UtilsU
@@ -10,7 +14,7 @@ if __name__ == '__main__':
 		EndCredits()
 		sys.exit()
 
-	conf = UtilsU.LoadConfiguration(options)
+	conf = UtilsU.LoadConfigurations(options)
 	if not (conf == None):
 		conf.PrintConf()
 		Field = FieldU.Field(conf)

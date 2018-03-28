@@ -86,4 +86,5 @@ def EndCredits():
 		print('1 ...')
 		sleep(1)
 
-	print('Simulacao encerrada!')
+	print('\t\t    Simulacao encerrada!')
+	print('\n\tTrabalho da disciplina de Inteligencia Artificial\n\n\t\t\t   Autores\n\t\t        Gabriel Chiele\n\t\t         Maiki Buffet')

@@ -1,5 +1,5 @@
 #
-#	Definicao da classe agente
+#	Modulo de variaveis globais
 #
 
 g_bVerbose = False;

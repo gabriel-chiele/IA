@@ -13,8 +13,8 @@ from random import randrange
 class Field:
 	def __init__(self, conf):
 		print('Gerando o mapa...')
-		self.nSize			= conf.size
-		self.mGround		= numpy.zeros(shape=(conf.size, conf.size))
+		self.nSize			= conf.nSize
+		self.mGround		= numpy.zeros(shape=(conf.nSize, conf.nSize))
 		self.nWallsQtd 		= self.nSize // 5
 		self.lstWalls		= []
 		self.lstCartorios 	= []

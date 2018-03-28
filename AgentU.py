@@ -1,6 +1,7 @@
 #
 #	Definicao da classe agente
 #
+
 import ConstantsU
 
 class Agent:

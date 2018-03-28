@@ -2,6 +2,8 @@
 #	Definicao da classe de consfiguracoes da simulacao
 #
 
+import GlobalsU
+
 class Config:
 	def __init__(self, size, cn1, cn2):
 		self.nSize				= size
