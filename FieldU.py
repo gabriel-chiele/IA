@@ -18,10 +18,11 @@ class Field:
 		self.nWallsQtd 		= self.nSize // 5
 		self.lstWalls		= []
 		self.lstCartorios 	= []
+		self.lstAgents		= conf.lstAgents
 
 		self.GenerateWalls()
 		self.GenerateCartorios(conf.nCartoriosNumber)
-		self.PlaceAgents(conf)
+		self.PlaceAgents()
 
 	def GenerateWalls(self):
 		print('Gerando as paredes...')
@@ -46,9 +47,9 @@ class Field:
 				self.PrintObjectPosition(cartorio.tpPos, ConstantsU.c_Cartorio)
 			self.SetPosition(cartorio.tpPos, ConstantsU.c_Cartorio)
 
-	def PlaceAgents(self, conf):
+	def PlaceAgents(self):
 		print('Posicionando Agentes...')
-		for agent in conf.lstAgents:
+		for agent in self.lstAgents:
 			bOK = False
 			while not bOK:
 				tpPos = (randrange(self.nSize), randrange(self.nSize))
@@ -74,15 +75,15 @@ class Field:
 				str = '*'
 				for j in range(self.nSize):
 					if (self.GetPosition((i, j)) == ConstantsU.c_Clear):
-						str = str + '    '
+						str = str + ConstantsU.ObjToStr(ConstantsU.c_Clear, True)
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Cartorio):
-						str = str + ' CT '
+						str = str + ConstantsU.ObjToStr(ConstantsU.c_Cartorio, True)
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Wall):
-						str = str + ' || '
+						str = str + ConstantsU.ObjToStr(ConstantsU.c_Wall, True)
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Agent):
-						str = str + ' AG '
+						str = str + ConstantsU.ObjToStr(ConstantsU.c_Agent, True)
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Couple):
-						str = str + ' CP '
+						str = str + ConstantsU.ObjToStr(ConstantsU.c_Couple, True)
 				str = str + '*'
 				print(str)
 			str = (self.nSize * '*' * 4) + '**'
@@ -93,6 +94,11 @@ class Field:
 
 	def SetPosition(self, tpPos, obj):
 		self.mGround[tpPos[0]][tpPos[1]] = obj
+
+	def GetAgent(self, tpPos):
+		for ag in self.lstAgents:
+			if (ag.tpPos == tpPos):
+				return ag
 
 	def PrintObjectPosition(self, tpPos, obj):
 		print('%s:\t(%i,%i)' % (ConstantsU.ObjToStr(obj), tpPos[0], tpPos[1]))

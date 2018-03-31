@@ -11,5 +11,5 @@ OBS: Lista propensa a alteração ao decorrer da implementação
 	- VerifyCartoriosPositions
 - implementar a máquina de estados de movimentação dos agentes
 - implementar o sistema de turnos dos agentes (multithread com mutex)
-
+- implementar um arquivo de configuração de constante de variação
 - realizar testes com outros arquivos de input e tamanho de mapa

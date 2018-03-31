@@ -11,17 +11,32 @@ c_Wall     = 2
 c_Agent    = 3
 c_Couple   = 4
 
-def ObjToStr(nObj):
+def ObjToStr(nObj, short=False):
 	if(nObj == c_Clear):
-		sObj = 'VAZIO'
+		if short:
+			sObj = '    '
+		else:
+			sObj = 'VAZIO'
 	elif (nObj == c_Cartorio):
-		sObj = 'CARTORIO'
+		if short:
+			sObj = ' CT '
+		else:
+			sObj = 'CARTORIO'
 	elif (nObj == c_Wall):
-		sObj = 'PAREDE'
+		if short:
+			sObj = ' || '
+		else:
+			sObj = 'PAREDE'
 	elif (nObj == c_Agent):
-		sObj = 'AGENTE'
+		if short:
+			sObj = ' AG '
+		else:
+			sObj = 'AGENTE'
 	elif (nObj == c_Couple):
-		sObj = 'CASAL'
+		if short:
+			sObj = ' CP '
+		else:
+			sObj = 'CASAL'
 
 	return sObj
 
@@ -68,6 +83,7 @@ c_MALE 		= 'M'
 c_FEMALE	= 'F'
 
 #
-#	constantes do mapa
+#	constantes de variacao
 #
 c_SIZE_VARIATION = 4
+c_VISION_RANGE = 2
