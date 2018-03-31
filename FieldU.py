@@ -31,6 +31,8 @@ class Field:
 		print('Posicionando as paredes...')
 		for wall in self.lstWalls:
 			for pos in wall.lstPos:
+				if GlobalsU.Verbose():
+					self.PrintObjectPosition(pos, ConstantsU.c_Wall)
 				self.SetPosition(pos, ConstantsU.c_Wall)
 
 	def GenerateCartorios(self, nCartorios):
@@ -40,6 +42,8 @@ class Field:
 
 		print('Posicionando cartorios...')
 		for cartorio in self.lstCartorios:
+			if GlobalsU.Verbose():
+				self.PrintObjectPosition(cartorio.tpPos, ConstantsU.c_Cartorio)
 			self.SetPosition(cartorio.tpPos, ConstantsU.c_Cartorio)
 
 	def PlaceAgents(self, conf):
@@ -49,8 +53,11 @@ class Field:
 			while not bOK:
 				tpPos = (randrange(self.nSize), randrange(self.nSize))
 				if (self.GetPosition(tpPos) == ConstantsU.c_Clear):
-					self.SetPosition(tpPos, ConstantsU.c_Agent)
 					agent.tpPos = tpPos
+					agent.lstCartorios = self.lstCartorios.copy()
+					self.SetPosition(tpPos, ConstantsU.c_Agent)
+					if GlobalsU.Verbose():
+						self.PrintObjectPosition(tpPos, ConstantsU.c_Agent)
 					bOK = True
 
 	def VerifyWallPositions(self):
@@ -86,3 +93,6 @@ class Field:
 
 	def SetPosition(self, tpPos, obj):
 		self.mGround[tpPos[0]][tpPos[1]] = obj
+
+	def PrintObjectPosition(self, tpPos, obj):
+		print('%s:\t(%i,%i)' % (ConstantsU.ObjToStr(obj), tpPos[0], tpPos[1]))

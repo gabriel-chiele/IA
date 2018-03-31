@@ -3,6 +3,7 @@
 #
 
 import ConstantsU
+import GlobalsU
 
 from random	import choice, randrange
 
@@ -22,26 +23,35 @@ class Wall:
 			nY = randrange(nFieldSize - 1)
 
 			nSizeVariation = randrange(ConstantsU.c_SIZE_VARIATION)
+			size = (self.nWallSize - nSizeVariation)
 
 			if nDir == ConstantsU.c_NORTE:
-				if ((nX - (self.nWallSize - nSizeVariation)) <  0):
+				if ((nY - size) >  0):
 					bFit = True
 			elif nDir == ConstantsU.c_SUL:
-				if ((nX + (self.nWallSize - nSizeVariation)) <  nFieldSize):
+				if ((nY + size) <  nFieldSize):
 					bFit = True
 			elif nDir == ConstantsU.c_LESTE:
-				if ((nY + (self.nWallSize - nSizeVariation)) <  nFieldSize):
+				if ((nX - size) >  0):
 					bFit = True
 			elif nDir == ConstantsU.c_OESTE:
-				if ((nY - (self.nWallSize - nSizeVariation)) <  0):
+				if ((nX + size) <  nFieldSize):
 					bFit = True
 
-		for i in range(self.nWallSize - nSizeVariation):
+			if bFit:
+				self.PrintWallPositionDetails(nDir, nX, nY, size)
+
+		for i in range(size):
 			if nDir == ConstantsU.c_NORTE:
-				self.lstPos.append(tuple((nX - i, nY)))
-			elif nDir == ConstantsU.c_SUL:
-				self.lstPos.append(tuple((nX + i, nY)))
-			elif nDir == ConstantsU.c_LESTE:
-				self.lstPos.append(tuple((nX, nY + i)))
-			elif nDir == ConstantsU.c_OESTE:
 				self.lstPos.append(tuple((nX, nY - i)))
+			elif nDir == ConstantsU.c_SUL:
+				self.lstPos.append(tuple((nX, nY + i)))
+			elif nDir == ConstantsU.c_LESTE:
+				self.lstPos.append(tuple((nX - i, nY)))
+			elif nDir == ConstantsU.c_OESTE:
+				self.lstPos.append(tuple((nX + i, nY)))
+
+	def PrintWallPositionDetails(self, ndir, x, y, size):
+		if GlobalsU.Verbose():
+			sdir = ConstantsU.DirToStr(ndir)
+			print('Direcao: %s\t Inicio:(%i,%i)\t Tamanho:%i' % (sdir, x, y, size))
