@@ -6,9 +6,7 @@ OBS: Lista propensa a alteração ao decorrer da implementação
 ###################################  TODO  ###################################
 - Corrigir método LookAround
 	- {OutOfBoounds tpPos >= Field.nSize}
-	- Um agente detecta outro, mas o outro não detecta o primeiro
-
-- PrintMap deve imprimir ag.ToString(short=True) ao invés de 'AG'
+	- agente as vezes não se detectam mutuamente
 
 - implementar verificação de consistencia de entrada
 	EX.: mapa pequeno para um numero grande de agentes ou cartorios

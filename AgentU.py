@@ -40,9 +40,9 @@ class Agent:
 				pass
 			else:
 				for j in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE):
-					if (self.tpPos[1] + i) < 0:
+					if (self.tpPos[1] + j) < 0:
 						pass
-					elif ((self.tpPos[1] + i) > field.nSize) or ((self.tpPos[1] + i) == field.nSize):
+					elif ((self.tpPos[1] + j) > field.nSize) or ((self.tpPos[1] + j) == field.nSize):
 						pass
 					else:
 						tpTempPos = (self.tpPos[0] + i, self.tpPos[1] + j)

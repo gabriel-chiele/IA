@@ -75,15 +75,15 @@ class Field:
 				str = '*'
 				for j in range(self.nSize):
 					if (self.GetPosition((i, j)) == ConstantsU.c_Clear):
-						str = str + ConstantsU.ObjToStr(ConstantsU.c_Clear, True)
+						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Clear, True))
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Cartorio):
-						str = str + ConstantsU.ObjToStr(ConstantsU.c_Cartorio, True)
+						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Cartorio, True))
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Wall):
-						str = str + ConstantsU.ObjToStr(ConstantsU.c_Wall, True)
+						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Wall, True))
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Agent):
-						str = str + ConstantsU.ObjToStr(ConstantsU.c_Agent, True)
+						str = str + ' %s ' % (self.GetAgent((i,j)).ToString(short=True))
 					elif (self.GetPosition((i, j)) == ConstantsU.c_Couple):
-						str = str + ConstantsU.ObjToStr(ConstantsU.c_Couple, True)
+						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Couple, True))
 				str = str + '*'
 				print(str)
 			str = (self.nSize * '*' * 4) + '**'

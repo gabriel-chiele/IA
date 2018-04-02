@@ -14,27 +14,27 @@ c_Couple   = 4
 def ObjToStr(nObj, short=False):
 	if(nObj == c_Clear):
 		if short:
-			sObj = '    '
+			sObj = '  '
 		else:
 			sObj = 'VAZIO'
 	elif (nObj == c_Cartorio):
 		if short:
-			sObj = ' CT '
+			sObj = 'CT'
 		else:
 			sObj = 'CARTORIO'
 	elif (nObj == c_Wall):
 		if short:
-			sObj = ' || '
+			sObj = '||'
 		else:
 			sObj = 'PAREDE'
 	elif (nObj == c_Agent):
 		if short:
-			sObj = ' AG '
+			sObj = 'AG'
 		else:
 			sObj = 'AGENTE'
 	elif (nObj == c_Couple):
 		if short:
-			sObj = ' CP '
+			sObj = 'CP'
 		else:
 			sObj = 'CASAL'
 
