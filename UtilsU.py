@@ -77,6 +77,12 @@ def LoadConfigurations(options):
 	GlobalsU.setVerbose(options.verbose)
 	return conf
 
+def EraseConf(conf):
+	conf.nSize = None
+	del conf.lstAgents[:]
+	if GlobalsU.Verbose():
+		print('Limpando variaveis auxiliares...')
+
 def EndCredits():
 	if GlobalsU.Verbose():
 		print('Encerrando simulacao em\n3 ...')
@@ -86,5 +92,8 @@ def EndCredits():
 		print('1 ...')
 		sleep(1)
 
-	print('\t\t    Simulacao encerrada!')
-	print('\n\tTrabalho da disciplina de Inteligencia Artificial\n\n\t\t\t   Autores\n\t\t        Gabriel Chiele\n\t\t         Maiki Buffet')
+	print('Simulacao encerrada!')
+	print('\nTrabalho da disciplina de Inteligencia Artificial')
+	print('                     Autores')
+	print('                 Gabriel Chiele')
+	print('                   Maiki Buffet')

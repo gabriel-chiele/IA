@@ -18,7 +18,7 @@ class Field:
 		self.nWallsQtd 		= self.nSize // 5
 		self.lstWalls		= []
 		self.lstCartorios 	= []
-		self.lstAgents		= conf.lstAgents
+		self.lstAgents		= conf.lstAgents.copy()
 
 		self.GenerateWalls()
 		self.GenerateCartorios(conf.nCartoriosNumber)

@@ -3,6 +3,7 @@
 #
 
 import ConstantsU
+import GlobalsU
 
 from math import sqrt
 
@@ -31,25 +32,34 @@ class Agent:
 		return closest
 
 	def LookAround(self, field):
-		# TODO: clocar o agente em lista temporaria e depois verificar a preferencia
-		# entre todos os agentes na lista, e me direcionar ao de maior rank
+		lstProximity = []		
 		for i in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE):
 			if (self.tpPos[0] + i) < 0:
 				pass
-			elif (self.tpPos[0] + i) > field.nSize:
+			elif ((self.tpPos[0] + i) > field.nSize) or (self.tpPos[0] + i) == field.nSize:
 				pass
 			else:
 				for j in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE):
 					if (self.tpPos[1] + i) < 0:
 						pass
-					elif (self.tpPos[1] + i) > field.nSize:
+					elif ((self.tpPos[1] + i) > field.nSize) or ((self.tpPos[1] + i) == field.nSize):
 						pass
 					else:
-						tpTempPos = (tpPos[0] + i, tpPos[1] + j)
+						tpTempPos = (self.tpPos[0] + i, self.tpPos[1] + j)
 						nFilled = field.GetPosition(tpTempPos)
 
-						if (nFilled == c_Agent):
-							ag = field.getAgent(tpTempPos)
+						if (nFilled == ConstantsU.c_Agent):
+							ag = field.GetAgent(tpTempPos)
+							if not (ag.ToString(short=True) == self.ToString(short=True)):
+								lstProximity.append(ag)
+								if GlobalsU.Verbose():
+									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
-	def ToString(self):
-		return str(self.nID) + ' - ' + self.cGender + ' - '  + str(self.lstPreferences)
+		return lstProximity
+
+	def ToString(self, short=False):
+		if short:
+			return str(self.nID) + self.cGender
+		else:
+			return str(self.nID) + ' - ' + self.cGender + ' - '  + str(self.lstPreferences)
+

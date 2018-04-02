@@ -24,10 +24,19 @@ if __name__ == '__main__':
 	else:
 		conf.PrintConf()
 		Field = FieldU.Field(conf)
+		UtilsU.EraseConf(conf)
 		Field.PrintMap()
 
-		while (GlobalsU.EndSimulation()):
-			print('Simulando...')
+		nTurnCount = 0
+
+		print('Simulando...')
+		while not (GlobalsU.EndSimulation()):			
+			nTurnCount = nTurnCount + 1
+			print('\nTurno %i:' % (nTurnCount))
+
+			for ag in Field.lstAgents:
+				ag.LookAround(Field)
+
 			GlobalsU.setEndSimulation(True)		
 
 	UtilsU.EndCredits()
