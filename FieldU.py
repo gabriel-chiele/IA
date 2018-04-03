@@ -101,4 +101,4 @@ class Field:
 				return ag
 
 	def PrintObjectPosition(self, tpPos, obj):
-		print('%s:\t(%i,%i)' % (ConstantsU.ObjToStr(obj), tpPos[0], tpPos[1]))
+		print('%s: (%i,%i)' % (ConstantsU.ObjToStr(obj), tpPos[0], tpPos[1]))

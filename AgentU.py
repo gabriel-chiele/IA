@@ -9,14 +9,14 @@ from math import sqrt
 
 class Agent:
 	def __init__(self, ID, pref, gender):
-		self.nID 			= ID	
+		self.nID						= ID	
 		self.lstPreferences	= pref
-		self.bMarried 		= False
-		self.nCoupleID		= 0
-		self.cGender		= gender
-		self.tpPos			= (0,0)
-		self.lstCartorios	= []
-		self.nFacing		= ConstantsU.c_NORTE
+		self.bMarried				= False
+		self.nCoupleID			= 0
+		self.cGender				= gender
+		self.tpPos					= (0,0)
+		self.lstCartorios		= []
+		self.nFacing				= ConstantsU.c_NORTE
 
 	def CalculateEuclidianDistance(self):
 		closest = (0,0)
@@ -33,16 +33,12 @@ class Agent:
 
 	def LookAround(self, field):
 		lstProximity = []		
-		for i in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE):
-			if (self.tpPos[0] + i) < 0:
-				pass
-			elif ((self.tpPos[0] + i) > field.nSize) or (self.tpPos[0] + i) == field.nSize:
+		for i in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE + 1):
+			if ((self.tpPos[0] + i) < 0) or ((self.tpPos[0] + i) > field.nSize) or ((self.tpPos[0] + i) == field.nSize):
 				pass
 			else:
-				for j in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE):
-					if (self.tpPos[1] + j) < 0:
-						pass
-					elif ((self.tpPos[1] + j) > field.nSize) or ((self.tpPos[1] + j) == field.nSize):
+				for j in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE + 1):
+					if ((self.tpPos[1] + j) < 0) or ((self.tpPos[1] + j) > field.nSize) or ((self.tpPos[1] + j) == field.nSize):
 						pass
 					else:
 						tpTempPos = (self.tpPos[0] + i, self.tpPos[1] + j)
@@ -56,6 +52,26 @@ class Agent:
 									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
 		return lstProximity
+
+	def ChooseAction(self, lstProximity):
+		action = ConstantsU.c_OTHER
+		if (lstProximity == []):
+			action = ConstantsU.c_STEP
+		else:
+			for ag in lstProximity:
+				if (self.bMarried):
+					if (ag.nID > self.nCoupleID) and not (ag.cGender == self.cGender):
+						action = ConstantsU.c_DIVORCE
+				else:
+					action = ConstantsU.c_MARRY
+					
+		if GlobalsU.Verbose():
+			print(ConstantsU.AcToStr(action))		
+		return action # oq fazer se casado e nID menor que o nCoupleID ? talvez STEP
+			
+
+	def Step(self):
+		print('step')
 
 	def ToString(self, short=False):
 		if short:

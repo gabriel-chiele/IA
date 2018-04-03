@@ -35,7 +35,8 @@ if __name__ == '__main__':
 			print('\nTurno %i:' % (nTurnCount))
 
 			for ag in Field.lstAgents:
-				ag.LookAround(Field)
+				lstProximity = ag.LookAround(Field)
+				action = ag.ChooseAction(lstProximity)
 
 			GlobalsU.setEndSimulation(True)		
 
