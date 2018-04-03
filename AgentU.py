@@ -62,7 +62,7 @@ class Agent:
 				if (self.bMarried):
 					if (ag.nID > self.nCoupleID) and not (ag.cGender == self.cGender):
 						action = ConstantsU.c_DIVORCE
-				else:
+				elif (ag.cGender == self.cGender):
 					action = ConstantsU.c_MARRY
 					
 		if GlobalsU.Verbose():
