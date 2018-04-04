@@ -27,7 +27,7 @@ class Field:
 	def GenerateWalls(self):
 		print('Gerando as paredes...')
 		for i in range(self.nWallsQtd):
-			self.lstWalls.append(WallU.Wall(self.nSize))
+			self.lstWalls.append(WallU.Wall(self.nSize, (i + 1)))
 
 		print('Posicionando as paredes...')
 		for wall in self.lstWalls:
@@ -60,9 +60,6 @@ class Field:
 					if GlobalsU.Verbose():
 						self.PrintObjectPosition(tpPos, ConstantsU.c_Agent)
 					bOK = True
-
-	def VerifyWallPositions(self):
-		print('')
 
 	def VerifyCartoriosPositions(self):
 		print('')

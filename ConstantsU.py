@@ -105,5 +105,7 @@ def AcToStr(nAc):
 #
 #	constantes de variacao
 #
-c_SIZE_VARIATION 	= 4
-c_VISION_RANGE		= 2
+c_SIZE_VARIATION 			= 4
+c_VISION_RANGE				= 2
+c_FIELD_SIZE_FACTOR 	= 5
+c_WALL_SPACING_FACTOR = 3
