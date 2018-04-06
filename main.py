@@ -6,6 +6,7 @@ import AgentU
 import FieldU
 import UtilsU
 import GlobalsU
+import ConstantsU
 
 if __name__ == '__main__':
 	options = None
@@ -38,6 +39,15 @@ if __name__ == '__main__':
 				lstProximity = ag.LookAround(Field)
 				action = ag.ChooseAction(lstProximity)
 
-			GlobalsU.setEndSimulation(True)		
+				if (action == ConstantsU.c_STEP):
+					ag.Step(Field)
+				elif (action == ConstantsU.c_MARRY):
+					ag.Chase()
+				elif (action == ConstantsU.c_DIVORCE):
+					ag.GoToCartorio()
+
+			Field.PrintMap()
+			if(True):
+				GlobalsU.setEndSimulation(True)		
 
 	UtilsU.EndCredits()

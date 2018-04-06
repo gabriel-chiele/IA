@@ -6,6 +6,7 @@ import ConstantsU
 import GlobalsU
 
 from math import sqrt
+from random import choice
 
 class Agent:
 	def __init__(self, ID, pref, gender):
@@ -16,7 +17,14 @@ class Agent:
 		self.cGender				= gender
 		self.tpPos					= (0,0)
 		self.lstCartorios		= []
-		self.nFacing				= ConstantsU.c_NORTE
+		self.nFacing				= choice([ConstantsU.c_NORTE,
+																	ConstantsU.c_NORDESTE,
+																	ConstantsU.c_LESTE,
+																  ConstantsU.c_SUDESTE,
+																	ConstantsU.c_SUL,
+																	ConstantsU.c_SUDOESTE,
+																  ConstantsU.c_OESTE,
+																	ConstantsU.c_NOROESTE])
 
 	def CalculateEuclidianDistance(self):
 		closest = (0,0)
@@ -62,16 +70,67 @@ class Agent:
 				if (self.bMarried):
 					if (ag.nID > self.nCoupleID) and not (ag.cGender == self.cGender):
 						action = ConstantsU.c_DIVORCE
+					else:
+						action = ConstantsU.c_STEP
 				elif not (ag.cGender == self.cGender):
 					action = ConstantsU.c_MARRY
+				else:
+					action = ConstantsU.c_STEP
 					
 		if GlobalsU.Verbose():
 			print(ConstantsU.AcToStr(action))		
 		return action # oq fazer se casado e nID menor que o nCoupleID ? talvez STEP
 			
 
-	def Step(self):
-		print('step')
+	def Step(self, field):
+		if GlobalsU.Verbose():
+			print(ConstantsU.DirToStr(self.nFacing))
+
+		bOK = False
+		field.SetPosition(self.tpPos, ConstantsU.c_Clear)
+
+		while not bOK:
+			if (self.nFacing == ConstantsU.c_NORTE):
+				self.tpPos = (self.tpPos[0] - 1, self.tpPos[1])
+
+			elif(self.nFacing == ConstantsU.c_NORDESTE):
+				self.tpPos = (self.tpPos[0] - 1, self.tpPos[1] + 1)
+
+			elif(self.nFacing == ConstantsU.c_LESTE):
+				self.tpPos = (self.tpPos[0], self.tpPos[1] + 1)
+
+			elif(self.nFacing == ConstantsU.c_SUDESTE):
+				self.tpPos = (self.tpPos[0] + 1, self.tpPos[1] + 1)
+
+			elif(self.nFacing == ConstantsU.c_SUL):
+				self.tpPos = (self.tpPos[0] + 1, self.tpPos[1])
+
+			elif(self.nFacing == ConstantsU.c_SUDOESTE):
+				self.tpPos = (self.tpPos[0] + 1, self.tpPos[1] - 1)
+
+			elif(self.nFacing == ConstantsU.c_OESTE):
+				self.tpPos = (self.tpPos[0], self.tpPos[1] - 1)
+
+			elif(self.nFacing == ConstantsU.c_NOROESTE):
+				self.tpPos = (self.tpPos[0] - 1, self.tpPos[1] - 1)
+
+			if (self.tpPos[0] < field.nSize) and (self.tpPos[1] < field.nSize) and (field.GetPosition(self.tpPos) == ConstantsU.c_Clear):
+				bOK = True
+			else:
+				print('Mudou de direcao')
+				self.nFacing = choice([ConstantsU.c_NORTE, ConstantsU.c_NORDESTE, ConstantsU.c_LESTE,
+															 ConstantsU.c_SUDESTE,	ConstantsU.c_SUL, ConstantsU.c_SUDOESTE,
+															 ConstantsU.c_OESTE,	ConstantsU.c_NOROESTE])
+
+		field.SetPosition(self.tpPos, ConstantsU.c_Agent)
+
+
+	def Chase(self):
+		print('marry')
+
+	def GoToCartorio(self):
+		print('divorce')
+
 
 	def ToString(self, short=False):
 		if short:
