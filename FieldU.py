@@ -9,6 +9,7 @@ import WallU
 import GlobalsU
 
 from random import randrange
+from copy import copy
 
 class Field:
 	def __init__(self, conf):
@@ -18,7 +19,7 @@ class Field:
 		self.nWallsQtd 		= self.nSize // 5
 		self.lstWalls		= []
 		self.lstCartorios 	= []
-		self.lstAgents		= conf.lstAgents.copy()
+		self.lstAgents		= copy(conf.lstAgents)
 
 		self.GenerateWalls()
 		self.GenerateCartorios(conf.nCartoriosNumber)
@@ -55,7 +56,7 @@ class Field:
 				tpPos = (randrange(self.nSize), randrange(self.nSize))
 				if (self.GetPosition(tpPos) == ConstantsU.c_Clear):
 					agent.tpPos = tpPos
-					agent.lstCartorios = self.lstCartorios.copy()
+					agent.lstCartorios = copy(self.lstCartorios)
 					self.SetPosition(tpPos, ConstantsU.c_Agent)
 					if GlobalsU.Verbose():
 						self.PrintObjectPosition(tpPos, ConstantsU.c_Agent)
@@ -71,15 +72,17 @@ class Field:
 			for i in range(self.nSize):
 				str = '*'
 				for j in range(self.nSize):
-					if (self.GetPosition((i, j)) == ConstantsU.c_Clear):
+					item = self.GetPosition((i, j))
+					if ( item == ConstantsU.c_Clear):
 						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Clear, True))
-					elif (self.GetPosition((i, j)) == ConstantsU.c_Cartorio):
+					elif (item == ConstantsU.c_Cartorio):
 						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Cartorio, True))
-					elif (self.GetPosition((i, j)) == ConstantsU.c_Wall):
+					elif (item == ConstantsU.c_Wall):
 						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Wall, True))
-					elif (self.GetPosition((i, j)) == ConstantsU.c_Agent):
+					elif (item == ConstantsU.c_Agent):
+						print((i,j))
 						str = str + ' %s ' % (self.GetAgent((i,j)).ToString(short=True))
-					elif (self.GetPosition((i, j)) == ConstantsU.c_Couple):
+					elif (item == ConstantsU.c_Couple):
 						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Couple, True))
 				str = str + '*'
 				print(str)

@@ -10,21 +10,21 @@ from random import choice
 
 class Agent:
 	def __init__(self, ID, pref, gender):
-		self.nID						= ID	
+		self.nID			= ID	
 		self.lstPreferences	= pref
-		self.bMarried				= False
-		self.nCoupleID			= 0
-		self.cGender				= gender
-		self.tpPos					= (0,0)
-		self.lstCartorios		= []
-		self.nFacing				= choice([ConstantsU.c_NORTE,
-																	ConstantsU.c_NORDESTE,
-																	ConstantsU.c_LESTE,
-																  ConstantsU.c_SUDESTE,
-																	ConstantsU.c_SUL,
-																	ConstantsU.c_SUDOESTE,
-																  ConstantsU.c_OESTE,
-																	ConstantsU.c_NOROESTE])
+		self.bMarried		= False
+		self.nCoupleID		= 0
+		self.cGender		= gender
+		self.tpPos			= (0,0)
+		self.lstCartorios	= []
+		self.nFacing		= choice([ConstantsU.c_NORTE,
+									ConstantsU.c_NORDESTE,
+									ConstantsU.c_LESTE,
+							 		ConstantsU.c_SUDESTE,
+									ConstantsU.c_SUL,
+									ConstantsU.c_SUDOESTE,
+									ConstantsU.c_OESTE,
+									ConstantsU.c_NOROESTE])
 
 	def CalculateEuclidianDistance(self):
 		closest = (0,0)
@@ -114,16 +114,29 @@ class Agent:
 			elif(self.nFacing == ConstantsU.c_NOROESTE):
 				self.tpPos = (self.tpPos[0] - 1, self.tpPos[1] - 1)
 
-			if (self.tpPos[0] < field.nSize) and (self.tpPos[1] < field.nSize) and (field.GetPosition(self.tpPos) == ConstantsU.c_Clear):
+			if self.VerifyStep(self.tpPos, field):
 				bOK = True
 			else:
 				print('Mudou de direcao')
 				self.nFacing = choice([ConstantsU.c_NORTE, ConstantsU.c_NORDESTE, ConstantsU.c_LESTE,
-															 ConstantsU.c_SUDESTE,	ConstantsU.c_SUL, ConstantsU.c_SUDOESTE,
-															 ConstantsU.c_OESTE,	ConstantsU.c_NOROESTE])
+										ConstantsU.c_SUDESTE,	ConstantsU.c_SUL, ConstantsU.c_SUDOESTE,
+										ConstantsU.c_OESTE,	ConstantsU.c_NOROESTE])
 
 		field.SetPosition(self.tpPos, ConstantsU.c_Agent)
 
+	def VerifyStep(self, tpStep, field):
+		if (tpStep[0] > field.nSize -1):
+			return False
+		if (tpStep[1] > field.nSize -1):
+			return False
+		if (tpStep[0] < 0):
+			return False
+		if (tpStep[1] < 0):
+			return False
+		if not (field.GetPosition(tpStep) == ConstantsU.c_Clear):
+			return False
+
+		return True
 
 	def Chase(self):
 		print('marry')
