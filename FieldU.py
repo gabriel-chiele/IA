@@ -80,7 +80,6 @@ class Field:
 					elif (item == ConstantsU.c_Wall):
 						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Wall, True))
 					elif (item == ConstantsU.c_Agent):
-						print((i,j))
 						str = str + ' %s ' % (self.GetAgent((i,j)).ToString(short=True))
 					elif (item == ConstantsU.c_Couple):
 						str = str + ' %s ' % (ConstantsU.ObjToStr(ConstantsU.c_Couple, True))

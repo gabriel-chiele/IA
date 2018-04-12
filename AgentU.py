@@ -63,23 +63,30 @@ class Agent:
 
 	def ChooseAction(self, lstProximity):
 		action = ConstantsU.c_OTHER
+		nBestMatch = -1
+		nIndex = 0
 		if (lstProximity == []):
 			action = ConstantsU.c_STEP
 		else:
 			for ag in lstProximity:
-				if (self.bMarried):
-					if (ag.nID > self.nCoupleID) and not (ag.cGender == self.cGender):
-						action = ConstantsU.c_DIVORCE
-					else:
-						action = ConstantsU.c_STEP
-				elif not (ag.cGender == self.cGender):
+				if (nBestMatch < ag.nID) and not (ag.cGender == self.cGender):
+					nBestMatch = nIndex
+
+				nIndex = nIndex + 1;
+
+			if not (nBestMatch == -1):
+				if (self.bMarried) and (self.nCoupleID < lstProximity[nBestMatch].nID):
+					action = ConstantsU.c_DIVORCE
+				elif not (self.bMarried):
 					action = ConstantsU.c_MARRY
 				else:
 					action = ConstantsU.c_STEP
+			else:
+				action = ConstantsU.c_STEP
 					
 		if GlobalsU.Verbose():
 			print(ConstantsU.AcToStr(action))		
-		return action # oq fazer se casado e nID menor que o nCoupleID ? talvez STEP
+		return action 
 			
 
 	def Step(self, field):
@@ -91,31 +98,32 @@ class Agent:
 
 		while not bOK:
 			if (self.nFacing == ConstantsU.c_NORTE):
-				self.tpPos = (self.tpPos[0] - 1, self.tpPos[1])
+				tpStep = (self.tpPos[0] - 1, self.tpPos[1])
 
 			elif(self.nFacing == ConstantsU.c_NORDESTE):
-				self.tpPos = (self.tpPos[0] - 1, self.tpPos[1] + 1)
+				tpStep = (self.tpPos[0] - 1, self.tpPos[1] + 1)
 
 			elif(self.nFacing == ConstantsU.c_LESTE):
-				self.tpPos = (self.tpPos[0], self.tpPos[1] + 1)
+				tpStep = (self.tpPos[0], self.tpPos[1] + 1)
 
 			elif(self.nFacing == ConstantsU.c_SUDESTE):
-				self.tpPos = (self.tpPos[0] + 1, self.tpPos[1] + 1)
+				tpStep = (self.tpPos[0] + 1, self.tpPos[1] + 1)
 
 			elif(self.nFacing == ConstantsU.c_SUL):
-				self.tpPos = (self.tpPos[0] + 1, self.tpPos[1])
+				tpStep = (self.tpPos[0] + 1, self.tpPos[1])
 
 			elif(self.nFacing == ConstantsU.c_SUDOESTE):
-				self.tpPos = (self.tpPos[0] + 1, self.tpPos[1] - 1)
+				tpStep = (self.tpPos[0] + 1, self.tpPos[1] - 1)
 
 			elif(self.nFacing == ConstantsU.c_OESTE):
-				self.tpPos = (self.tpPos[0], self.tpPos[1] - 1)
+				tpStep = (self.tpPos[0], self.tpPos[1] - 1)
 
 			elif(self.nFacing == ConstantsU.c_NOROESTE):
-				self.tpPos = (self.tpPos[0] - 1, self.tpPos[1] - 1)
+				tpStep = (self.tpPos[0] - 1, self.tpPos[1] - 1)
 
-			if self.VerifyStep(self.tpPos, field):
+			if self.VerifyStep(tpStep, field):
 				bOK = True
+				self.tpPos = (tpStep[0], tpStep[1])
 			else:
 				print('Mudou de direcao')
 				self.nFacing = choice([ConstantsU.c_NORTE, ConstantsU.c_NORDESTE, ConstantsU.c_LESTE,

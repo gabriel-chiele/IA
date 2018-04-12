@@ -4,26 +4,13 @@ em ordem de prioridades.
 OBS: Lista propensa a alteração ao decorrer da implementação
 
 ###################################  TODO  ###################################
-- Corrigir método de Step
-	- se atingiu o canto do mapa, mudar de direção
-
-- Corrigir método LookAround
-	- verificar a lista de preferencia em caso da lista de proximidade ser maior de 1
+- Separar parte gráfica em outro arquivo
 
 - implementar verificação de consistencia de entrada
 	EX.: mapa pequeno para um numero grande de agentes ou cartorios
 
-- implementar sistema de verificação das posições dos objetos no mapa
-	- VerifyWallPositions
-	- VerifyCartoriosPositions
-
 - implementar a máquina de estados de movimentação dos agentes
 
-- implementar o sistema de turnos dos agentes (multithread com mutex)
-
-- implementar um arquivo de configuração de constante de variação
+- implementar o sistema de turnos dos agentes
 
 - realizar testes com outros arquivos de input e tamanho de mapa
-
-- fazer switch para substituir if's do Step :
-	https://jaxenter.com/implement-switch-case-statement-python-138315.html
