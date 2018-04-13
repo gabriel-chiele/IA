@@ -94,7 +94,3 @@ def EndCredits(dtExecTime):
 
 	print('Simulacao encerrada!')
 	print('Tempo total de execucao : %i segundos' % dtExecTime)
-	print('\nTrabalho da disciplina de Inteligencia Artificial')
-	print('                     Autores')
-	print('                 Gabriel Chiele')
-	print('                   Maiki Buffet')

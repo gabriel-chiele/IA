@@ -4,7 +4,7 @@ em ordem de prioridades.
 OBS: Lista propensa a alteração ao decorrer da implementação
 
 ###################################  TODO  ###################################
-- Separar parte gráfica em outro arquivo
+- implementar grid de representação do mapa
 
 - implementar verificação de consistencia de entrada
 	EX.: mapa pequeno para um numero grande de agentes ou cartorios

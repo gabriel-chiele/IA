@@ -125,7 +125,6 @@ class Agent:
 				bOK = True
 				self.tpPos = (tpStep[0], tpStep[1])
 			else:
-				print('Mudou de direcao')
 				self.nFacing = choice([ConstantsU.c_NORTE, ConstantsU.c_NORDESTE, ConstantsU.c_LESTE,
 										ConstantsU.c_SUDESTE,	ConstantsU.c_SUL, ConstantsU.c_SUDOESTE,
 										ConstantsU.c_OESTE,	ConstantsU.c_NOROESTE])
