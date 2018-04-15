@@ -2,6 +2,8 @@
 #	Modulo de constante
 #
 
+import GlobalsU
+
 #
 #	constantes representacao dos objetos
 #
@@ -109,13 +111,17 @@ c_SIZE_VARIATION 		= 4
 c_VISION_RANGE			= 2
 c_FIELD_SIZE_FACTOR		= 5
 c_WALL_SPACING_FACTOR 	= 3
-c_MAX_TURNS		= 2
+c_MAX_TURNS				= 2
 
 #
 #	constantes textuais
 #
-tc_Title = '\nTrabalho da disciplina de Inteligencia Artificial'
-tc_Authors = '\nAutores'	
-tc_Name1 = '\nGabriel Chiele'
-tc_Name2 = '\nMaiki Buffet'
-tc_Screen = tc_Title + tc_Authors + tc_Name1 + tc_Name2
+tc_Title 			= '\nTrabalho da disciplina de Inteligencia Artificial'
+tc_Authors 			= '\nAutores'	
+tc_Name1 			= '\nGabriel Chiele'
+tc_Name2 			= '\nMaiki Buffet'
+tc_StartScreen 		= tc_Title + tc_Authors + tc_Name1 + tc_Name2
+tc_EndOfSimulation 	= '\nSimulacao encerrada!'
+tc_ExecutionTime	= '\n\nTempo total de execucao : %i segundos'
+tc_EndScreen 		= tc_EndOfSimulation + tc_ExecutionTime
+

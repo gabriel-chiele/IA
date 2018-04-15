@@ -93,9 +93,27 @@ class Agent:
 		if GlobalsU.Verbose():
 			print(ConstantsU.DirToStr(self.nFacing))
 
-		bOK = False
 		field.SetPosition(self.tpPos, ConstantsU.c_Clear)
+		tpStep = self.CalculateNextStep(field)
+		self.tpPos = (tpStep[0], tpStep[1])
+		field.SetPosition(self.tpPos, ConstantsU.c_Agent)
 
+	def VerifyStep(self, tpStep, field):
+		if (tpStep[0] > field.nSize -1):
+			return False
+		if (tpStep[1] > field.nSize -1):
+			return False
+		if (tpStep[0] < 0):
+			return False
+		if (tpStep[1] < 0):
+			return False
+		if not (field.GetPosition(tpStep) == ConstantsU.c_Clear):
+			return False
+
+		return True
+
+	def CalculateNextStep(self, field):
+		bOK = False
 		while not bOK:
 			if (self.nFacing == ConstantsU.c_NORTE):
 				tpStep = (self.tpPos[0] - 1, self.tpPos[1])
@@ -123,27 +141,11 @@ class Agent:
 
 			if self.VerifyStep(tpStep, field):
 				bOK = True
-				self.tpPos = (tpStep[0], tpStep[1])
 			else:
 				self.nFacing = choice([ConstantsU.c_NORTE, ConstantsU.c_NORDESTE, ConstantsU.c_LESTE,
 										ConstantsU.c_SUDESTE,	ConstantsU.c_SUL, ConstantsU.c_SUDOESTE,
 										ConstantsU.c_OESTE,	ConstantsU.c_NOROESTE])
-
-		field.SetPosition(self.tpPos, ConstantsU.c_Agent)
-
-	def VerifyStep(self, tpStep, field):
-		if (tpStep[0] > field.nSize -1):
-			return False
-		if (tpStep[1] > field.nSize -1):
-			return False
-		if (tpStep[0] < 0):
-			return False
-		if (tpStep[1] < 0):
-			return False
-		if not (field.GetPosition(tpStep) == ConstantsU.c_Clear):
-			return False
-
-		return True
+		return tpStep
 
 	def Chase(self):
 		print('marry')

@@ -83,7 +83,7 @@ def EraseConf(conf):
 	if GlobalsU.Verbose():
 		print('Limpando variaveis auxiliares...')
 
-def EndCredits(dtExecTime):
+def EndCredits(sTime):
 	if GlobalsU.Verbose():
 		print('Encerrando simulacao em\n3 ...')
 		sleep(1)
@@ -92,5 +92,4 @@ def EndCredits(dtExecTime):
 		print('1 ...')
 		sleep(1)
 
-	print('Simulacao encerrada!')
-	print('Tempo total de execucao : %i segundos' % dtExecTime)
+	print(ConstantsU.tc_EndScreen % sTime)

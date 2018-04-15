@@ -58,12 +58,26 @@ class Visual(Frame):
 					GlobalsU.setEndSimulation(True)	
 
 			dtEndTime = time()
+			self.dtExecTime = dtEndTime - dtStartTime
+			UtilsU.EndCredits(self.dtExecTime)
+			self.EndMessage()
 
-		UtilsU.EndCredits(dtEndTime - dtStartTime)
+	def EndMessage(self):
+		self.strText.set(ConstantsU.tc_EndScreen % self.dtExecTime)
+		self.btQuit.grid(row=1, column=0, sticky=W+E)
+		self.btStart.grid(row=1, column=1, sticky=W+E)
+
+	def StartSimulation(self):
+		self.strText.set('Simulando...')
+		self.btQuit.grid_forget()
+		self.btStart.grid_forget()
+		self.master.update()
+		self.run()
 
 	def createWidgets(self):
-		self.lblTitleScreen = Label(self)
-		self.lblTitleScreen['text'] = ConstantsU.tc_Screen
+		self.strText = StringVar()
+		self.strText.set(ConstantsU.tc_StartScreen)
+		self.lblTitleScreen = Label(self, textvariable = self.strText) 
 		self.lblTitleScreen['bg'] = "white"
 		self.lblTitleScreen.grid(row=0,column=0,columnspan=2)
 
@@ -78,7 +92,7 @@ class Visual(Frame):
 		self.btStart["text"] = "Start"
 		self.btStart['bg'] = "white"
 		self.btStart["fg"]   = "green"
-		self.btStart["command"] = self.run
+		self.btStart["command"] = self.StartSimulation
 		self.btStart.grid(row=1, column=1, sticky=W+E)
 
 	def __init__(self, master=None):
