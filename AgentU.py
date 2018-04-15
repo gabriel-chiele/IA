@@ -4,6 +4,7 @@
 
 import ConstantsU
 import GlobalsU
+import ProposalU
 
 from math import sqrt
 from random import choice
@@ -113,7 +114,11 @@ class Agent:
 		field.SetPosition(self.tpPos, ConstantsU.c_Agent)
 
 	def Propose(self):
-		print('propose')
+		if GlobalsU.Verbose():
+			print('%s Fazendo proposta de casamento para %s' %(self.ToString(short=True),agMatch.ToString(short=True)))
+		prpPropose = Proposal(self.nID, agMatch.nID)
+		self.lstMadeProposes.append(prpPropose)
+		agMatch.lstPendingProposes.append(prpPropose)
 
 	def Marry(self):
 		print('marry')
