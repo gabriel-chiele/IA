@@ -25,6 +25,12 @@ class Agent:
 									ConstantsU.c_SUDOESTE,
 									ConstantsU.c_OESTE,
 									ConstantsU.c_NOROESTE])
+		self.lstProximity = []
+		self.action = ConstantsU.c_OTHER
+		self.agMatch = None
+
+		self.lstMadeProposes = []
+		self.lstPendingProposes = []
 
 	def CalculateEuclidianDistance(self):
 		closest = (0,0)
@@ -40,7 +46,7 @@ class Agent:
 		return closest
 
 	def LookAround(self, field):
-		lstProximity = []		
+		self.lstProximity = []		
 		for i in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE + 1):
 			if ((self.tpPos[0] + i) < 0) or ((self.tpPos[0] + i) > field.nSize) or ((self.tpPos[0] + i) == field.nSize):
 				pass
@@ -55,39 +61,47 @@ class Agent:
 						if (nFilled == ConstantsU.c_Agent):
 							ag = field.GetAgent(tpTempPos)
 							if not (ag.ToString(short=True) == self.ToString(short=True)):
-								lstProximity.append(ag)
+								self.lstProximity.append(ag)
 								if GlobalsU.Verbose():
 									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
-		return lstProximity
+	def ChooseAction(self):
+		self.action = ConstantsU.c_OTHER
+		self.agMatch = None
 
-	def ChooseAction(self, lstProximity):
-		action = ConstantsU.c_OTHER
-		nBestMatch = -1
-		nIndex = 0
-		if (lstProximity == []):
-			action = ConstantsU.c_STEP
+		if (self.lstProximity == []):
+			self.action = ConstantsU.c_STEP
 		else:
-			for ag in lstProximity:
-				if (nBestMatch < ag.nID) and not (ag.cGender == self.cGender):
-					nBestMatch = nIndex
+			for ag in self.lstProximity:
+				if (self.agMatch == None) and not (ag.cGender == self.cGender):
+					self.agMatch = ag
+				elif (self.agMatch == None) and (ag.cGender == self.cGender):
+					pass
+				elif (self.agMatch.nID < ag.nID) and not (ag.cGender == self.cGender):
+					self.agMatch = ag
 
-				nIndex = nIndex + 1;
-
-			if not (nBestMatch == -1):
-				if (self.bMarried) and (self.nCoupleID < lstProximity[nBestMatch].nID):
-					action = ConstantsU.c_DIVORCE
+			if not (self.agMatch == None):
+				if (self.bMarried) and (self.nCoupleID < self.agMatch.nID):
+					self.action = ConstantsU.c_DIVORCE
 				elif not (self.bMarried):
-					action = ConstantsU.c_MARRY
+					self.action = ConstantsU.c_PROPOSE
 				else:
-					action = ConstantsU.c_STEP
+					self.action = ConstantsU.c_STEP
 			else:
-				action = ConstantsU.c_STEP
+				self.action = ConstantsU.c_STEP
 					
 		if GlobalsU.Verbose():
-			print(ConstantsU.AcToStr(action))		
-		return action 
-			
+			print(ConstantsU.AcToStr(self.action))		
+	
+	def ExecuteAction(self, field):
+		if (self.action == ConstantsU.c_STEP):
+			self.Step(field)
+		elif (self.action == ConstantsU.c_PROPOSE):
+			self.Propose()
+		elif (self.action == ConstantsU.c_MARRY):
+			self.Marry()
+		elif (self.action == ConstantsU.c_DIVORCE):
+			self.Divorce()
 
 	def Step(self, field):
 		if GlobalsU.Verbose():
@@ -97,6 +111,15 @@ class Agent:
 		tpStep = self.CalculateNextStep(field)
 		self.tpPos = (tpStep[0], tpStep[1])
 		field.SetPosition(self.tpPos, ConstantsU.c_Agent)
+
+	def Propose(self):
+		print('propose')
+
+	def Marry(self):
+		print('marry')
+
+	def Divorce(self):
+		print('divorce')
 
 	def VerifyStep(self, tpStep, field):
 		if (tpStep[0] > field.nSize -1):
@@ -146,13 +169,6 @@ class Agent:
 										ConstantsU.c_SUDESTE,	ConstantsU.c_SUL, ConstantsU.c_SUDOESTE,
 										ConstantsU.c_OESTE,	ConstantsU.c_NOROESTE])
 		return tpStep
-
-	def Chase(self):
-		print('marry')
-
-	def GoToCartorio(self):
-		print('divorce')
-
 
 	def ToString(self, short=False):
 		if short:

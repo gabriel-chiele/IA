@@ -13,54 +13,54 @@ from tkinter import *
 
 class Visual(Frame):
 	def run(self):
-		options = None
-		conf = None
+		try :
+			options = None
+			conf = None
 
-		options = UtilsU.ParseOption()
-	
-		if options == None:
-			GlobalsU.setEndSimulation(True)
-		else:
-			conf = UtilsU.LoadConfigurations(options)
+			options = UtilsU.ParseOption()
+		
+			if options == None:
+				GlobalsU.setEndSimulation(True)
+			else:
+				conf = UtilsU.LoadConfigurations(options)
 
-		if (conf == None):
-			print('Arquivo de configuracao da simulacao invalido!')
-			GlobalsU.setEndSimulation(True)
-		else:
-			conf.PrintConf()
-			Field = FieldU.Field(conf)
-			UtilsU.EraseConf(conf)
-			Field.PrintMap()
-
-			nTurnCount = 0
-
-			print('Simulando...')
-			dtStartTime = time()
-			while not (GlobalsU.EndSimulation()):			
-				nTurnCount = nTurnCount + 1
-				print('Turno %i:' % (nTurnCount))
-
-				for ag in Field.lstAgents:
-					lstProximity = ag.LookAround(Field)
-					action = ag.ChooseAction(lstProximity)
-
-					if (action == ConstantsU.c_STEP):
-						ag.Step(Field)
-					elif (action == ConstantsU.c_MARRY):
-						ag.Step(Field)#Chase()
-					elif (action == ConstantsU.c_DIVORCE):
-						ag.Step(Field)#GoToCartorio()
-
-					sleep(0.5)
-
+			if (conf == None):
+				print('Arquivo de configuracao da simulacao invalido!')
+				GlobalsU.setEndSimulation(True)
+			else:
+				conf.PrintConf()
+				Field = FieldU.Field(conf)
+				UtilsU.EraseConf(conf)
 				Field.PrintMap()
-				if(nTurnCount == ConstantsU.c_MAX_TURNS):
-					GlobalsU.setEndSimulation(True)	
 
-			dtEndTime = time()
-			self.dtExecTime = dtEndTime - dtStartTime
-			UtilsU.EndCredits(self.dtExecTime)
-			self.EndMessage()
+				nTurnCount = 0
+
+				print('Simulando...')
+				dtStartTime = time()
+				while not (GlobalsU.EndSimulation()):			
+					nTurnCount = nTurnCount + 1
+					print('Turno %i:' % (nTurnCount))
+
+					for ag in Field.lstAgents:
+						ag.LookAround(Field)
+						ag.ChooseAction()
+						ag.ExecuteAction(Field)
+
+					Field.PrintMap()
+					if(nTurnCount == ConstantsU.c_MAX_TURNS):
+						GlobalsU.setEndSimulation(True)	
+
+				dtEndTime = time()
+				self.dtExecTime = dtEndTime - dtStartTime
+				UtilsU.EndCredits(self.dtExecTime)
+				self.EndMessage()
+		except Exception as e:
+			self.ErrorMessage(str(e))
+
+	def ErrorMessage(self, strError):
+		self.strText.set(strError)
+		self.btQuit.grid(row=1, column=0, sticky=W+E)
+		self.btStart.grid(row=1, column=1, sticky=W+E)
 
 	def EndMessage(self):
 		self.strText.set(ConstantsU.tc_EndScreen % self.dtExecTime)

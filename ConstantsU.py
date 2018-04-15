@@ -90,6 +90,7 @@ c_FEMALE	= 'F'
 c_STEP		= 0
 c_DIVORCE 	= 1
 c_MARRY		= 2
+c_PROPOSE	= 3
 c_OTHER		= 255
 
 def AcToStr(nAc):
@@ -99,6 +100,8 @@ def AcToStr(nAc):
 		sAc = 'DIVORCIO'
 	elif (nAc == c_MARRY):
 		sAc = 'CASAR'
+	elif (nAc == c_PROPOSE):
+		sAc = 'FAZER PEDIDO'
 	elif (nAc == c_OTHER):
 		sAc = 'OUTRO'
 
