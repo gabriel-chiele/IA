@@ -4,6 +4,20 @@ em ordem de prioridades.
 OBS: Lista propensa a alteração ao decorrer da implementação
 
 ###################################  TODO  ###################################
+- verificar se o método LookAround funciona através de paredes
+	- se funciona arrumar
+
+- quando ação for casar:
+	- envia pedido de casamento(não se mexer até receber resposta)
+	- ao receber reposta, se for posistiva ir na direção do outro agente
+	- quando agentes se encontrarem, ir ao cartorio
+
+- quando ação for ir ao cartorio
+	- homem calcula o cartorio mais proximo e passa a localização para a mulher
+	- os dois agentes se direcionam para lá
+	- ao chegar no cartorio, se cadastra e espera lá até o namorado chegar
+	- quando os dois chegarem, forma casal
+
 - implementar grid de representação do mapa
 
 - implementar verificação de consistencia de entrada
