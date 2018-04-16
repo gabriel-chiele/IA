@@ -7,8 +7,7 @@ OBS: Lista propensa a alteração ao decorrer da implementação
 - verificar se o método LookAround funciona através de paredes
 	- se funciona arrumar
 
-- adicionar condições que levem em conta a lista de propostas no método ChooseAction
-	- caso existam propostas pendentes, dar prioridade para responder ou verificar lista de proximidade?
+- modificar CooseAction para levar em conta a BestPropose
 
 - quando ação for casar:
 	- ao receber reposta, se for posistiva ir na direção do outro agente

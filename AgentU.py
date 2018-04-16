@@ -46,6 +46,17 @@ class Agent:
 
 		return closest
 
+	def ChooseBestProposal(self):
+		nBestMatch = -1
+		if not (self.lstPendingProposes == []):
+			for prop in self.lstPendingProposes:
+				if (nBestMatch == -1) or (nBestMatch < prop.nAgentMadeProposeID):
+					nBestMatch = prop.nAgentMadeProposeID
+
+			return nBestMatch
+		else:
+			return None
+
 	def LookAround(self, field):
 		self.lstProximity = []		
 		for i in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE + 1):
@@ -70,6 +81,8 @@ class Agent:
 		self.action = ConstantsU.c_OTHER
 		self.agMatch = None
 
+		BestProposal = self.ChooseBestProposal()
+
 		if (self.lstProximity == []):
 			self.action = ConstantsU.c_STEP
 		else:
@@ -83,7 +96,7 @@ class Agent:
 
 			if not (self.agMatch == None):
 				if (self.bMarried) and (self.nCoupleID < self.agMatch.nID):
-					self.action = ConstantsU.c_DIVORCE
+					self.action = ConstantsU.c_PROPOSE
 				elif not (self.bMarried):
 					self.action = ConstantsU.c_PROPOSE
 				else:
