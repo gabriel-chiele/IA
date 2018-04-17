@@ -114,7 +114,8 @@ c_SIZE_VARIATION 		= 4
 c_VISION_RANGE			= 2
 c_FIELD_SIZE_FACTOR		= 5
 c_WALL_SPACING_FACTOR 	= 3
-c_MAX_TURNS				= 2
+c_MAX_TURNS				= 100
+c_TURN_CLOCK	=	0.5
 
 #
 #	constantes textuais

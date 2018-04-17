@@ -36,6 +36,7 @@ class Visual(Frame):
 				nTurnCount = 0
 
 				print('Simulando...')
+				self.CreateGrid(Field)
 				dtStartTime = time()
 				while not (GlobalsU.EndSimulation()):			
 					nTurnCount = nTurnCount + 1
@@ -47,12 +48,17 @@ class Visual(Frame):
 						ag.ExecuteAction(Field)
 
 					Field.PrintMap()
+					self.UpdateGrid(Field)
 					if(nTurnCount == ConstantsU.c_MAX_TURNS):
-						GlobalsU.setEndSimulation(True)	
+						GlobalsU.setEndSimulation(True)
+
+					sleep(ConstantsU.c_TURN_CLOCK)
 
 				dtEndTime = time()
 				self.dtExecTime = dtEndTime - dtStartTime
+				self.ForgetGrid(Field)
 				UtilsU.EndCredits(self.dtExecTime)
+				GlobalsU.setEndSimulation(False)
 				self.EndMessage()
 		except Exception as e:
 			self.ErrorMessage(str(e))
@@ -64,6 +70,7 @@ class Visual(Frame):
 
 	def EndMessage(self):
 		self.strText.set(ConstantsU.tc_EndScreen % self.dtExecTime)
+		self.lblTitleScreen.grid(row=0,column=0,columnspan=2)
 		self.btQuit.grid(row=1, column=0, sticky=W+E)
 		self.btStart.grid(row=1, column=1, sticky=W+E)
 
@@ -71,8 +78,40 @@ class Visual(Frame):
 		self.strText.set('Simulando...')
 		self.btQuit.grid_forget()
 		self.btStart.grid_forget()
-		self.master.update()
+		self.update()
 		self.run()
+
+	def UpdateGrid(self, field):
+		self.PaintGrid(field)
+		self.update()
+
+	def CreateGrid(self, field):
+		lstSlave = self.grid_slaves()
+		for widget in lstSlave:
+			widget.grid_forget()
+		
+		self.PaintGrid(field)
+
+	def ForgetGrid(self, field):
+		lstSlave = self.grid_slaves()
+		for widget in lstSlave:
+			widget.grid_forget()
+
+	def PaintGrid(self, field):
+		for i in range(field.nSize):
+			for j in range(field.nSize):
+				nItem = field.GetPosition((i,j))
+				if (nItem == ConstantsU.c_Clear):
+					frSquare = Frame(self, width=25, height=25, bg="white")
+				elif (nItem == ConstantsU.c_Cartorio):
+					frSquare = Frame(self, width=25, height=25, bg="yellow")
+				elif (nItem== ConstantsU.c_Wall):
+					frSquare = Frame(self, width=25, height=25, bg="blue")
+				elif (nItem == ConstantsU.c_Agent):
+					frSquare = Frame(self, width=25, height=25, bg="red")
+				elif (nItem == ConstantsU.c_Couple):
+					frSquare = Frame(self, width=25, height=25, bg="purple")			
+				frSquare.grid(row=i, column=j)
 
 	def createWidgets(self):
 		self.strText = StringVar()

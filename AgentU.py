@@ -26,8 +26,11 @@ class Agent:
 									ConstantsU.c_SUDOESTE,
 									ConstantsU.c_OESTE,
 									ConstantsU.c_NOROESTE])
+
+		self.LastAction= ConstantsU.c_OTHER
+		self.Action 			= ConstantsU.c_OTHER
+
 		self.lstProximity = []
-		self.action = ConstantsU.c_OTHER
 		self.agMatch = None
 
 		self.lstMadeProposes = []
@@ -78,13 +81,13 @@ class Agent:
 									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
 	def ChooseAction(self):
-		self.action = ConstantsU.c_OTHER
+		self.Action = ConstantsU.c_OTHER
 		self.agMatch = None
 
 		BestProposal = self.ChooseBestProposal()
 
 		if (self.lstProximity == []):
-			self.action = ConstantsU.c_STEP
+			self.Action = ConstantsU.c_STEP
 		else:
 			for ag in self.lstProximity:
 				if (self.agMatch == None) and not (ag.cGender == self.cGender):
@@ -96,26 +99,31 @@ class Agent:
 
 			if not (self.agMatch == None):
 				if (self.bMarried) and (self.nCoupleID < self.agMatch.nID):
-					self.action = ConstantsU.c_PROPOSE
+					self.Action = ConstantsU.c_PROPOSE
 				elif not (self.bMarried):
-					self.action = ConstantsU.c_PROPOSE
+					self.Action = ConstantsU.c_PROPOSE
 				else:
-					self.action = ConstantsU.c_STEP
+					self.Action = ConstantsU.c_STEP
 			else:
-				self.action = ConstantsU.c_STEP
+				self.Action = ConstantsU.c_STEP
 					
 		if GlobalsU.Verbose():
-			print(ConstantsU.AcToStr(self.action))		
+			print(ConstantsU.AcToStr(self.Action))		
 	
 	def ExecuteAction(self, field):
-		if (self.action == ConstantsU.c_STEP):
+		if (self.Action == ConstantsU.c_STEP):
 			self.Step(field)
-		elif (self.action == ConstantsU.c_PROPOSE):
-			self.Propose()
-		elif (self.action == ConstantsU.c_MARRY):
-			self.Marry()
-		elif (self.action == ConstantsU.c_DIVORCE):
-			self.Divorce()
+		elif (self.Action == ConstantsU.c_PROPOSE):
+			#self.Propose()
+			self.Step(field)
+		elif (self.Action == ConstantsU.c_MARRY):
+			#self.Marry()
+			self.Step(field)
+		elif (self.Action == ConstantsU.c_DIVORCE):
+			#self.Divorce()
+			self.Step(field)
+
+		self.LastAction = self.Action
 
 	def Step(self, field):
 		if GlobalsU.Verbose():
@@ -128,16 +136,16 @@ class Agent:
 
 	def Propose(self):
 		if GlobalsU.Verbose():
-			print('%s Fazendo proposta de casamento para %s' %(self.ToString(short=True),agMatch.ToString(short=True)))
-		prpPropose = Proposal(self.nID, agMatch.nID)
+			print('%s Fazendo proposta de casamento para %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
+		prpPropose = ProposalU.Proposal(self.nID, self.agMatch.nID)
 		self.lstMadeProposes.append(prpPropose)
-		agMatch.lstPendingProposes.append(prpPropose)
+		self.agMatch.lstPendingProposes.append(prpPropose)
 
 	def Marry(self):
-		print('marry')
+		print('Casando')
 
 	def Divorce(self):
-		print('divorce')
+		print('Divorciando')
 
 	def VerifyStep(self, tpStep, field):
 		if (tpStep[0] > field.nSize -1):
