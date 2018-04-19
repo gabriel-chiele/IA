@@ -10,10 +10,18 @@ em ordem de prioridades.
 OBS: Lista propensa a alteração ao decorrer da implementação
 
 ###################################  TODO  ###################################
+- Método ChooseAction
+	-	modificar para ser uma máquina de estado
+		- armazenar os estados em lista
+	- com base no estado
+		- Encontrar melhor candidato na lstProximity
+		- Encontrar melhor proposta de casamento
+		- Verificar se alguma proposta foi respondida
+
 - verificar se o método LookAround funciona através de paredes
 	- se funciona arrumar
 
-- modificar CooseAction para levar em conta a BestPropose
+- Diferenciar o genero dos agentes com cores diferentes
 
 - separar parte gráfica em outra thread
 

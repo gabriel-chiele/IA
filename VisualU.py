@@ -56,7 +56,7 @@ class Visual(Frame):
 
 				dtEndTime = time()
 				self.dtExecTime = dtEndTime - dtStartTime
-				self.ForgetGrid(Field)
+				self.ForgetGrid()
 				UtilsU.EndCredits(self.dtExecTime)
 				GlobalsU.setEndSimulation(False)
 				self.EndMessage()
@@ -88,6 +88,11 @@ class Visual(Frame):
 
 	def CreateGrid(self, field):
 		self.ForgetGrid()
+		for i in range(field.nSize):
+			for j in range(field.nSize):
+				frSquare = Frame(self, width=25, height=25, bg="white")
+				frSquare.grid(row=i, column=j)
+		
 		self.PaintGrid(field)
 
 	def ForgetGrid(self):
@@ -99,17 +104,18 @@ class Visual(Frame):
 		for i in range(field.nSize):
 			for j in range(field.nSize):
 				nItem = field.GetPosition((i,j))
+				frSlave = self.grid_slaves(row=i, column=j)
 				if (nItem == ConstantsU.c_Clear):
-					frSquare = Frame(self, width=25, height=25, bg="white")
+					frSlave[0].configure(bg="white",highlightbackground="white")
 				elif (nItem == ConstantsU.c_Cartorio):
-					frSquare = Frame(self, width=25, height=25, bg="yellow")
+					frSlave[0].configure(bg="yellow",highlightbackground="white")
 				elif (nItem== ConstantsU.c_Wall):
-					frSquare = Frame(self, width=25, height=25, bg="blue")
+					frSlave[0].configure(bg="blue",highlightbackground="white")
 				elif (nItem == ConstantsU.c_Agent):
-					frSquare = Frame(self, width=25, height=25, bg="red", highlightbackground="black", highlightthickness=1)
+					frSlave[0].configure(bg="red", highlightbackground="black", highlightthickness=1)
 				elif (nItem == ConstantsU.c_Couple):
-					frSquare = Frame(self, width=25, height=25, bg="purple", highlightcolor="black", highlightthickness=1)
-				frSquare.grid(row=i, column=j)
+					frSlave[0].configure(bg="purple", highlightbackground="black", highlightthickness=1)
+				
 		self.update()
 
 	def createWidgets(self):
