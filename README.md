@@ -15,6 +15,8 @@ OBS: Lista propensa a alteração ao decorrer da implementação
 
 - modificar CooseAction para levar em conta a BestPropose
 
+- separar parte gráfica em outra thread
+
 - quando ação for casar:
 	- ao receber reposta, se for posistiva ir na direção do outro agente
 	- quando agentes se encontrarem, ir ao cartorio

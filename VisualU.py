@@ -93,22 +93,22 @@ class Visual(Frame):
 	def ForgetGrid(self):
 		lstSlave = self.grid_slaves()
 		for widget in lstSlave:
-			widget.grid_forget()
+			widget.grid_remove()
 
 	def PaintGrid(self, field):
 		for i in range(field.nSize):
 			for j in range(field.nSize):
 				nItem = field.GetPosition((i,j))
 				if (nItem == ConstantsU.c_Clear):
-					frSquare = Frame(self, width=25, height=25, bg="white", highlightbackground="black", highlightthickness=1)
+					frSquare = Frame(self, width=25, height=25, bg="white")
 				elif (nItem == ConstantsU.c_Cartorio):
-					frSquare = Frame(self, width=25, height=25, bg="yellow", highlightbackground="black", highlightthickness=1)
+					frSquare = Frame(self, width=25, height=25, bg="yellow")
 				elif (nItem== ConstantsU.c_Wall):
-					frSquare = Frame(self, width=25, height=25, bg="blue", highlightbackground="black", highlightthickness=1)
+					frSquare = Frame(self, width=25, height=25, bg="blue")
 				elif (nItem == ConstantsU.c_Agent):
 					frSquare = Frame(self, width=25, height=25, bg="red", highlightbackground="black", highlightthickness=1)
 				elif (nItem == ConstantsU.c_Couple):
-					frSquare = Frame(self, width=25, height=25, bg="purple", highlightbackground="black", highlightthickness=1)
+					frSquare = Frame(self, width=25, height=25, bg="purple", highlightcolor="black", highlightthickness=1)
 				frSquare.grid(row=i, column=j)
 		self.update()
 
