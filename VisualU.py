@@ -18,7 +18,7 @@ class Visual(Frame):
 			conf = None
 
 			options = UtilsU.ParseOption()
-		
+
 			if options == None:
 				GlobalsU.setEndSimulation(True)
 			else:
@@ -38,7 +38,7 @@ class Visual(Frame):
 				print('Simulando...')
 				self.CreateGrid(Field)
 				dtStartTime = time()
-				while not (GlobalsU.EndSimulation()):			
+				while not (GlobalsU.EndSimulation()):
 					nTurnCount = nTurnCount + 1
 					print('Turno %i:' % (nTurnCount))
 
@@ -64,7 +64,9 @@ class Visual(Frame):
 			self.ErrorMessage(str(e))
 
 	def ErrorMessage(self, strError):
+		self.ForgetGrid()
 		self.strText.set(strError)
+		self.lblTitleScreen.grid(row=0,column=0,columnspan=2)
 		self.btQuit.grid(row=1, column=0, sticky=W+E)
 		self.btStart.grid(row=1, column=1, sticky=W+E)
 
@@ -83,16 +85,12 @@ class Visual(Frame):
 
 	def UpdateGrid(self, field):
 		self.PaintGrid(field)
-		self.update()
 
 	def CreateGrid(self, field):
-		lstSlave = self.grid_slaves()
-		for widget in lstSlave:
-			widget.grid_forget()
-		
+		self.ForgetGrid()
 		self.PaintGrid(field)
 
-	def ForgetGrid(self, field):
+	def ForgetGrid(self):
 		lstSlave = self.grid_slaves()
 		for widget in lstSlave:
 			widget.grid_forget()
@@ -102,21 +100,22 @@ class Visual(Frame):
 			for j in range(field.nSize):
 				nItem = field.GetPosition((i,j))
 				if (nItem == ConstantsU.c_Clear):
-					frSquare = Frame(self, width=25, height=25, bg="white")
+					frSquare = Frame(self, width=25, height=25, bg="white", highlightbackground="black", highlightthickness=1)
 				elif (nItem == ConstantsU.c_Cartorio):
-					frSquare = Frame(self, width=25, height=25, bg="yellow")
+					frSquare = Frame(self, width=25, height=25, bg="yellow", highlightbackground="black", highlightthickness=1)
 				elif (nItem== ConstantsU.c_Wall):
-					frSquare = Frame(self, width=25, height=25, bg="blue")
+					frSquare = Frame(self, width=25, height=25, bg="blue", highlightbackground="black", highlightthickness=1)
 				elif (nItem == ConstantsU.c_Agent):
-					frSquare = Frame(self, width=25, height=25, bg="red")
+					frSquare = Frame(self, width=25, height=25, bg="red", highlightbackground="black", highlightthickness=1)
 				elif (nItem == ConstantsU.c_Couple):
-					frSquare = Frame(self, width=25, height=25, bg="purple")			
+					frSquare = Frame(self, width=25, height=25, bg="purple", highlightbackground="black", highlightthickness=1)
 				frSquare.grid(row=i, column=j)
+		self.update()
 
 	def createWidgets(self):
 		self.strText = StringVar()
 		self.strText.set(ConstantsU.tc_StartScreen)
-		self.lblTitleScreen = Label(self, textvariable = self.strText) 
+		self.lblTitleScreen = Label(self, textvariable = self.strText)
 		self.lblTitleScreen['bg'] = "white"
 		self.lblTitleScreen.grid(row=0,column=0,columnspan=2)
 

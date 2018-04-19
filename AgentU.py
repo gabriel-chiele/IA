@@ -11,7 +11,7 @@ from random import choice
 
 class Agent:
 	def __init__(self, ID, pref, gender):
-		self.nID			= ID	
+		self.nID			= ID
 		self.lstPreferences	= pref
 		self.bMarried		= False
 		self.nCoupleID		= 0
@@ -61,7 +61,7 @@ class Agent:
 			return None
 
 	def LookAround(self, field):
-		self.lstProximity = []		
+		self.lstProximity = []
 		for i in range(-ConstantsU.c_VISION_RANGE, ConstantsU.c_VISION_RANGE + 1):
 			if ((self.tpPos[0] + i) < 0) or ((self.tpPos[0] + i) > field.nSize) or ((self.tpPos[0] + i) == field.nSize):
 				pass
@@ -106,10 +106,10 @@ class Agent:
 					self.Action = ConstantsU.c_STEP
 			else:
 				self.Action = ConstantsU.c_STEP
-					
+
 		if GlobalsU.Verbose():
-			print(ConstantsU.AcToStr(self.Action))		
-	
+			print(ConstantsU.AcToStr(self.Action))
+
 	def ExecuteAction(self, field):
 		if (self.Action == ConstantsU.c_STEP):
 			self.Step(field)
@@ -201,4 +201,3 @@ class Agent:
 			return str(self.nID) + self.cGender
 		else:
 			return str(self.nID) + ' - ' + self.cGender + ' - '  + str(self.lstPreferences)
-
