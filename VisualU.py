@@ -13,7 +13,7 @@ from tkinter import *
 
 class Visual(Frame):
 	def run(self):
-		try :
+		#try :
 			options = None
 			conf = None
 
@@ -60,8 +60,8 @@ class Visual(Frame):
 				UtilsU.EndCredits(self.dtExecTime)
 				GlobalsU.setEndSimulation(False)
 				self.EndMessage()
-		except Exception as e:
-			self.ErrorMessage(str(e))
+		#except Exception as e:
+		#	self.ErrorMessage(str(e))
 
 	def ErrorMessage(self, strError):
 		self.ForgetGrid()

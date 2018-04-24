@@ -67,7 +67,7 @@ class Agent:
 		agBest = None
 		if not (self.lstProximity == []):
 			for ag in self.lstProximity:
-				if (agBest == -None) or (agBest.nID < ag.nID):
+				if (agBest == None) or (agBest.nID < ag.nID):
 					agBest = ag
 		return ag
 
@@ -92,7 +92,7 @@ class Agent:
 									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
 	def ChooseAction(self):
-		if (self.Action == ConstantsU.c_OTHER):
+		if (self.Action == ConstantsU.c_OTHER) or (self.Action == ConstantsU.c_STEP):
 			if not (self.MadePropose == None):
 				bAccepted = self.MadePropose.CheckProposeResponse()
 				if (bAccepted):
@@ -102,7 +102,6 @@ class Agent:
 				else:
 					self.bAcceptedPropose = False
 					self.MadePropose = None
-
 			if not (self.lstPendingProposes == []):
 				prop = self.ChooseBestProposal()
 				if (self.bMarried) and (self.nCoupleID < prop.nAgentMadeProposeID):
@@ -115,16 +114,23 @@ class Agent:
 					self.bAcceptedPropose = True
 					self.Action = ConstantsU.c_MARRY
 					return None
-
 			if not (self.lstProximity == []):
 				ag = self.FilterPreference()
 				if ((self.bMarried) and (self.nCoupleID < ag.nID)) or not (self.bMarried) :
 					self.agMatch = ag
 					self.Action = ConstantsU.c_PROPOSE
 					return None
-
 			if (self.lstProximity == []):
 				self.Action = ConstantsU.c_STEP
+
+		if (self.Action == ConstantsU.c_PROPOSE):
+			print('completar...')
+
+		if (self.Action == ConstantsU.c_MARRY):
+			print('completar...')
+
+		if (self.Action == ConstantsU.c_DIVORCE):
+			print('completar...')
 
 	def ExecuteAction(self, field):
 		if (self.Action == ConstantsU.c_STEP):
@@ -156,10 +162,12 @@ class Agent:
 		self.agMatch.lstPendingProposes.append(prpPropose)
 
 	def Marry(self):
-		print('Casando')
+		if GlobalsU.Verbose():
+			print('Casando')
 
 	def Divorce(self):
-		print('Divorciando')
+		if GlobalsU.Verbose():
+			print('Divorciando')
 
 	def VerifyStep(self, tpStep, field):
 		if (tpStep[0] > field.nSize -1):

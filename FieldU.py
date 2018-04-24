@@ -100,5 +100,10 @@ class Field:
 			if (ag.tpPos == tpPos):
 				return ag
 
+	def GetCartorio(self, tpPos):
+		for ct in self.lstCartorios:
+			if (ct.tpPos == tpPos):
+				return ct
+
 	def PrintObjectPosition(self, tpPos, obj):
 		print('%s: (%i,%i)' % (UtilsU.ObjToStr(obj), tpPos[0], tpPos[1]))

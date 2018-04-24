@@ -8,8 +8,9 @@ class Cartorio:
 	def __init__(self, nWallsQtd, lstWalls, nFieldSize):
 		self.tpPos = tuple((0,0))
 		self.CalculatePosition(nWallsQtd, lstWalls, nFieldSize)
+		self.lstPresence = []
 
-	def CalculatePosition(self, nWallsQtd, lstWalls, nFieldSize):	
+	def CalculatePosition(self, nWallsQtd, lstWalls, nFieldSize):
 		nWich	   = randrange(nWallsQtd - 1)
 		tpWallPos  = choice(lstWalls[nWich].lstPos)
 
@@ -22,3 +23,6 @@ class Cartorio:
 			self.tpPos = tuple((self.tpPos[0], tpWallPos[1] + 1))
 		elif ((tpWallPos[1] - 1) < 0):
 			self.tpPos = tuple((self.tpPos[0], tpWallPos[1] - 1))
+
+	def CheckIn(self, agent):
+		self.lstPresence.append(agent)
