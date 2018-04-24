@@ -5,6 +5,7 @@
 import ConstantsU
 import GlobalsU
 import ProposalU
+import UtilsU
 
 from math import sqrt
 from random import choice
@@ -28,13 +29,14 @@ class Agent:
 									ConstantsU.c_NOROESTE])
 
 		self.LastAction = ConstantsU.c_OTHER
-		self.Action 		= ConstantsU.c_OTHER
+		self.Action 	= ConstantsU.c_OTHER
 
 		self.lstProximity = []
 		self.agMatch = None
 
-		self.lstMadeProposes = []
+		self.MadePropose = None
 		self.lstPendingProposes = []
+		self.bAcceptedPropose = False
 
 	def CalculateEuclidianDistance(self):
 		closest = (0,0)
@@ -51,14 +53,23 @@ class Agent:
 
 	def ChooseBestProposal(self):
 		nBestMatch = -1
+		propBest = None
 		if not (self.lstPendingProposes == []):
 			for prop in self.lstPendingProposes:
 				if (nBestMatch == -1) or (nBestMatch < prop.nAgentMadeProposeID):
 					nBestMatch = prop.nAgentMadeProposeID
 
-			return nBestMatch
-		else:
-			return None
+			for prop in self.lstPendingProposes:
+				if (prop.nAgentMadeProposeID == nBestMatch):
+					return prop
+
+	def FilterPreference(self):
+		agBest = None
+		if not (self.lstProximity == []):
+			for ag in self.lstProximity:
+				if (agBest == -None) or (agBest.nID < ag.nID):
+					agBest = ag
+		return ag
 
 	def LookAround(self, field):
 		self.lstProximity = []
@@ -81,56 +92,46 @@ class Agent:
 									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
 	def ChooseAction(self):
-		self.LastAction = self.Action
-		self.Action = ConstantsU.c_OTHER
-		self.agMatch = None
-
-		BestProposal = self.ChooseBestProposal()
-
-		if (self.lstProximity == []):
-			self.Action = ConstantsU.c_STEP
-		else:
-			for ag in self.lstProximity:
-				if (self.agMatch == None) and not (ag.cGender == self.cGender):
-					self.agMatch = ag
-				elif (self.agMatch == None) and (ag.cGender == self.cGender):
-					pass
-				elif (self.agMatch.nID < ag.nID) and not (ag.cGender == self.cGender):
-					self.agMatch = ag
-
-			if not (self.agMatch == None) and not (BestProposal == None):
-				if (self.agMatch.nID < BestProposal) and not (self.bMarried):
+		if (self.Action == ConstantsU.c_OTHER):
+			if not (self.MadePropose == None):
+				bAccepted = self.MadePropose.CheckProposeResponse()
+				if (bAccepted):
 					self.Action = ConstantsU.c_MARRY
-				elif (self.agMatch.nID < BestProposal) and (self.bMarried):
-					if (self.nCoupleID < BestProposal):
-						self.Action = ConstantsU.c_DIVORCE
-					else:
-						self.Action = ConstantsU.c_STEP
-			elif (self.agMatch == None) and not (BestProposal == None):
-				if (self.bMarried) and (self.nCoupleID < BestProposal):
-					self.Action = ConstantsU.c_DIVORCE
-				elif not (self.bMarried):		
-					self.Action = ConstantsU.c_MARRY		
+					self.bAcceptedPropose = True
+					return None
 				else:
-					self.Action = ConstantsU.c_STEP
-			elif not (self.agMatch == None) and (BestProposal == None):
-				if (self.bMarried) and (self.nCoupleID < self.agMatch.nID):
-					self.Action = ConstantsU.c_PROPOSE
-				elif not (self.bMarried):
-					self.Action = ConstantsU.c_PROPOSE
-				else:
-					self.Action = ConstantsU.c_STEP
-			else:
-				self.Action = ConstantsU.c_STEP
+					self.bAcceptedPropose = False
+					self.MadePropose = None
 
-		if GlobalsU.Verbose():
-			print(ConstantsU.AcToStr(self.Action))
+			if not (self.lstPendingProposes == []):
+				prop = self.ChooseBestProposal()
+				if (self.bMarried) and (self.nCoupleID < prop.nAgentMadeProposeID):
+					prop.Accept()
+					self.bAcceptedPropose = True
+					self.Action = ConstantsU.c_DIVORCE
+					return None
+				else:
+					prop.Accept()
+					self.bAcceptedPropose = True
+					self.Action = ConstantsU.c_MARRY
+					return None
+
+			if not (self.lstProximity == []):
+				ag = self.FilterPreference()
+				if ((self.bMarried) and (self.nCoupleID < ag.nID)) or not (self.bMarried) :
+					self.agMatch = ag
+					self.Action = ConstantsU.c_PROPOSE
+					return None
+
+			if (self.lstProximity == []):
+				self.Action = ConstantsU.c_STEP
 
 	def ExecuteAction(self, field):
 		if (self.Action == ConstantsU.c_STEP):
 			self.Step(field)
 		elif (self.Action == ConstantsU.c_PROPOSE):
-			self.Propose()
+			self.Step(field)
+			#self.Propose()
 		elif (self.Action == ConstantsU.c_MARRY):
 			#self.Marry()
 			self.Step(field)
@@ -140,7 +141,7 @@ class Agent:
 
 	def Step(self, field):
 		if GlobalsU.Verbose():
-			print(ConstantsU.DirToStr(self.nFacing))
+			print(UtilsU.DirToStr(self.nFacing))
 
 		field.SetPosition(self.tpPos, ConstantsU.c_Clear)
 		tpStep = self.CalculateNextStep(field)

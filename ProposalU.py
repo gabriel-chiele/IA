@@ -7,8 +7,11 @@ class Proposal:
 		self.nAgentProposedID = nPretenderID
 		self.bAccepted = False
 
-	def Accept():
+	def Accept(self):
 		self.bAccepted = True
 
-	def Reject():
+	def Reject(self):
 		self.bAccepted = False
+
+	def CheckProposeResponse(self):
+		return self.bAccepted

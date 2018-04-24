@@ -92,7 +92,7 @@ class Visual(Frame):
 			for j in range(field.nSize):
 				frSquare = Frame(self, width=25, height=25, bg="white")
 				frSquare.grid(row=i, column=j)
-		
+
 		self.PaintGrid(field)
 
 	def ForgetGrid(self):
@@ -115,7 +115,7 @@ class Visual(Frame):
 					frSlave[0].configure(bg="red", highlightbackground="black", highlightthickness=1)
 				elif (nItem == ConstantsU.c_Couple):
 					frSlave[0].configure(bg="purple", highlightbackground="black", highlightthickness=1)
-				
+
 		self.update()
 
 	def createWidgets(self):
