@@ -28,8 +28,7 @@ class Agent:
 									ConstantsU.c_OESTE,
 									ConstantsU.c_NOROESTE])
 
-		self.LastAction = ConstantsU.c_OTHER
-		self.Action 	= ConstantsU.c_OTHER
+		self.Action 	= ConstantsU.c_STEP
 
 		self.lstProximity = []
 		self.agMatch = None
@@ -37,19 +36,6 @@ class Agent:
 		self.MadePropose = None
 		self.lstPendingProposes = []
 		self.bAcceptedPropose = False
-
-	def CalculateEuclidianDistance(self):
-		closest = (0,0)
-		nBestDistance = 0
-		nThisDistance = 0
-		for cartorio in self.lstCartorios:
-			nThisDistance = sqrt(((self.tpPos[0] - cartorio.tpPos[0])**2) + ((self.tpPos[1] - cartorio.tpPos[1])**2))
-
-			if (nThisDistance < nBestDistance) or (nBestDistance == 0):
-				nBestDistance = nThisDistance
-				closest = cartorio.tpPos
-
-		return closest
 
 	def ChooseBestProposal(self):
 		nBestMatch = -1
@@ -92,7 +78,7 @@ class Agent:
 									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
 	def ChooseAction(self):
-		if (self.Action == ConstantsU.c_OTHER) or (self.Action == ConstantsU.c_STEP):
+		if (self.Action == ConstantsU.c_STEP) or (self.Action == ConstantsU.c_PROPOSE):
 			if not (self.MadePropose == None):
 				bAccepted = self.MadePropose.CheckProposeResponse()
 				if (bAccepted):
@@ -123,9 +109,6 @@ class Agent:
 			if (self.lstProximity == []):
 				self.Action = ConstantsU.c_STEP
 
-		if (self.Action == ConstantsU.c_PROPOSE):
-			print('completar...')
-
 		if (self.Action == ConstantsU.c_MARRY):
 			print('completar...')
 
@@ -136,11 +119,9 @@ class Agent:
 		if (self.Action == ConstantsU.c_STEP):
 			self.Step(field)
 		elif (self.Action == ConstantsU.c_PROPOSE):
-			self.Step(field)
-			#self.Propose()
+			self.Propose()
 		elif (self.Action == ConstantsU.c_MARRY):
-			#self.Marry()
-			self.Step(field)
+			self.Marry()
 		elif (self.Action == ConstantsU.c_DIVORCE):
 			#self.Divorce()
 			self.Step(field)
@@ -163,7 +144,8 @@ class Agent:
 
 	def Marry(self):
 		if GlobalsU.Verbose():
-			print('Casando')
+			print('%s Casando com %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
+		nDist = UtilsU.CalculateEuclidianDistance()
 
 	def Divorce(self):
 		if GlobalsU.Verbose():

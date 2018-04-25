@@ -94,6 +94,48 @@ def EndCredits(sTime):
 
 	print(ConstantsU.tc_EndScreen % sTime)
 
+def CalculateHeuristic(a, b):
+    (x1, y1) = a
+    (x2, y2) = b
+    return (abs(x1 - x2) + abs(y1 - y2))
+
+def CalculateEuclidianDistance(self, lstCartorios):
+	closest = (0,0)
+	nBestDistance = 0
+	nThisDistance = 0
+	for cartorio in lstCartorios:
+		nThisDistance = sqrt(((self.tpPos[0] - cartorio.tpPos[0])**2) + ((self.tpPos[1] - cartorio.tpPos[1])**2))
+
+		if (nThisDistance < nBestDistance) or (nBestDistance == 0):
+			nBestDistance = nThisDistance
+			closest = cartorio.tpPos
+
+	return closest
+
+	def AStarSearch(field, start, goal):
+	    frontier = PriorityQueue()
+	    frontier.put(start, 0)
+	    came_from = {}
+	    cost_so_far = {}
+	    came_from[start] = None
+	    cost_so_far[start] = 0
+
+	    while not frontier.empty():
+	        current = frontier.get()
+
+	        if current == goal:
+	            break
+
+	        for next in field.neighbors(current):
+	            new_cost = cost_so_far[current] + 1 # custo é 1 pois consideramos todas as direções iguais
+	            if next not in cost_so_far or new_cost < cost_so_far[next]:
+	                cost_so_far[next] = new_cost
+	                priority = new_cost + CalculateHeuristic(goal, next)
+	                frontier.put(next, priority)
+	                came_from[next] = current
+
+	    return came_from, cost_so_far
+
 def ActionToStr(nAc):
 	if(nAc == ConstantsU.c_STEP):
 		sAc = 'PASSO'

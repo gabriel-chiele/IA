@@ -107,3 +107,17 @@ class Field:
 
 	def PrintObjectPosition(self, tpPos, obj):
 		print('%s: (%i,%i)' % (UtilsU.ObjToStr(obj), tpPos[0], tpPos[1]))
+
+	def InBounds(self, id):
+		(x, y) = id
+		return ((0 <= x < self.nSize) and (0 <= y < self.nSize))
+
+    def IsPassable(self, id):
+		return id not in self.walls
+
+	def GetNeighbors(self, id):
+		(x, y) = id
+		results = [(x+1, y), (x, y-1), (x-1, y), (x, y+1), (x-1, y-1), (x+1, y-1), (x+1, y+1), (x-1, y+1)] 
+		results = filter(self.InBounds, results)
+		results = filter(self.IsPassable, results)
+		return results
