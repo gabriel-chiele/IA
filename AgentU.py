@@ -19,7 +19,10 @@ class Agent:
 		self.cGender		= gender
 		self.tpPos			= (0,0)
 		self.lstCartorios	= []
-		self.nFacing		= choice([ConstantsU.c_NORTE,
+		self.lstPathToCartorio = []
+		self.OnCartorio = None
+		self.bArrived	= False
+		self.nFacing	= choice([ConstantsU.c_NORTE,
 									ConstantsU.c_NORDESTE,
 									ConstantsU.c_LESTE,
 							 		ConstantsU.c_SUDESTE,
@@ -121,7 +124,7 @@ class Agent:
 		elif (self.Action == ConstantsU.c_PROPOSE):
 			self.Propose()
 		elif (self.Action == ConstantsU.c_MARRY):
-			self.Marry()
+			self.Marry(field)
 		elif (self.Action == ConstantsU.c_DIVORCE):
 			#self.Divorce()
 			self.Step(field)
@@ -138,14 +141,40 @@ class Agent:
 	def Propose(self):
 		if GlobalsU.Verbose():
 			print('%s Fazendo proposta de casamento para %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
-		prpPropose = ProposalU.Proposal(self.nID, self.agMatch.nID)
+		prpPropose = Proself.PathToCartorioposalU.Proposal(self.nID, self.agMatch.nID)
 		self.lstMadeProposes.append(prpPropose)
 		self.agMatch.lstPendingProposes.append(prpPropose)
 
-	def Marry(self):
+	def Marry(self, field):
 		if GlobalsU.Verbose():
 			print('%s Casando com %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
-		nDist = UtilsU.CalculateEuclidianDistance()
+
+		if (self.lstPathToCartorio == []) and not (bArrived):
+			tpCartorioPos = UtilsU.CalculateEuclidianDistance(self.lstCartorios)
+			self.lstPathToCartorio = UtilsU.AStartSearch(field,self.tpPos,tpCartorioPos)
+		elif not (len(self.lstPathtoCartorio) == 1):
+			field.SetPosition(self.tpPos, ConstantsU.c_Clear)
+			self.tpPos = (self.lstPathToCartorio[0][0], self.lstPathToCartorio[0][1])
+			field.SetPosition(self.tpPos, ConstantsU.c_Agent)
+			self.lstPathToCartorio.pop(0)
+		elif (len(self.lstPathToCartorio) == 1):
+			self.bArrived = True
+			self.OnCartorio = field.GetCartorio(self.lstPathToCartorio[0])
+			self.OnCartorio.CheckIn(self)
+			self.lstPathToCartorio.pop(0)
+		else:
+			#bArrived = self.OnCartorio.CoupleArrived()
+			# se chegou cria casal
+			# senão espera
+
+	#	TODO: armazenar a proposta aceita nos dois agentes
+	#				neste else verificar se eu fiz a proposta ou se eu aceitei a proposta feita
+	#				dependendo disto eu pego o ID do outro agente e verifica se ele esta presente no cartorio
+	#				se ele estiver cria casal
+	#				senão espera
+			
+			
+				
 
 	def Divorce(self):
 		if GlobalsU.Verbose():

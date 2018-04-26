@@ -112,29 +112,39 @@ def CalculateEuclidianDistance(self, lstCartorios):
 
 	return closest
 
-	def AStarSearch(field, start, goal):
-	    frontier = PriorityQueue()
-	    frontier.put(start, 0)
-	    came_from = {}
-	    cost_so_far = {}
-	    came_from[start] = None
-	    cost_so_far[start] = 0
+def ReconstructPath(From, Start, End):
+    current = End
+    path = []
+    while current != Start:
+        path.append(current)
+        current = From[current]
+    path.append(Start) # optional
+    path.reverse() # optional
+    return path
 
-	    while not frontier.empty():
-	        current = frontier.get()
+def AStarSearch(field, start, goal):
+    frontier = PriorityQueue()
+    frontier.put(start, 0)
+    came_from = {}
+    cost_so_far = {}
+    came_from[start] = None
+    cost_so_far[start] = 0
 
-	        if current == goal:
-	            break
+    while not frontier.empty():
+        current = frontier.get()
 
-	        for next in field.neighbors(current):
-	            new_cost = cost_so_far[current] + 1 # custo é 1 pois consideramos todas as direções iguais
-	            if next not in cost_so_far or new_cost < cost_so_far[next]:
-	                cost_so_far[next] = new_cost
-	                priority = new_cost + CalculateHeuristic(goal, next)
-	                frontier.put(next, priority)
-	                came_from[next] = current
+        if current == goal:
+            break
 
-	    return came_from, cost_so_far
+        for next in field.neighbors(current):
+            new_cost = cost_so_far[current] + 1 # custo é 1 pois consideramos todas as direções iguais
+            if next not in cost_so_far or new_cost < cost_so_far[next]:
+                cost_so_far[next] = new_cost
+                priority = new_cost + CalculateHeuristic(goal, next)
+                frontier.put(next, priority)
+                came_from[next] = current
+
+    return came_from, cost_so_far
 
 def ActionToStr(nAc):
 	if(nAc == ConstantsU.c_STEP):

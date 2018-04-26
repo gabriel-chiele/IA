@@ -26,3 +26,11 @@ class Cartorio:
 
 	def CheckIn(self, agent):
 		self.lstPresence.append(agent)
+
+	def CoupleArrived(self, nID):
+		for ag in self.lstPresence:
+			if (ag.nID == nID):
+				return True
+
+		return False
+		
