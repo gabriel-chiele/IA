@@ -3,15 +3,31 @@
 #
 
 import sys
+import heapq
+
 import AgentU
 import ConfigU
 import ConstantsU
 import GlobalsU
 import FieldU
 
+from math 		import sqrt
 from time 		import sleep
 from optparse 	import OptionParser
 from random		import randrange
+
+class PriorityQueue:
+    def __init__(self):
+        self.elements = []
+
+    def empty(self):
+        return len(self.elements) == 0
+
+    def put(self, item, priority):
+        heapq.heappush(self.elements, (priority, item))
+
+    def get(self):
+        return heapq.heappop(self.elements)[1]
 
 def ParseOption():
 	err = False
@@ -99,14 +115,14 @@ def CalculateHeuristic(a, b):
     (x2, y2) = b
     return (abs(x1 - x2) + abs(y1 - y2))
 
-def CalculateEuclidianDistance(self, lstCartorios):
+def CalculateEuclidianDistance(tpPos, lstCartorios):
 	closest = (0,0)
-	nBestDistance = 0
+	nBestDistance = -1
 	nThisDistance = 0
 	for cartorio in lstCartorios:
-		nThisDistance = sqrt(((self.tpPos[0] - cartorio.tpPos[0])**2) + ((self.tpPos[1] - cartorio.tpPos[1])**2))
+		nThisDistance = sqrt(((tpPos[0] - cartorio.tpPos[0])**2) + ((tpPos[1] - cartorio.tpPos[1])**2))
 
-		if (nThisDistance < nBestDistance):
+		if (nThisDistance < nBestDistance) or (nBestDistance == -1):
 			nBestDistance = nThisDistance
 			closest = cartorio.tpPos
 	return closest
@@ -135,7 +151,7 @@ def AStarSearch(field, start, goal):
         if current == goal:
             break
 
-        for next in field.neighbors(current):
+        for next in field.GetNeighbors(current):
             new_cost = cost_so_far[current] + 1 # custo é 1 pois consideramos todas as direções iguais
             if next not in cost_so_far or new_cost < cost_so_far[next]:
                 cost_so_far[next] = new_cost
@@ -143,7 +159,7 @@ def AStarSearch(field, start, goal):
                 frontier.put(next, priority)
                 came_from[next] = current
 
-    return came_from, cost_so_far
+    return came_from
 
 def ActionToStr(nAc):
 	if(nAc == ConstantsU.c_STEP):

@@ -37,28 +37,26 @@ class Agent:
 		self.agMatch = None
 
 		self.MadePropose = None
+		self.AcceptedPropose = None
 		self.lstPendingProposes = []
-		self.bAcceptedPropose = False
 
 	def ChooseBestProposal(self):
-		nBestMatch = -1
 		propBest = None
 		if not (self.lstPendingProposes == []):
 			for prop in self.lstPendingProposes:
-				if (nBestMatch == -1) or (nBestMatch < prop.nAgentMadeProposeID):
-					nBestMatch = prop.nAgentMadeProposeID
+				if (propBest == None) or (propBest.nAgentMadeProposeID < prop.nAgentMadeProposeID):
+					propBest = prop
 
-			for prop in self.lstPendingProposes:
-				if (prop.nAgentMadeProposeID == nBestMatch):
-					return prop
+		return propBest
 
 	def FilterPreference(self):
 		agBest = None
 		if not (self.lstProximity == []):
 			for ag in self.lstProximity:
-				if (agBest == None) or (agBest.nID < ag.nID):
-					agBest = ag
-		return ag
+				if not (ag.cGender == self.cGender):
+					if ((agBest == None) or (agBest.nID < ag.nID)):
+						agBest = ag
+		return agBest
 
 	def LookAround(self, field):
 		self.lstProximity = []
@@ -86,29 +84,28 @@ class Agent:
 				bAccepted = self.MadePropose.CheckProposeResponse()
 				if (bAccepted):
 					self.Action = ConstantsU.c_MARRY
-					self.bAcceptedPropose = True
 					return None
 				else:
-					self.bAcceptedPropose = False
 					self.MadePropose = None
 			if not (self.lstPendingProposes == []):
 				prop = self.ChooseBestProposal()
 				if (self.bMarried) and (self.nCoupleID < prop.nAgentMadeProposeID):
 					prop.Accept()
-					self.bAcceptedPropose = True
+					self.AcceptedPropose = prop
 					self.Action = ConstantsU.c_DIVORCE
 					return None
 				else:
 					prop.Accept()
-					self.bAcceptedPropose = True
+					self.AcceptedPropose = prop
 					self.Action = ConstantsU.c_MARRY
 					return None
 			if not (self.lstProximity == []):
 				ag = self.FilterPreference()
-				if ((self.bMarried) and (self.nCoupleID < ag.nID)) or not (self.bMarried) :
-					self.agMatch = ag
-					self.Action = ConstantsU.c_PROPOSE
-					return None
+				if not (ag == None):
+					if ((self.bMarried) and (self.nCoupleID < ag.nID)) or not (self.bMarried) :
+						self.agMatch = ag
+						self.Action = ConstantsU.c_PROPOSE
+						return None
 			if (self.lstProximity == []):
 				self.Action = ConstantsU.c_STEP
 
@@ -141,19 +138,29 @@ class Agent:
 	def Propose(self):
 		if GlobalsU.Verbose():
 			print('%s Fazendo proposta de casamento para %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
-		prpPropose = ProoposalU.Proposal(self.nID, self.agMatch.nID)
+		prpPropose = ProposalU.Proposal(self.nID, self.agMatch.nID)
 		self.MadePropose = prpPropose
 		self.agMatch.lstPendingProposes.append(prpPropose)
 
 	def Marry(self, field):
+		if (self.MadePropose == None):
+			self.agMatch = field.GetCouple(self.AcceptedPropose.nAgentMadeProposeID)
+		elif(self.AcceptedPropose == None):
+			self.agMatch = field.GetCouple(self.MadePropose.nAgentProposedID)
+
 		if GlobalsU.Verbose():
 			print('%s Casando com %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
 
-		if (self.lstPathToCartorio == []) and not (bArrived):
-			tpCartorioPos = UtilsU.CalculateEuclidianDistance(self.lstCartorios)
-			self.lstPathToCartorio = UtilsU.AStartSearch(field,self.tpPos,tpCartorioPos)
-		elif not (len(self.lstPathtoCartorio) == 1):
+		if (self.lstPathToCartorio == []) and not (self.bArrived):
+			tpCartorioPos = UtilsU.CalculateEuclidianDistance(self.tpPos, self.lstCartorios)
+			From = UtilsU.AStarSearch(field, self.tpPos, tpCartorioPos)
+			print(tpCartorioPos)
+			print(self.tpPos)
+			print(From)
+			self.lstPathToCartorio = UtilsU.ReconstructPath(From, self.tpPos, tpCartorioPos)
+		elif not (len(self.lstPathToCartorio) < 1) or not (len(self.lstPathToCartorio) == 1):
 			field.SetPosition(self.tpPos, ConstantsU.c_Clear)
+			print(self.lstPathToCartorio)
 			self.tpPos = (self.lstPathToCartorio[0][0], self.lstPathToCartorio[0][1])
 			field.SetPosition(self.tpPos, ConstantsU.c_Agent)
 			self.lstPathToCartorio.pop(0)
