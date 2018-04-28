@@ -63,9 +63,6 @@ class Field:
 						self.PrintObjectPosition(tpPos, ConstantsU.c_Agent)
 					bOK = True
 
-	def VerifyCartoriosPositions(self):
-		print('')
-
 	def PrintMap(self):
 		if (GlobalsU.Verbose()):
 			str = (self.nSize * '*' * 4) + '**'
@@ -100,6 +97,11 @@ class Field:
 			if (ag.tpPos == tpPos):
 				return ag
 
+	def GetCouple(self, nCoupleID):
+		for ag in self.lstAgents:
+			if (ag.nID == nCoupleID):
+				return ag
+
 	def GetCartorio(self, tpPos):
 		for ct in self.lstCartorios:
 			if (ct.tpPos == tpPos):
@@ -113,11 +115,14 @@ class Field:
 		return ((0 <= x < self.nSize) and (0 <= y < self.nSize))
 
     def IsPassable(self, id):
-		return id not in self.walls
+		bOK = True
+		for wall in self.walls:
+			bOK = bOK and (id not in self.walls)
+		return bOK
 
 	def GetNeighbors(self, id):
 		(x, y) = id
-		results = [(x+1, y), (x, y-1), (x-1, y), (x, y+1), (x-1, y-1), (x+1, y-1), (x+1, y+1), (x-1, y+1)] 
+		results = [(x+1, y), (x, y-1), (x-1, y), (x, y+1), (x-1, y-1), (x+1, y-1), (x+1, y+1), (x-1, y+1)]
 		results = filter(self.InBounds, results)
 		results = filter(self.IsPassable, results)
 		return results

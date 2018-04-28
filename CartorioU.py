@@ -27,10 +27,33 @@ class Cartorio:
 	def CheckIn(self, agent):
 		self.lstPresence.append(agent)
 
+	def CheckOut(self, agent):
+		self.lstPresence.remove(agent)
+
 	def CoupleArrived(self, nID):
 		for ag in self.lstPresence:
-			if (ag.nID == nID):
+			if (ag.nID == nID) and not (ag.bMarried):
 				return True
-
 		return False
-		
+
+	def CreateCouple(self, field, ag):
+		CoupleAg = field.GetCouple(ag.nCoupleID)
+		ag.bMarried = True
+		ag.nCoupleID = CoupleAg.nID
+
+		CoupleAg.bMarried = True
+		CoupleAg.nCoupleID = ag.nCoupleID
+		CoupleAg.tpPos = (-1,-1) #retira do mapa
+		CoupleAg.OnCartorio = None
+		CoupleAg.OnCartorio.CheckOut(self)
+
+	def DivorceCouple(self, field, ag):
+		CoupleAg = field.GetCouple(ag.nCoupleID)
+		ag.bMarried = False
+		ag.nCoupleID = 0
+
+		CoupleAg.bMarried = False
+		CoupleAg.nCoupleID = 0
+		CoupleAg.tpPos = (0,0) #TODO: pegar posição valida próxima a posição do cartorio
+		CoupleAg.OnCartorio = ag.OnCartorio
+		CoupleAg.OnCartorio.CheckIn(self)

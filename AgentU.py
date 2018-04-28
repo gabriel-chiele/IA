@@ -141,8 +141,8 @@ class Agent:
 	def Propose(self):
 		if GlobalsU.Verbose():
 			print('%s Fazendo proposta de casamento para %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
-		prpPropose = Proself.PathToCartorioposalU.Proposal(self.nID, self.agMatch.nID)
-		self.lstMadeProposes.append(prpPropose)
+		prpPropose = ProoposalU.Proposal(self.nID, self.agMatch.nID)
+		self.MadePropose = prpPropose
 		self.agMatch.lstPendingProposes.append(prpPropose)
 
 	def Marry(self, field):
@@ -163,18 +163,10 @@ class Agent:
 			self.OnCartorio.CheckIn(self)
 			self.lstPathToCartorio.pop(0)
 		else:
-			#bArrived = self.OnCartorio.CoupleArrived()
-			# se chegou cria casal
-			# senão espera
-
-	#	TODO: armazenar a proposta aceita nos dois agentes
-	#				neste else verificar se eu fiz a proposta ou se eu aceitei a proposta feita
-	#				dependendo disto eu pego o ID do outro agente e verifica se ele esta presente no cartorio
-	#				se ele estiver cria casal
-	#				senão espera
-			
-			
-				
+			if not (self.MadePropose == None):
+				bCoupleArrived = self.OnCartorio.CoupleArrived(self.MadePropose.nAgentProposedID)
+				if (bCoupleArrived) and (self.cGender == ConstantsU.c_MALE):
+					self.OnCartorio.CreateCouple(field, self)
 
 	def Divorce(self):
 		if GlobalsU.Verbose():

@@ -106,10 +106,9 @@ def CalculateEuclidianDistance(self, lstCartorios):
 	for cartorio in lstCartorios:
 		nThisDistance = sqrt(((self.tpPos[0] - cartorio.tpPos[0])**2) + ((self.tpPos[1] - cartorio.tpPos[1])**2))
 
-		if (nThisDistance < nBestDistance) or (nBestDistance == 0):
+		if (nThisDistance < nBestDistance):
 			nBestDistance = nThisDistance
 			closest = cartorio.tpPos
-
 	return closest
 
 def ReconstructPath(From, Start, End):
