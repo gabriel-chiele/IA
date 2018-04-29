@@ -133,8 +133,9 @@ def ReconstructPath(From, Start, End):
     while current != Start:
         path.append(current)
         current = From[current]
-    path.append(Start) # optional
-    path.reverse() # optional
+    path.append(Start)
+    path.pop(0)
+    path.reverse()
     return path
 
 def AStarSearch(field, start, goal):
@@ -152,7 +153,7 @@ def AStarSearch(field, start, goal):
             break
 
         for next in field.GetNeighbors(current):
-            new_cost = cost_so_far[current] + 1 # custo é 1 pois consideramos todas as direções iguais
+            new_cost = cost_so_far[current] + 1
             if next not in cost_so_far or new_cost < cost_so_far[next]:
                 cost_so_far[next] = new_cost
                 priority = new_cost + CalculateHeuristic(goal, next)
