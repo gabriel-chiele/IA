@@ -35,8 +35,9 @@ class Visual(Frame):
 
 				nTurnCount = 0
 
-				print('Simulando...')
+				print('Criando ambiente gráfico...')
 				self.CreateGrid(Field)
+				print('Simulando...')
 				dtStartTime = time()
 				while not (GlobalsU.EndSimulation()):
 					nTurnCount = nTurnCount + 1

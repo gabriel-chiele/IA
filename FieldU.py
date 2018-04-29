@@ -8,6 +8,7 @@ import CartorioU
 import WallU
 import GlobalsU
 import UtilsU
+import ConversionU
 
 from random import randrange
 from copy import copy
@@ -72,15 +73,19 @@ class Field:
 				for j in range(self.nSize):
 					item = self.GetPosition((i, j))
 					if ( item == ConstantsU.c_Clear):
-						str = str + ' %s ' % (UtilsU.ObjToStr(ConstantsU.c_Clear, True))
+						str = str + ' %s ' % (ConversionU.ObjToStr(ConstantsU.c_Clear, True))
 					elif (item == ConstantsU.c_Cartorio):
-						str = str + ' %s ' % (UtilsU.ObjToStr(ConstantsU.c_Cartorio, True))
+						str = str + ' %s ' % (ConversionU.ObjToStr(ConstantsU.c_Cartorio, True))
 					elif (item == ConstantsU.c_Wall):
-						str = str + ' %s ' % (UtilsU.ObjToStr(ConstantsU.c_Wall, True))
+						str = str + ' %s ' % (ConversionU.ObjToStr(ConstantsU.c_Wall, True))
 					elif (item == ConstantsU.c_Agent):
-						str = str + ' %s ' % (self.GetAgent((i,j)).ToString(short=True))
+						ag = self.GetAgent((i,j))
+						if not (ag == None):
+							str = str + ' %s ' % (ag.ToString(short=True))
+						else:
+							str = str + ' %s ' % (ConversionU.ObjToStr(ConstantsU.c_Clear, True))
 					elif (item == ConstantsU.c_Couple):
-						str = str + ' %s ' % (UtilsU.ObjToStr(ConstantsU.c_Couple, True))
+						str = str + ' %s ' % (ConversionU.ObjToStr(ConstantsU.c_Couple, True))
 				str = str + '*'
 				print(str)
 			str = (self.nSize * '*' * 4) + '**'
@@ -97,9 +102,9 @@ class Field:
 			if (ag.tpPos == tpPos):
 				return ag
 
-	def GetCouple(self, nCoupleID):
+	def GetCouple(self, nCoupleID, cGender):
 		for ag in self.lstAgents:
-			if (ag.nID == nCoupleID):
+			if (ag.nID == nCoupleID) and (cGender == ag.cGender):
 				return ag
 
 	def GetCartorio(self, tpPos):
@@ -108,7 +113,7 @@ class Field:
 				return ct
 
 	def PrintObjectPosition(self, tpPos, obj):
-		print('%s: (%i,%i)' % (UtilsU.ObjToStr(obj), tpPos[0], tpPos[1]))
+		print('%s: (%i,%i)' % (ConversionU.ObjToStr(obj), tpPos[0], tpPos[1]))
 
 	def InBounds(self, id):
 		(x, y) = id
@@ -121,7 +126,7 @@ class Field:
 
 		for cartorio in self.lstCartorios:
 			bOK = bOK and (id not in cartorio.tpPos)
-			
+
 		return bOK
 
 	def GetNeighbors(self, id):

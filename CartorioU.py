@@ -2,6 +2,9 @@
 #	Definicao da classe cartorio
 #
 
+import GlobalsU
+import ConversionU
+
 from random import choice, randrange
 
 class Cartorio:
@@ -25,29 +28,48 @@ class Cartorio:
 			self.tpPos = tuple((self.tpPos[0], tpWallPos[1] - 1))
 
 	def CheckIn(self, agent):
-		self.lstPresence.append(agent)
+		if (agent not in self.lstPresence):
+			self.lstPresence.append(agent)
+			agent.bChecked = True
+			if (GlobalsU.Verbose()):
+				print('%s fez CheckIn no cartorio %s' % (agent.ToString(short=True), self.tpPos))
 
 	def CheckOut(self, agent):
-		self.lstPresence.remove(agent)
+		if (agent in self.lstPresence):
+			self.lstPresence.remove(agent)
+			agent.bChecked = False
+			if (GlobalsU.Verbose()):
+				print('%s fez CheckOut no cartorio %s' % (agent.ToString(short=True), self.tpPos))
 
-	def CoupleArrived(self, nID):
+	def CoupleArrived(self, nID, cMyGender):
 		for ag in self.lstPresence:
-			if (ag.nID == nID) and not (ag.bMarried):
+			if (ag.nID == nID) and not (cGender == ag.cGender):
 				return True
 		return False
 
-	def CreateCouple(self, field, ag):
-		CoupleAg = field.GetCouple(ag.nCoupleID)
-		ag.bMarried = True
-		ag.nCoupleID = CoupleAg.nID
+	def GetAgent(self, nID, cGender):
+		for ag in self.lstPresence:
+			if (ag.nID == nID) and (cGender == ag.cGender):
+				return ag
+		return None
 
-		CoupleAg.bMarried = True
-		CoupleAg.nCoupleID = ag.nCoupleID
-		CoupleAg.tpPos = (-1,-1) #retira do mapa
-		CoupleAg.OnCartorio = None
-		CoupleAg.OnCartorio.CheckOut(self)
+	def CreateCouple(self, nMyID, nCoupleID, cMyGender):
+		ag1 = self.GetAgent(nMyID, cMyGender)
+		ag2 = self.GetAgent(nCoupleID, ConversionU.OpositeGender(cMyGender))
 
-	def DivorceCouple(self, field, ag):
+		ag1.bMarried = True
+		ag1.nCoupleID = ag2.nID
+
+		ag2.bMarried = True
+		ag2.nCoupleID = ag1.nCoupleID
+		ag2.tpPos = (-1,-1) #retira do mapa
+		self.CheckOut(ag2)
+		ag2.OnCartorio = None
+
+		self.CheckOut(ag1)
+		ag1.OnCartorio = None
+
+	def DivorceCouple(self, ag):
 		CoupleAg = field.GetCouple(ag.nCoupleID)
 		ag.bMarried = False
 		ag.nCoupleID = 0

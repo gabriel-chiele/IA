@@ -1,5 +1,6 @@
 #
-#	Definicao da classe propsta
+#	Definicao da classe proposta
+#
 
 class Proposal:
 	def __init__(self, nMyID, nPretenderID):

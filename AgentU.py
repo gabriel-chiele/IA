@@ -6,6 +6,7 @@ import ConstantsU
 import GlobalsU
 import ProposalU
 import UtilsU
+import ConversionU
 
 from math import sqrt
 from random import choice
@@ -20,8 +21,10 @@ class Agent:
 		self.tpPos			= (0,0)
 		self.lstCartorios	= []
 		self.lstPathToCartorio = []
+		self.tpCartorioPos = (-1,-1)
 		self.OnCartorio = None
 		self.bArrived	= False
+		self.bChecked	= False
 		self.nFacing	= choice([ConstantsU.c_NORTE,
 									ConstantsU.c_NORDESTE,
 									ConstantsU.c_LESTE,
@@ -110,10 +113,16 @@ class Agent:
 				self.Action = ConstantsU.c_STEP
 
 		if (self.Action == ConstantsU.c_MARRY):
-			print('completar...')
+			if (self.bMarried) and not (self.tpPos == (-1,-1)):
+				self.Action = ConstantsU.c_STEP
+			elif(self.bMarried) and (self.tpPos == (-1,-1)):
+				self.Action = ConstantsU.c_OTHER
 
 		if (self.Action == ConstantsU.c_DIVORCE):
-			print('completar...')
+			print('completar')
+
+		if (self.Action == ConstantsU.c_OTHER):
+			print('Fora do mapa')
 
 	def ExecuteAction(self, field):
 		if (self.Action == ConstantsU.c_STEP):
@@ -128,12 +137,15 @@ class Agent:
 
 	def Step(self, field):
 		if GlobalsU.Verbose():
-			print(UtilsU.DirToStr(self.nFacing))
+			print(ConversionU.DirToStr(self.nFacing))
 
 		field.SetPosition(self.tpPos, ConstantsU.c_Clear)
 		tpStep = self.CalculateNextStep(field)
 		self.tpPos = (tpStep[0], tpStep[1])
-		field.SetPosition(self.tpPos, ConstantsU.c_Agent)
+		if not (self.bMarried):
+			field.SetPosition(self.tpPos, ConstantsU.c_Agent)
+		else:
+			field.SetPosition(self.tpPos, ConstantsU.c_Couple)
 
 	def Propose(self):
 		if GlobalsU.Verbose():
@@ -144,36 +156,39 @@ class Agent:
 
 	def Marry(self, field):
 		if (self.MadePropose == None):
-			self.agMatch = field.GetCouple(self.AcceptedPropose.nAgentMadeProposeID)
+			self.agMatch = field.GetCouple(self.AcceptedPropose.nAgentMadeProposeID, ConversionU.OpositeGender(self.cGender))
 		elif(self.AcceptedPropose == None):
-			self.agMatch = field.GetCouple(self.MadePropose.nAgentProposedID)
+			self.agMatch = field.GetCouple(self.MadePropose.nAgentProposedID, ConversionU.OpositeGender(self.cGender))
 
 		if GlobalsU.Verbose():
 			print('%s Casando com %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
 
 		if (self.lstPathToCartorio == []) and not (self.bArrived):
-			tpCartorioPos = UtilsU.CalculateEuclidianDistance(self.tpPos, self.lstCartorios)
-			From = UtilsU.AStarSearch(field, self.tpPos, tpCartorioPos)
-			print(tpCartorioPos)
-			print(self.tpPos)
-			print(From)
-			self.lstPathToCartorio = UtilsU.ReconstructPath(From, self.tpPos, tpCartorioPos)
-		elif not (len(self.lstPathToCartorio) < 1) or not (len(self.lstPathToCartorio) == 1):
+			self.tpCartorioPos = UtilsU.CalculateEuclidianDistance(self.tpPos, self.lstCartorios)
+			From = UtilsU.AStarSearch(field, self.tpPos, self.tpCartorioPos)
+			self.lstPathToCartorio = UtilsU.ReconstructPath(From, self.tpPos, self.tpCartorioPos)
+			if GlobalsU.Verbose():
+				print('Caminho para o cartorio: %s' %(self.lstPathToCartorio))
+		elif not (len(self.lstPathToCartorio) < 1):
 			field.SetPosition(self.tpPos, ConstantsU.c_Clear)
-			print(self.lstPathToCartorio)
 			self.tpPos = (self.lstPathToCartorio[0][0], self.lstPathToCartorio[0][1])
 			field.SetPosition(self.tpPos, ConstantsU.c_Agent)
 			self.lstPathToCartorio.pop(0)
-		elif (len(self.lstPathToCartorio) == 1):
-			self.bArrived = True
-			self.OnCartorio = field.GetCartorio(self.lstPathToCartorio[0])
+			if (self.lstPathToCartorio == []):
+				self.bArrived = True
+				print(self.tpCartorioPos)
+				self.OnCartorio = field.GetCartorio(self.tpCartorioPos)
+			if GlobalsU.Verbose():
+				print('Caminho para o cartorio : %s' %(self.lstPathToCartorio))
+		elif (self.lstPathToCartorio == []) and (self.bArrived) and not (self.bChecked):
 			self.OnCartorio.CheckIn(self)
-			self.lstPathToCartorio.pop(0)
 		else:
 			if not (self.MadePropose == None):
-				bCoupleArrived = self.OnCartorio.CoupleArrived(self.MadePropose.nAgentProposedID)
-				if (bCoupleArrived) and (self.cGender == ConstantsU.c_MALE):
-					self.OnCartorio.CreateCouple(field, self)
+				bCoupleArrived = self.OnCartorio.CoupleArrived(self.MadePropose.nAgentProposedID, self.cGender)
+				if (bCoupleArrived):
+					self.OnCartorio.CreateCouple(self.nID, self.MadePropose.nAgentProposedID, self.cGender)
+					self.MadePropose = None
+					self.bArrived = False
 
 	def Divorce(self):
 		if GlobalsU.Verbose():
