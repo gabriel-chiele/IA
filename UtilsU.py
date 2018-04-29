@@ -86,7 +86,7 @@ def EraseConf(conf):
 	if GlobalsU.Verbose():
 		print('Limpando variaveis auxiliares...')
 
-def EndCredits(sTime):
+def EndCredits(sTime, nQtdMarriages, nQtdDivorces):
 	if GlobalsU.Verbose():
 		print('Encerrando simulacao em\n3 ...')
 		sleep(1)
@@ -95,7 +95,7 @@ def EndCredits(sTime):
 		print('1 ...')
 		sleep(1)
 
-	print(ConstantsU.tc_EndScreen % sTime)
+	print(ConstantsU.tc_EndScreen % (sTime, nQtdMarriages, nQtdDivorces))
 
 def CalculateHeuristic(a, b):
     (x1, y1) = a
@@ -148,3 +148,17 @@ def AStarSearch(field, start, goal):
                 came_from[next] = current
 
     return came_from
+
+def CalculateTotalMarriages(lstCartorios):
+	sum = 0
+	for cartorio in lstCartorios:
+		sum = sum + cartorio.nNumberOfMarriages
+
+	return sum
+
+def CalculateTotalDivorces(lstCartorios):
+	sum = 0
+	for cartorio in lstCartorios:
+		sum = sum + cartorio.nNumberOfDivorces
+
+	return sum

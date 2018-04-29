@@ -61,4 +61,6 @@ tc_Name2 			= '\nMaiki Buffet'
 tc_StartScreen 		= tc_Title + tc_Authors + tc_Name1 + tc_Name2
 tc_EndOfSimulation 	= '\nSimulacao encerrada!'
 tc_ExecutionTime	= '\n\nTempo total de execucao : %i segundos'
-tc_EndScreen 		= tc_EndOfSimulation + tc_ExecutionTime
+tc_QtdMarriages     = '\nQuantidade total de casamentos: %i'
+tc_QtdDivorces      = '\nQuantidade total de divorcios: %i'
+tc_EndScreen 		= tc_EndOfSimulation + tc_ExecutionTime + tc_QtdMarriages + tc_QtdDivorces

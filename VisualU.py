@@ -57,8 +57,10 @@ class Visual(Frame):
 
 				dtEndTime = time()
 				self.dtExecTime = dtEndTime - dtStartTime
+				self.nQtdMarriages = UtilsU.CalculateTotalMarriages(Field.lstCartorios)
+				self.nQtdDivorces = UtilsU.CalculateTotalDivorces(Field.lstCartorios)
 				self.ForgetGrid()
-				UtilsU.EndCredits(self.dtExecTime)
+				UtilsU.EndCredits(self.dtExecTime, self.nQtdMarriages, self.nQtdDivorces)
 				GlobalsU.setEndSimulation(False)
 				self.EndMessage()
 		#except Exception as e:
@@ -72,7 +74,7 @@ class Visual(Frame):
 		self.btStart.grid(row=1, column=1, sticky=W+E)
 
 	def EndMessage(self):
-		self.strText.set(ConstantsU.tc_EndScreen % self.dtExecTime)
+		self.strText.set(ConstantsU.tc_EndScreen % (self.dtExecTime, self.nQtdMarriages, self.nQtdDivorces))
 		self.lblTitleScreen.grid(row=0,column=0,columnspan=2)
 		self.btQuit.grid(row=1, column=0, sticky=W+E)
 		self.btStart.grid(row=1, column=1, sticky=W+E)

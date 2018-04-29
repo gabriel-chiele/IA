@@ -12,6 +12,8 @@ class Cartorio:
 		self.tpPos = tuple((0,0))
 		self.CalculatePosition(nWallsQtd, lstWalls, nFieldSize)
 		self.lstPresence = []
+		self.nNumberOfMarriages = 0
+		self.nNumberOfDivorces = 0
 
 	def CalculatePosition(self, nWallsQtd, lstWalls, nFieldSize):
 		nWich	   = randrange(nWallsQtd - 1)
@@ -43,7 +45,7 @@ class Cartorio:
 
 	def CoupleArrived(self, nID, cMyGender):
 		for ag in self.lstPresence:
-			if (ag.nID == nID) and not (cGender == ag.cGender):
+			if (ag.nID == nID) and not (cMyGender == ag.cGender):
 				return True
 		return False
 
@@ -69,6 +71,8 @@ class Cartorio:
 		self.CheckOut(ag1)
 		ag1.OnCartorio = None
 
+		self.nNumberOfMarriages = self.nNumberOfMarriages + 1
+
 	def DivorceCouple(self, ag):
 		CoupleAg = field.GetCouple(ag.nCoupleID)
 		ag.bMarried = False
@@ -79,3 +83,5 @@ class Cartorio:
 		CoupleAg.tpPos = (0,0) #TODO: pegar posição valida próxima a posição do cartorio
 		CoupleAg.OnCartorio = ag.OnCartorio
 		CoupleAg.OnCartorio.CheckIn(self)
+
+		self.nNumberOfDivorces = self.nNumberOfDivorces + 1
