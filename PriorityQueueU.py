@@ -1,18 +1,18 @@
 #
-#	Definicao da classe proposta
+#	Definicao da classe pilha de prioridade
 #
 
 import heapq
 
 class PriorityQueue:
     def __init__(self):
-        self.elements = []
+        self.lstElements = []
 
     def empty(self):
-        return len(self.elements) == 0
+        return (len(self.lstElements) == 0)
 
     def put(self, item, priority):
-        heapq.heappush(self.elements, (priority, item))
+        heapq.heappush(self.lstElements, (priority, item))
 
     def get(self):
-        return heapq.heappop(self.elements)[1]
+        return heapq.heappop(self.lstElements)[1]

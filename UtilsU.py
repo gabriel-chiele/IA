@@ -97,9 +97,9 @@ def EndCredits(sTime, nQtdMarriages, nQtdDivorces):
 
 	print(ConstantsU.tc_EndScreen % (sTime, nQtdMarriages, nQtdDivorces))
 
-def CalculateHeuristic(a, b):
-    (x1, y1) = a
-    (x2, y2) = b
+def CalculateHeuristic(tp1, tp2):
+    (x1, y1) = tp1
+    (x2, y2) = tp2
     return (abs(x1 - x2) + abs(y1 - y2))
 
 def CalculateEuclidianDistance(tpPos, lstCartorios):
@@ -115,39 +115,39 @@ def CalculateEuclidianDistance(tpPos, lstCartorios):
 	return closest
 
 def ReconstructPath(From, Start, End):
-    current = End
-    path = []
-    while current != Start:
-        path.append(current)
-        current = From[current]
-    path.append(Start)
-    path.pop(0)
-    path.reverse()
-    return path
+    tpCurrent = End
+    lstPath = []
+    while tpCurrent != Start:
+        lstPath.append(tpCurrent)
+        tpCurrent = From[tpCurrent]
+    lstPath.append(Start)
+    lstPath.pop(0)
+    lstPath.reverse()
+    return lstPath
 
-def AStarSearch(field, start, goal):
-    frontier = PriorityQueueU.PriorityQueue()
-    frontier.put(start, 0)
-    came_from = {}
-    cost_so_far = {}
-    came_from[start] = None
-    cost_so_far[start] = 0
+def AStarSearch(Field, Start, End):
+    pqFrontier = PriorityQueueU.PriorityQueue()
+    pqFrontier.put(Start, 0)
+    dctCameFrom = {}
+    dctCost = {}
+    dctCameFrom[Start] = None
+    dctCost[Start] = 0
 
-    while not frontier.empty():
-        current = frontier.get()
+    while not pqFrontier.empty():
+        tpCurrent = pqFrontier.get()
 
-        if current == goal:
+        if tpCurrent == End:
             break
 
-        for next in field.GetNeighbors(current):
-            new_cost = cost_so_far[current] + 1
-            if next not in cost_so_far or new_cost < cost_so_far[next]:
-                cost_so_far[next] = new_cost
-                priority = new_cost + CalculateHeuristic(goal, next)
-                frontier.put(next, priority)
-                came_from[next] = current
+        for tpNext in Field.GetNeighbors(tpCurrent):
+            nNewCost = dctCost[tpCurrent] + 1
+            if tpNext not in dctCost or nNewCost < dctCost[tpNext]:
+                dctCost[tpNext] = nNewCost
+                nPriority = nNewCost + CalculateHeuristic(End, tpNext)
+                pqFrontier.put(tpNext, nPriority)
+                dctCameFrom[tpNext] = tpCurrent
 
-    return came_from
+    return dctCameFrom
 
 def CalculateTotalMarriages(lstCartorios):
 	sum = 0

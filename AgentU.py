@@ -150,13 +150,15 @@ class Agent:
 	def Propose(self):
 		if GlobalsU.Verbose():
 			print('%s Fazendo proposta de casamento para %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
-		prpPropose = ProposalU.Proposal(self.nID, self.agMatch.nID)
+		self.tpCartorioPos = UtilsU.CalculateEuclidianDistance(self.tpPos, self.lstCartorios)
+		prpPropose = ProposalU.Proposal(self.nID, self.agMatch.nID, self.tpCartorioPos)
 		self.MadePropose = prpPropose
 		self.agMatch.lstPendingProposes.append(prpPropose)
 
 	def Marry(self, field):
 		if (self.MadePropose == None):
 			self.agMatch = field.GetCouple(self.AcceptedPropose.nAgentMadeProposeID, ConversionU.OpositeGender(self.cGender))
+			self.tpCartorioPos = self.AcceptedPropose.tpCartorio
 		elif(self.AcceptedPropose == None):
 			self.agMatch = field.GetCouple(self.MadePropose.nAgentProposedID, ConversionU.OpositeGender(self.cGender))
 
@@ -164,7 +166,6 @@ class Agent:
 			print('%s Casando com %s' %(self.ToString(short=True), self.agMatch.ToString(short=True)))
 
 		if (self.lstPathToCartorio == []) and not (self.bArrived):
-			self.tpCartorioPos = UtilsU.CalculateEuclidianDistance(self.tpPos, self.lstCartorios)
 			From = UtilsU.AStarSearch(field, self.tpPos, self.tpCartorioPos)
 			self.lstPathToCartorio = UtilsU.ReconstructPath(From, self.tpPos, self.tpCartorioPos)
 			if GlobalsU.Verbose():
