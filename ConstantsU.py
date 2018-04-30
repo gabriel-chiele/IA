@@ -48,8 +48,20 @@ c_SIZE_VARIATION 		= 4
 c_VISION_RANGE			= 2
 c_FIELD_SIZE_FACTOR		= 5
 c_WALL_SPACING_FACTOR 	= 3
-c_MAX_TURNS				= 100
-c_TURN_CLOCK	        = 0.5
+c_MAX_TURNS				= 500
+c_TURN_CLOCK	        = 0.3
+
+#
+#   constantes de cores
+#
+c_Grass     = '#9cdb89'
+c_Brick     = '#ffa500'
+c_Cement    = '#4c514a'
+c_Cart      = '#4f0808'
+c_Ag        = '#ff0c00'
+c_Coup      = '#9613c1'
+c_White     = '#ffffff'
+c_Black     = '#000000'
 
 #
 #	constantes textuais

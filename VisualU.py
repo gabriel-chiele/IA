@@ -109,15 +109,15 @@ class Visual(Frame):
 				nItem = field.GetPosition((i,j))
 				frSlave = self.grid_slaves(row=i, column=j)
 				if (nItem == ConstantsU.c_Clear):
-					frSlave[0].configure(bg="white",highlightbackground="white")
+					frSlave[0].configure(bg=ConstantsU.c_Grass, highlightbackground=ConstantsU.c_Grass)
 				elif (nItem == ConstantsU.c_Cartorio):
-					frSlave[0].configure(bg="yellow",highlightbackground="white")
+					frSlave[0].configure(bg=ConstantsU.c_White, highlightbackground=ConstantsU.c_Cart, highlightthickness=3)
 				elif (nItem== ConstantsU.c_Wall):
-					frSlave[0].configure(bg="blue",highlightbackground="white")
+					frSlave[0].configure(bg=ConstantsU.c_Brick, highlightbackground=ConstantsU.c_Cement, highlightthickness=2)
 				elif (nItem == ConstantsU.c_Agent):
-					frSlave[0].configure(bg="red", highlightbackground="black", highlightthickness=1)
+					frSlave[0].configure(bg=ConstantsU.c_Ag, highlightbackground=ConstantsU.c_Black, highlightthickness=1)
 				elif (nItem == ConstantsU.c_Couple):
-					frSlave[0].configure(bg="purple", highlightbackground="black", highlightthickness=1)
+					frSlave[0].configure(bg=ConstantsU.c_Coup, highlightbackground=ConstantsU.c_Black, highlightthickness=1)
 
 		self.update()
 

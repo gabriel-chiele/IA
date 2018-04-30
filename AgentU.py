@@ -76,10 +76,11 @@ class Agent:
 
 						if (nFilled == ConstantsU.c_Agent):
 							ag = field.GetAgent(tpTempPos)
-							if not (ag.ToString(short=True) == self.ToString(short=True)):
-								self.lstProximity.append(ag)
-								if GlobalsU.Verbose():
-									print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
+							if not (ag == None):
+								if not (ag.ToString(short=True) == self.ToString(short=True)):
+									self.lstProximity.append(ag)
+									if GlobalsU.Verbose():
+										print('%s Spotted: %s' % (self.ToString(short=True), ag.ToString()))
 
 	def ChooseAction(self):
 		if (self.Action == ConstantsU.c_STEP) or (self.Action == ConstantsU.c_PROPOSE):
@@ -187,6 +188,7 @@ class Agent:
 			if not (self.MadePropose == None):
 				bCoupleArrived = self.OnCartorio.CoupleArrived(self.MadePropose.nAgentProposedID, self.cGender)
 				if (bCoupleArrived):
+					field.SetPosition(field.GetCouple(self.MadePropose.nAgentProposedID, ConversionU.OpositeGender(self.cGender)).tpPos, ConstantsU.c_Clear)
 					self.OnCartorio.CreateCouple(self.nID, self.MadePropose.nAgentProposedID, self.cGender)
 					self.MadePropose = None
 					self.bArrived = False
