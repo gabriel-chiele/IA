@@ -139,7 +139,7 @@ def AStarSearch(Field, Start, End):
         if tpCurrent == End:
             break
 
-        for tpNext in Field.GetNeighbors(tpCurrent):
+        for tpNext in Field.GetNeighbors(tpCurrent, End):
             nNewCost = dctCost[tpCurrent] + 1
             if tpNext not in dctCost or nNewCost < dctCost[tpNext]:
                 dctCost[tpNext] = nNewCost
@@ -162,3 +162,6 @@ def CalculateTotalDivorces(lstCartorios):
 		sum = sum + cartorio.nNumberOfDivorces
 
 	return sum
+
+def EqualTuples(tp1, tp2):
+	return ((tp1[0] == tp2[0]) and (tp1[1] == tp2[1]))

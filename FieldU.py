@@ -119,19 +119,21 @@ class Field:
 		(x, y) = id
 		return ((0 <= x < self.nSize) and (0 <= y < self.nSize))
 
-	def IsPassable(self, id):
+	def IsPassable(self, id, tpPos):
 		bOK = True
 		for wall in self.lstWalls:
 			bOK = bOK and (id not in wall.lstPos)
 
 		for cartorio in self.lstCartorios:
-			bOK = bOK and (id not in cartorio.tpPos)
+			if not (UtilsU.EqualTuples(tpPos, cartorio.tpPos)):
+				bOK = bOK and not (UtilsU.EqualTuples(id, cartorio.tpPos))
 
 		return bOK
 
-	def GetNeighbors(self, id):
+	def GetNeighbors(self, id, tpPos):
 		(x, y) = id
 		results = [(x+1, y), (x, y-1), (x-1, y), (x, y+1), (x-1, y+1),  (x+1, y+1), (x-1, y-1), (x+1, y-1)]
 		results = filter(self.InBounds, results)
-		results = filter(self.IsPassable, results)
+		results = [item for item in results if self.IsPassable(item, tpPos)]
+
 		return results

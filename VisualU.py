@@ -44,6 +44,7 @@ class Visual(Frame):
 					print('Turno %i:' % (nTurnCount))
 
 					for ag in Field.lstAgents:
+						print('\t%s:' % (ag.ToString(short=False)))
 						ag.LookAround(Field)
 						ag.ChooseAction()
 						ag.ExecuteAction(Field)
