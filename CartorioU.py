@@ -61,10 +61,15 @@ class Cartorio:
 
 		ag1.bMarried = True
 		ag1.nCoupleID = ag2.nID
+		ag1.MadePropose = None
+		ag1.bArrived = False
 
 		ag2.bMarried = True
 		ag2.nCoupleID = ag1.nCoupleID
 		ag2.tpPos = (-1,-1) #retira do mapa
+		ag2.AcceptedPropose = None
+		ag2.bArrived = False
+
 		self.CheckOut(ag2)
 		ag2.OnCartorio = None
 
@@ -73,15 +78,16 @@ class Cartorio:
 
 		self.nNumberOfMarriages = self.nNumberOfMarriages + 1
 
-	def DivorceCouple(self, ag):
-		CoupleAg = field.GetCouple(ag.nCoupleID)
-		ag.bMarried = False
-		ag.nCoupleID = 0
+	def DivorceCouple(self, field, nMyID, cMyGender):
+		ag1 = self.GetAgent(nMyID, cMyGender)
+		ag2 = field.GetOutsideAgent(ag1.nCoupleID, UtilsU.OpositeGender(ag1.cGender))
 
-		CoupleAg.bMarried = False
-		CoupleAg.nCoupleID = 0
-		CoupleAg.tpPos = (0,0) #TODO: pegar posição valida próxima a posição do cartorio
-		CoupleAg.OnCartorio = ag.OnCartorio
-		CoupleAg.OnCartorio.CheckIn(self)
+		ag1.bMarried = False
+		ag1.nCoupleID = 0
+
+		ag2.bMarried = False
+		ag2.nCoupleID = 0
+		ag2.tpPos = choice(field.GetNeighbors(self.tpPos, self.tpPos))
+		ag2.bArrived = False
 
 		self.nNumberOfDivorces = self.nNumberOfDivorces + 1

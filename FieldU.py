@@ -102,6 +102,11 @@ class Field:
 			if (ag.tpPos == tpPos):
 				return ag
 
+	def GetOutsideAgent(self, nCoupleID, cGender):
+		for ag in self.lstAgents:
+			if (ag.nID == nCoupleID) and (cGender == ag.cGender) and (UtilsU.EqualTuples(ag.tpPos, (-1,-1))):
+				return ag
+
 	def GetCouple(self, nCoupleID, cGender):
 		for ag in self.lstAgents:
 			if (ag.nID == nCoupleID) and (cGender == ag.cGender):
