@@ -1,6 +1,6 @@
 ﻿(define (problem teste2)
     (:domain agenteSeguranca)
-    (:objects Corredor Sala1 Porta1 Janela2 Sala1 Porta2 Janela2)
+    (:objects Corredor Sala1 Porta1 Janela1 Sala2 Porta2 Janela2)
     (:init (Sala Corredor) (Em Corredor)
     (Sala Sala1) (Porta Porta1) (Janela Janela1) (Pertence Sala1 Porta1) (Pertence Sala1 Janela1)
     (Sala Sala2) (Porta Porta2) (Janela Janela2) (Pertence Sala2 Porta2) (Pertence Sala2 Janela2)
