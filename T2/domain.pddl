@@ -1,35 +1,29 @@
-﻿(define (domain agenteSeguranca)
-  (:requirements :strips )
-  (:predicates (Em ?sala ) (Aberta ?x) (Fechada ?x) (Conectadas ?sala1 ?sala2) (Pertence ?sala ?x) (Sala ?sala) (Porta ?porta) (Janela ?janela))
+(define (domain agenteSeguranca)
+  (:requirements :strips :negative-preconditions)
+  (:predicates (Em ?sala ) (Aberta ?x) (Conectadas ?sala1 ?sala2) (Pertence ?sala ?x) (Sala ?sala) (Porta ?porta) (Janela ?janela))
   
-  (:action abrirJanela :parameters (?sala ?janela)
-      :precondition (and (Em ?sala) (Sala ?sala) (Janela ?janela) (Pertence ?sala ?janela) (Fechada ?janela))
-      :effect (and (not Fechada ?janela) (Aberta ?janela))
+  (:action AbrirPorta :parameters (?sala1 ?porta)
+      :precondition (and (Sala ?sala1) (Porta ?porta) (Em ?sala1) (Pertence ?sala1 ?porta) (not (Aberta ?porta)))
+      :effect (and (Aberta ?porta))
   )
-
-  (:action fecharJanela :parameters (?sala ?janela)
-      :precondition (and (Em ?sala) (Sala ?sala) (Janela ?janela) (Pertence ?sala ?janela) (Aberta ?janela))
-      :effect (and (not Aberta ?janela) (Fechada ?janela))
+  
+  (:action FecharPorta :parameters (?sala1 ?porta)
+      :precondition (and (Sala ?sala1) (Porta ?porta) (Em ?sala1) (Pertence ?sala1 ?porta) (Aberta ?porta))
+      :effect (and (not (Aberta ?porta)))
   )
-
-  (:action abrirPorta :parameters (?sala1 ?sala2 ?porta)
-      :precondition (and (Em ?sala1) (Sala ?sala1) (Sala ?sala2) (Porta ?porta) (Pertence ?sala2 ?porta) (Fechada ?porta) (Conectadas ?sala1 ?sala2))
-      :effect (and (not Fechada ?porta) (Aberta ?porta))
+  
+  (:action AbrirJanela :parameters (?sala1 ?janela)
+      :precondition (and (Sala ?sala1) (Janela ?janela) (Em ?sala1) (Pertence ?sala1 ?janela) (not (Aberta ?janela)))
+      :effect (and (Aberta ?janela))
   )
-
-  (:action fecharPorta :parameters (?sala1 ?sala2 ?porta)
-      :precondition (and (Em ?sala1) (Sala ?sala1) (Sala ?sala2) (Porta ?porta) (Pertence ?sala2 ?porta) (Aberta ?porta) (Conectadas ?sala1 ?sala2))
-      :effect (and (not Aberta ?porta) (not Fechada ?porta))
+  
+  (:action FecharJanela :parameters (?sala1 ?janela)
+      :precondition (and (Sala ?sala1) (Janela ?janela) (Em ?sala1) (Pertence ?sala1 ?janela) (Aberta ?janela))
+      :effect (and (not (Aberta ?janela)))
   )
-
-  (:action Entrar  :parameters (?sala1 ?sala2 ?porta)
-      :precondition (and (Em ?sala1) (Sala ?sala1) (Sala ?sala2) (Porta ?porta) (Pertence ?sala2 ?porta) (Aberta ?porta) (Conectadas ?sala1 ?sala2))
-      :effect (and (not Em ?sala1) (Em ?sala2) )
+  
+  (:action Andar :parameters (?sala1 ?sala2 ?porta)
+      :precondition (and (Sala ?sala1) (Sala ?sala2) (Porta ?porta) (Em ?sala1) (Pertence ?sala1 ?porta) (Pertence ?sala2 ?porta) (Aberta ?porta))
+      :effect (and (not (Em ?sala1)) (Em ?sala2))
   )
-
-  (:action Sair  :parameters (?sala1 ?sala2 ?porta)
-      :precondition (and (Em ?sala1) (Sala ?sala1) (Sala ?sala2) (Porta ?porta) (Pertence ?sala1 ?porta) (Aberta ?porta) (Conectadas ?sala1 ?sala2))
-      :effect (and (not Em ?sala1) (Em ?sala2) )
-  )
-
 )
