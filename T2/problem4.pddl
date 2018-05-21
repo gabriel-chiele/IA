@@ -1,5 +1,4 @@
-(define (problem teste4)
-    (:domain agenteSeguranca)
+﻿(define (problem teste4)
     (:domain agenteSeguranca)
     ; cria os objetos
     (:objects Corredor             LuzC 

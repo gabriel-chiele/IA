@@ -1,4 +1,4 @@
-(define (domain agenteSeguranca)
+﻿(define (domain agenteSeguranca)
   (:requirements :strips :negative-preconditions)
   (:predicates (Em ?sala ) (Aberta ?x) (Conectadas ?sala1 ?sala2) (Pertence ?sala ?x) (Sala ?sala) (Porta ?porta) (Janela ?janela) (Luz ?luz))
   
