@@ -1,4 +1,6 @@
-A aplicação escolhida é a previsão de produtividade de plantações de cacau, onde a lógica fuzzy foi utilizada para calcular o resultado esperado da plantação para este cultivo levando em consideração os 'cuidados' tomados durante o tempo de maturação dos frutos.
+A aplicação escolhida é a previsão de produtividade de plantações de cacau,
+onde a lógica fuzzy foi utilizada para calcular o resultado esperado da plantação para este
+cultivo levando em consideração os 'cuidados' tomados durante o tempo de maturação dos frutos.
 
 O sistema fuzzy utilizado tem as seguintes caracteristicas:
 entrada:
@@ -78,9 +80,9 @@ regras fuzzy:
 	Se adubação é correta então variação da produção é PG
 	Se adubação é média então variação da produção é PM
 ------------------------------------------------------------------------------------------
-	Se calagem é boa então variação da produção é ZE
-	Se calagem é boa então variação da produção é PM
-	Se calagem é boa então variação da produção é PP
+	Se calagem é zero então variação da produção é ZE
+	Se calagem é correta então variação da produção é PM
+	Se calagem é média então variação da produção é PP
 ------------------------------------------------------------------------------------------
 	Se inc. praga é fraca e ctl. praga é zero então variação da produção é NP
 	Se inc. praga é fraca e ctl. praga é localizado então variação da produção é ZE
@@ -122,33 +124,55 @@ Fórmulas:
 Exemplo:
  - entradas
 		> distribuição de chuva	|80| crescente
-		> incidencia de mato		|50| intermediaria
-		> adubação							|60| intermediaria
-		> calagem								|75| intermediaria e crescente
-		> incidencia de praga		|30| decrescente e intermediaria
-		> incidencia de doença	|30| decrescente e intermediaria
-		> controle de praga			|70| intermediaria
-		> controle de doença		|90| crescente
+		> incidencia de mato    |50| intermediaria
+		> adubação              |60| intermediaria
+		> calagem               |75| intermediaria e crescente
+		> incidencia de praga   |30| decrescente e intermediaria
+		> incidencia de doença  |30| decrescente e intermediaria
+		> controle de praga     |70| intermediaria
+		> controle de doença    |90| crescente
 
 - fuzzyficação:
 		> distribuição de chuva	: (u > b)     : (80 > 72)       : |1   | > boa
 
-		> incidencia de mato		: (y-u)/(y-b) : (71-50)/(71-43) : |0.75| > baixa
+		> incidencia de mato    : (y-u)/(y-b) : (71-50)/(71-43) : |0.75| > baixa
 
-		> adubação							: (y-u)/(y-b) : (79-60)/(79-50) : |0.65| > média
+		> adubação              : (y-u)/(y-b) : (79-60)/(79-50) : |0.65| > média
 
-		> calagem								: (y-u)/(y-b) : (79-75)/(79-50) : |0.13| > média
-														: (u-a)/(b-a) : (75-70)/(93-70) : |0.21| > correta
+		> calagem               : (y-u)/(y-b) : (79-75)/(79-50) : |0.13| > média
+                                : (u-a)/(b-a) : (75-70)/(93-70) : |0.21| > correta
 
-		> incidencia de praga		: (b-u)/(b-a) : (40-30)/(40-20) : |0.50| > fraca
-														: (u-a)/(b-a) : (30-23)/(50-23) : |0.25| > média
+		> incidencia de praga   : (b-u)/(b-a) : (40-30)/(40-20) : |0.50| > fraca
+                                : (u-a)/(b-a) : (30-23)/(50-23) : |0.25| > média
 
 		> incidencia de doença	: (b-u)/(b-a) : (40-30)/(40-20) : |0.50| > fraca
-														: (u-a)/(b-a) : (30-23)/(50-23) : |0.25| > média
+                                : (u-a)/(b-a) : (30-23)/(50-23) : |0.25| > média
 
-		> controle de praga			: (y-u)/(y-b) : (72-70)/(72-50) : |0.09| > localizado
-														: (u-a)/(b-a) : (70-60)/(78-60) : |0.55| > geral
+		> controle de praga     : (y-u)/(y-b) : (72-70)/(72-50) : |0.09| > localizado
+                                : (u-a)/(b-a) : (70-60)/(78-60) : |0.55| > geral
 
-		> controle de doença		: (u > b)     : (90 > 78)       : |1   | > geral
+		> controle de doença    : (u > b)     : (90 > 78)       : |1   | > geral
 
+inferencia:
+	Se distribuição de chuva é boa então variação da produção é ZE
+	Se incidencia de mato é baixa então variação da produção é NP
+	Se adubação é média então variação da produção é PM
+	Se calagem é correta então variação da produção é PM
+	Se calagem é média então variação da produção é PP
+	Se inc. praga é fraca e ctl. praga é localizado então variação da produção é ZE
+	Se inc. praga é fraca e ctl. praga é geral então variação da produção é ZE
+	Se inc. praga é média e ctl. praga é localizado então variação da produção é NP
+	Se inc. praga é média e ctl. praga é geral então variação da produção é ZE
+	Se inc. doença é fraca e ctl. doença é geral então variação da produção é ZE
+	Se inc. doença é média e ctl. doença é geral então variação da produção é ZE
+	
+	(colar gráfico aqui)
+	
+defuzzyficação:
+
+((-.5*.3)+(-.3*.75)+(-.1*.45)+(.1*.2)+(.3*.25)+(.5*.45)+(.7*.65))/(.3 + .75 + .45 + .2 + .25 + .45 + .65)
+
+0.116
+
+com esses parametros temos uma melhora de 11.6 % nesta safra de cacau
 
