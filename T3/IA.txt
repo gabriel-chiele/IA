@@ -1,0 +1,79 @@
+NG - Grande Variação Negativa |NM - Intermediária Variação Negativa |NP - Pouca Variação Negativa
+ZE - Nenhuma Variação         |PP - Pouca Variação positiva         |PM - Intermediária Variação positiva
+PG - Grande Variação positiva |
+
+decrescente:
+	1 se u < a
+	(b-u)/(b-a) se a <= u <= b
+	0 se u > b
+	
+intermediária:
+	0 se u < a
+	(u-a)/(b-a) se a <= u <= b
+	(y-u)/(y-b) se b <= u <= y
+	0 se u > y
+	
+crescente:
+	0 se u < a
+	(u-a)/(b-a) se a <= u <= b
+	1 se u > b
+
+---------------------------------------------------------
+Se distribuição de chuva é boa então variação da produção é ZE
+Se distribuição de chuva é má então variação da produção é NM
+Se distribuição de chuva é zero então variação da produção é NG
+dcZero(n) = (u,12,21)
+dcMá  (n) = (u,11,40,72)
+dcBoa (n) = (u,46,72)
+
+---------------------------------------------------------
+Se incidencia de mato é alta então variação da produção é NM
+Se incidencia de mato é baixa então variação da produção é NP
+Se incidencia de mato é zero então variação da produção é ZE
+imAlta  (n) = (u,12,39)
+imBaixa (n) = (u,22,43,71)
+imZero  (n) = (u,50,85)
+
+---------------------------------------------------------
+Se adubação é zero então variação da produção é ZE
+Se adubação é correta então variação da produção é PG
+Se adubação é média então variação da produção é PM
+adZero    (n) = (u,20,39)
+adCorreta (n) = (u,23,50,79)
+adMédia   (n) = (u,70,93)
+
+---------------------------------------------------------
+Se calagem é boa então variação da produção é ZE
+Se calagem é boa então variação da produção é PM
+Se calagem é boa então variação da produção é PP
+calZero    (n) = (u,20,39)
+calCorreta (n) = (u,23,50,79)
+calMédia   (n) = (u,70,93))
+
+---------------------------------------------------------
+Se inc. praga é fraca e ctl. praga é zero então variação da produção é NP
+Se inc. praga é fraca e ctl. praga é localizado então variação da produção é ZE
+Se inc. praga é fraca e ctl. praga é geral então variação da produção é ZE
+Se inc. praga é média e ctl. praga é zero então variação da produção é NM
+Se inc. praga é média e ctl. praga é localizado então variação da produção é NP
+Se inc. praga é média e ctl. praga é geral então variação da produção é ZE
+Se inc. praga é generalizada e ctl. praga é zero então variação da produção é NM
+Se inc. praga é generalizada e ctl. praga é localizado então variação da produção é NP
+Se inc. praga é generalizada e ctl. praga é geral então variação da produção é ZE
+ipcpFraca        (n) = (u,20,40)
+ipcpMédia        (n) = (u,23,50,72)
+ipcpGeneralizada (n) = (u,60,78)
+
+---------------------------------------------------------
+Se inc. doença é fraca e ctl. doença é zero então variação da produção é NM
+Se inc. doença é fraca e ctl. doença é localizado então variação da produção é NP
+Se inc. doença é fraca e ctl. doença é geral então variação da produção é ZE
+Se inc. doença é média e ctl. doença é zero então variação da produção é NM
+Se inc. doença é média e ctl. doença é localizado então variação da produção é NP
+Se inc. doença é média e ctl. doença é geral então variação da produção é ZE
+Se inc. doença é generalizada e ctl. doença é zero então variação da produção é NG
+Se inc. doença é generalizada e ctl. doença é localizado então variação da produção é NM
+Se inc. doença é generalizada e ctl. doença é geral então variação da produção é ZE
+idcdFraca        (n) = (u,20,40)
+idcdMédia        (n) = (u,23,50,72)
+idcdGeneralizada (n) = (u,60,78)
