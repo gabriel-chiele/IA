@@ -1,79 +1,154 @@
-NG - Grande Variação Negativa |NM - Intermediária Variação Negativa |NP - Pouca Variação Negativa
-ZE - Nenhuma Variação         |PP - Pouca Variação positiva         |PM - Intermediária Variação positiva
-PG - Grande Variação positiva |
+A aplicação escolhida é a previsão de produtividade de plantações de cacau, onde a lógica fuzzy foi utilizada para calcular o resultado esperado da plantação para este cultivo levando em consideração os 'cuidados' tomados durante o tempo de maturação dos frutos.
 
-decrescente:
-	1 se u < a
-	(b-u)/(b-a) se a <= u <= b
-	0 se u > b
+O sistema fuzzy utilizado tem as seguintes caracteristicas:
+entrada:
+	- distribuição de chuva (0 <>  70)
+	- incidencia de mato    (0 <>  30)
+	- adubação              (0 <> 150)
+	- calagem               (0 <>  15)
+	- controle de praga     (0 <>  10)
+	- incidencia de praga   (0 <>  10)
+	- incidencia de doença  (0 <>  60)
+	- controle de doença    (0 <>  60)
+
+saida:
+	- variação de produção (-60 <> 60)
+
+variáveis linguisticas:
+	> distribuição de chuva:
+		 - zero: dcZero(n) = (u,12,21)
+		 - má:   dcMá  (n) = (u,11,40,72)
+		 - boa:  dcBoa (n) = (u,46,72)
+
+	> incidencia de mato:
+		 - alta:  imAlta  (n) = (u,12,39)
+		 - baixa: imBaixa (n) = (u,22,43,71)
+		 - zero:  imZero  (n) = (u,50,85)
+
+	> adubação:
+		 - zero:    adZero    (n) = (u,20,39)
+		 - correta: adCorreta (n) = (u,23,50,79)
+		 - média:   adMédia   (n) = (u,70,93)
+
+	> calagem:
+		 - zero:    calZero    (n) = (u,20,39)
+		 - correta: calCorreta (n) = (u,23,50,79)
+		 - média:   calMédia   (n) = (u,70,93)
+
+	> incidencia de praga:
+		 - fraca:        ipFraca        (n) = (u,20,40)
+		 - média:        ipMédia        (n) = (u,23,50,72)
+		 - generalizada: ipGeneralizada (n) = (u,60,78)
+
+	> incidencia de doença:
+		 - fraca:        idFraca        (n) = (u,20,40)
+		 - média:        idMédia        (n) = (u,23,50,72)
+		 - generalizada: idGeneralizada (n) = (u,60,78)
+
+	> controle de praga:
+		 - fraca:        cpFraca        (n) = (u,20,40)
+		 - média:        cpMédia        (n) = (u,23,50,72)
+		 - generalizada: cpGeneralizada (n) = (u,60,78)
+
+	> controle de doença:
+		 - fraca:        cdFraca        (n) = (u,20,40)
+		 - média:        cdMédia        (n) = (u,23,50,72)
+		 - generalizada: cdGeneralizada (n) = (u,60,78)
+
+valores linguisticos:
+	> NG - Grande Variação Negativa
+	> NM - Intermediária Variação Negativa
+	> NP - Pouca Variação Negativa
+	> ZE - Nenhuma Variação
+	> PP - Pouca Variação positiva
+	> PM - Intermediária Variação positiva
+	> PG - Grande Variação positiva
+
+regras fuzzy:
+------------------------------------------------------------------------------------------
+	Se distribuição de chuva é boa então variação da produção é ZE
+	Se distribuição de chuva é má então variação da produção é NM
+	Se distribuição de chuva é zero então variação da produção é NG
+------------------------------------------------------------------------------------------
+	Se incidencia de mato é alta então variação da produção é NM
+	Se incidencia de mato é baixa então variação da produção é NP
+	Se incidencia de mato é zero então variação da produção é ZE
+------------------------------------------------------------------------------------------
+	Se adubação é zero então variação da produção é ZE
+	Se adubação é correta então variação da produção é PG
+	Se adubação é média então variação da produção é PM
+------------------------------------------------------------------------------------------
+	Se calagem é boa então variação da produção é ZE
+	Se calagem é boa então variação da produção é PM
+	Se calagem é boa então variação da produção é PP
+------------------------------------------------------------------------------------------
+	Se inc. praga é fraca e ctl. praga é zero então variação da produção é NP
+	Se inc. praga é fraca e ctl. praga é localizado então variação da produção é ZE
+	Se inc. praga é fraca e ctl. praga é geral então variação da produção é ZE
+	Se inc. praga é média e ctl. praga é zero então variação da produção é NM
+	Se inc. praga é média e ctl. praga é localizado então variação da produção é NP
+	Se inc. praga é média e ctl. praga é geral então variação da produção é ZE
+	Se inc. praga é generalizada e ctl. praga é zero então variação da produção é NM
+	Se inc. praga é generalizada e ctl. praga é localizado então variação da produção é NP
+	Se inc. praga é generalizada e ctl. praga é geral então variação da produção é ZE
+------------------------------------------------------------------------------------------
+	Se inc. doença é fraca e ctl. doença é zero então variação da produção é NM
+	Se inc. doença é fraca e ctl. doença é localizado então variação da produção é NP
+	Se inc. doença é fraca e ctl. doença é geral então variação da produção é ZE
+	Se inc. doença é média e ctl. doença é zero então variação da produção é NM
+	Se inc. doença é média e ctl. doença é localizado então variação da produção é NP
+	Se inc. doença é média e ctl. doença é geral então variação da produção é ZE
+	Se inc. doença é generalizada e ctl. doença é zero então variação da produção é NG
+	Se inc. doença é generalizada e ctl. doença é localizado então variação da produção é NM
+	Se inc. doença é generalizada e ctl. doença é geral então variação da produção é ZE
+------------------------------------------------------------------------------------------
+Fórmulas:
+	> decrescente:
+		  1 se u < a
+		  (b-u)/(b-a) se a <= u <= b
+		  0 se u > b
 	
-intermediária:
-	0 se u < a
-	(u-a)/(b-a) se a <= u <= b
-	(y-u)/(y-b) se b <= u <= y
-	0 se u > y
+	> intermediária:
+		  0 se u < a
+		  (u-a)/(b-a) se a <= u <= b
+		  (y-u)/(y-b) se b <= u <= y
+		  0 se u > y
 	
-crescente:
-	0 se u < a
-	(u-a)/(b-a) se a <= u <= b
-	1 se u > b
+	> crescente:
+		  0 se u < a
+		  (u-a)/(b-a) se a <= u <= b
+		  1 se u > b
 
----------------------------------------------------------
-Se distribuição de chuva é boa então variação da produção é ZE
-Se distribuição de chuva é má então variação da produção é NM
-Se distribuição de chuva é zero então variação da produção é NG
-dcZero(n) = (u,12,21)
-dcMá  (n) = (u,11,40,72)
-dcBoa (n) = (u,46,72)
+Exemplo:
+ - entradas
+		> distribuição de chuva	|80| crescente
+		> incidencia de mato		|50| intermediaria
+		> adubação							|60| intermediaria
+		> calagem								|75| intermediaria e crescente
+		> incidencia de praga		|30| decrescente e intermediaria
+		> incidencia de doença	|30| decrescente e intermediaria
+		> controle de praga			|70| intermediaria
+		> controle de doença		|90| crescente
 
----------------------------------------------------------
-Se incidencia de mato é alta então variação da produção é NM
-Se incidencia de mato é baixa então variação da produção é NP
-Se incidencia de mato é zero então variação da produção é ZE
-imAlta  (n) = (u,12,39)
-imBaixa (n) = (u,22,43,71)
-imZero  (n) = (u,50,85)
+- fuzzyficação:
+		> distribuição de chuva	: (u > b)     : (80 > 72)       : |1   | > boa
 
----------------------------------------------------------
-Se adubação é zero então variação da produção é ZE
-Se adubação é correta então variação da produção é PG
-Se adubação é média então variação da produção é PM
-adZero    (n) = (u,20,39)
-adCorreta (n) = (u,23,50,79)
-adMédia   (n) = (u,70,93)
+		> incidencia de mato		: (y-u)/(y-b) : (71-50)/(71-43) : |0.75| > baixa
 
----------------------------------------------------------
-Se calagem é boa então variação da produção é ZE
-Se calagem é boa então variação da produção é PM
-Se calagem é boa então variação da produção é PP
-calZero    (n) = (u,20,39)
-calCorreta (n) = (u,23,50,79)
-calMédia   (n) = (u,70,93))
+		> adubação							: (y-u)/(y-b) : (79-60)/(79-50) : |0.65| > média
 
----------------------------------------------------------
-Se inc. praga é fraca e ctl. praga é zero então variação da produção é NP
-Se inc. praga é fraca e ctl. praga é localizado então variação da produção é ZE
-Se inc. praga é fraca e ctl. praga é geral então variação da produção é ZE
-Se inc. praga é média e ctl. praga é zero então variação da produção é NM
-Se inc. praga é média e ctl. praga é localizado então variação da produção é NP
-Se inc. praga é média e ctl. praga é geral então variação da produção é ZE
-Se inc. praga é generalizada e ctl. praga é zero então variação da produção é NM
-Se inc. praga é generalizada e ctl. praga é localizado então variação da produção é NP
-Se inc. praga é generalizada e ctl. praga é geral então variação da produção é ZE
-ipcpFraca        (n) = (u,20,40)
-ipcpMédia        (n) = (u,23,50,72)
-ipcpGeneralizada (n) = (u,60,78)
+		> calagem								: (y-u)/(y-b) : (79-75)/(79-50) : |0.13| > média
+														: (u-a)/(b-a) : (75-70)/(93-70) : |0.21| > correta
 
----------------------------------------------------------
-Se inc. doença é fraca e ctl. doença é zero então variação da produção é NM
-Se inc. doença é fraca e ctl. doença é localizado então variação da produção é NP
-Se inc. doença é fraca e ctl. doença é geral então variação da produção é ZE
-Se inc. doença é média e ctl. doença é zero então variação da produção é NM
-Se inc. doença é média e ctl. doença é localizado então variação da produção é NP
-Se inc. doença é média e ctl. doença é geral então variação da produção é ZE
-Se inc. doença é generalizada e ctl. doença é zero então variação da produção é NG
-Se inc. doença é generalizada e ctl. doença é localizado então variação da produção é NM
-Se inc. doença é generalizada e ctl. doença é geral então variação da produção é ZE
-idcdFraca        (n) = (u,20,40)
-idcdMédia        (n) = (u,23,50,72)
-idcdGeneralizada (n) = (u,60,78)
+		> incidencia de praga		: (b-u)/(b-a) : (40-30)/(40-20) : |0.50| > fraca
+														: (u-a)/(b-a) : (30-23)/(50-23) : |0.25| > média
+
+		> incidencia de doença	: (b-u)/(b-a) : (40-30)/(40-20) : |0.50| > fraca
+														: (u-a)/(b-a) : (30-23)/(50-23) : |0.25| > média
+
+		> controle de praga			: (y-u)/(y-b) : (72-70)/(72-50) : |0.09| > localizado
+														: (u-a)/(b-a) : (70-60)/(78-60) : |0.55| > geral
+
+		> controle de doença		: (u > b)     : (90 > 78)       : |1   | > geral
+
+
