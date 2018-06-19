@@ -15,8 +15,10 @@ str = ''
 
 o.write('@RELATION Weka\n')
 o.write('\n')
-o.write('@ATTRIBUTE binary	string\n')
-o.write('@ATTRIBUTE number	string\n')
+
+for j in range(1024):
+    o.write('@ATTRIBUTE bnr%i	numeric\n' % j)
+
 o.write('@ATTRIBUTE class 	{0,1,2,3,4,5,6,7,8,9}\n')
 o.write('\n')
 o.write('@DATA\n')
@@ -27,7 +29,14 @@ while not end:
         line = line.replace('\n','')
         line = line.replace(' ','')
         if not len(line) == 1:
-            str = str + line
+            lst = list(line)
+            new_line = ''
+            for k in range(len(lst)):
+                if k == 0:
+                    new_line = lst[k]
+                else:
+                    new_line = new_line + ',' + lst[k]
+            str = str + new_line
         else:
             str = str + ',' + line + '\n'
             o.write(str)
