@@ -1,4 +1,4 @@
-def formater(input, output):
+def formater(input, output, n):
     i = open(input,'r')
     o = open(output,'w')
 
@@ -45,34 +45,34 @@ def formater(input, output):
             else:
                 str = str + ',' + line + '\n'
                 number = int(line)
-                if number == 0 and n0 < 50:
+                if number == 0 and n0 < n:
                     n0 += 1
                     o.write(str)
-                elif number == 1 and n1 < 50:
+                elif number == 1 and n1 < n:
                     n1 += 1
                     o.write(str)
-                elif number == 2 and n2 < 50:
+                elif number == 2 and n2 < n:
                     n2 += 1
                     o.write(str)
-                elif number == 3 and n3 < 50:
+                elif number == 3 and n3 < n:
                     n3 += 1
                     o.write(str)
-                elif number == 4 and n4 < 50:
+                elif number == 4 and n4 < n:
                     n4 += 1
                     o.write(str)
-                elif number == 5 and n5 < 50:
+                elif number == 5 and n5 < n:
                     n5 += 1
                     o.write(str)
-                elif number == 6 and n6 < 50:
+                elif number == 6 and n6 < n:
                     n6 += 1
                     o.write(str)
-                elif number == 7 and n7 < 50:
+                elif number == 7 and n7 < n:
                     n7 += 1
                     o.write(str)
-                elif number == 8 and n8 < 50:
+                elif number == 8 and n8 < n:
                     n8 += 1
                     o.write(str)
-                elif number == 9 and n9 < 50:
+                elif number == 9 and n9 < n:
                     n9 += 1
                     o.write(str)
 
