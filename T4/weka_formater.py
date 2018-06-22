@@ -83,13 +83,3 @@ def formater(input, output, n):
 
     i.close
     o.close
-    print(n0)
-    print(n1)
-    print(n2)
-    print(n3)
-    print(n4)
-    print(n5)
-    print(n6)
-    print(n7)
-    print(n8)
-    print(n9)
