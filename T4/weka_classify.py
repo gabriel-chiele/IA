@@ -1,11 +1,6 @@
-import argparse
+import parser
 
-parser = argparse.ArgumentParser()
-
-parser.add_argument('--input', dest='input', required=True, help='arquivo de entrada')
-parser.add_argument('--output', dest='output', required=True, help='arquivo de saída')
-
-arg = parser.parse_args()
+arg = parser.parse()
 
 i = open(arg.input,'r')
 o = open(arg.output,'w')
@@ -23,6 +18,8 @@ o.write('@ATTRIBUTE class 	{0,1,2,3,4,5,6,7,8,9}\n')
 o.write('\n')
 o.write('@DATA\n')
 
+first = True
+
 while not end:
     line = i.readline()
     if not line == '':
@@ -32,7 +29,8 @@ while not end:
             lst = list(line)
             new_line = ''
             for k in range(len(lst)):
-                if k == 0:
+                if k == 0 and first:
+                    first = False
                     new_line = lst[k]
                 else:
                     new_line = new_line + ',' + lst[k]
@@ -41,6 +39,7 @@ while not end:
             str = str + ',' + line + '\n'
             o.write(str)
             str = ''
+            first = True
     else:
         end = True
 
