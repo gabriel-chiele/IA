@@ -1,0 +1,78 @@
+@RELATION weka
+
+@ATTRIBUTE nbr00	numeric
+@ATTRIBUTE nbr01	numeric
+@ATTRIBUTE nbr02	numeric
+@ATTRIBUTE nbr03	numeric
+@ATTRIBUTE nbr04	numeric
+@ATTRIBUTE nbr05	numeric
+@ATTRIBUTE nbr06	numeric
+@ATTRIBUTE nbr07	numeric
+@ATTRIBUTE nbr08	numeric
+@ATTRIBUTE nbr09	numeric
+@ATTRIBUTE nbr10	numeric
+@ATTRIBUTE nbr11	numeric
+@ATTRIBUTE nbr12	numeric
+@ATTRIBUTE nbr13  numeric
+@ATTRIBUTE nbr14	numeric
+@ATTRIBUTE nbr15	numeric
+@ATTRIBUTE nbr16	numeric
+@ATTRIBUTE nbr17	numeric
+@ATTRIBUTE nbr18	numeric
+@ATTRIBUTE nbr19	numeric
+@ATTRIBUTE nbr20	numeric
+@ATTRIBUTE nbr21	numeric
+@ATTRIBUTE nbr22	numeric
+@ATTRIBUTE nbr23	numeric
+@ATTRIBUTE nbr24	numeric
+@ATTRIBUTE nbr25	numeric
+@ATTRIBUTE nbr26	numeric
+@ATTRIBUTE nbr27	numeric
+@ATTRIBUTE nbr28	numeric
+@ATTRIBUTE nbr29	numeric
+@ATTRIBUTE nbr30	numeric
+@ATTRIBUTE nbr31	numeric
+@ATTRIBUTE nbr32	numeric
+@ATTRIBUTE nbr33	numeric
+@ATTRIBUTE nbr34	numeric
+@ATTRIBUTE nbr35	numeric
+@ATTRIBUTE nbr36	numeric
+@ATTRIBUTE nbr37	numeric
+@ATTRIBUTE nbr38	numeric
+@ATTRIBUTE nbr39	numeric
+@ATTRIBUTE nbr40	numeric
+@ATTRIBUTE nbr41	numeric
+@ATTRIBUTE nbr42	numeric
+@ATTRIBUTE nbr43	numeric
+@ATTRIBUTE nbr44	numeric
+@ATTRIBUTE nbr45	numeric
+@ATTRIBUTE nbr46	numeric
+@ATTRIBUTE nbr47	numeric
+@ATTRIBUTE nbr48	numeric
+@ATTRIBUTE nbr49	numeric
+@ATTRIBUTE nbr50	numeric
+@ATTRIBUTE nbr51	numeric
+@ATTRIBUTE nbr52	numeric
+@ATTRIBUTE nbr53	numeric
+@ATTRIBUTE nbr54	numeric
+@ATTRIBUTE nbr55	numeric
+@ATTRIBUTE nbr56	numeric
+@ATTRIBUTE nbr57	numeric
+@ATTRIBUTE nbr58	numeric
+@ATTRIBUTE nbr59	numeric
+@ATTRIBUTE nbr60	numeric
+@ATTRIBUTE nbr61	numeric
+@ATTRIBUTE nbr62	numeric
+@ATTRIBUTE nbr63	numeric
+
+@ATTRIBUTE class 	{0,1,2,3,4,5,6,7,8,9}
+
+@DATA
+0,0,10,12,10,0,0,0,0,3,16,16,16,4,0,0,0,7,15,3,8,13,0,0,0,8,12,0,0,14,1,0,0,8,12,0,0,7,8,0,0,5,13,0,0,4,8,0,0,0,14,8,0,10,8,0,0,0,7,12,13,12,4,0,0
+0,0,4,14,11,0,0,0,0,3,15,15,16,9,0,0,0,8,13,0,3,15,1,0,0,8,12,0,0,8,6,0,0,8,12,0,0,8,8,0,0,5,13,1,0,8,8,0,0,2,15,14,12,15,6,0,0,0,5,16,15,8,0,0,0
+0,0,0,1,14,13,1,0,0,0,0,1,16,16,3,0,0,5,11,15,16,16,0,0,0,4,15,16,16,15,0,0,0,0,0,8,16,7,0,0,0,0,0,10,16,3,0,0,0,0,0,8,16,6,0,0,0,0,0,2,13,15,2,0,1
+0,0,3,14,16,14,0,0,0,0,13,13,13,16,2,0,0,0,1,0,9,15,0,0,0,0,9,12,15,16,10,0,0,4,16,16,16,11,3,0,0,0,4,9,14,2,0,0,0,0,2,15,9,0,0,0,0,0,4,13,1,0,0,0,7
+0,0,0,10,15,3,0,0,0,0,7,16,11,0,0,0,0,0,13,15,1,0,0,0,0,0,15,11,0,0,0,0,0,0,16,13,8,1,0,0,0,0,15,16,16,15,6,0,0,0,10,16,14,16,14,2,0,0,1,9,15,16,11,0,6
+0,2,13,15,10,4,0,0,0,0,5,4,13,15,2,0,0,0,0,0,11,16,4,0,0,0,0,0,16,12,0,0,0,0,0,0,13,11,0,0,0,0,0,0,8,13,0,0,0,1,6,8,14,12,0,0,0,2,12,14,11,1,0,0,3
+0,1,13,15,2,0,0,0,0,6,15,15,9,0,0,0,0,9,8,10,13,0,0,0,0,5,3,12,12,0,0,0,0,0,3,16,6,0,0,0,0,5,15,15,1,0,0,0,0,6,16,15,12,12,11,0,0,1,11,13,16,16,12,0,2
+0,0,0,1,16,5,0,0,0,0,0,5,16,11,0,0,0,0,0,12,16,11,0,0,0,7,12,16,16,7,0,0,0,4,8,12,16,4,0,0,0,0,0,9,16,2,0,0,0,0,0,10,16,2,0,0,0,0,0,3,13,5,0,0,1
