@@ -1,0 +1,125 @@
+=== Run information ===
+
+Scheme:weka.classifiers.lazy.KStar -B 20 -M a
+Relation:     weka
+Instances:    3823
+Attributes:   65
+              nbr00
+              nbr01
+              nbr02
+              nbr03
+              nbr04
+              nbr05
+              nbr06
+              nbr07
+              nbr08
+              nbr09
+              nbr10
+              nbr11
+              nbr12
+              nbr13
+              nbr14
+              nbr15
+              nbr16
+              nbr17
+              nbr18
+              nbr19
+              nbr20
+              nbr21
+              nbr22
+              nbr23
+              nbr24
+              nbr25
+              nbr26
+              nbr27
+              nbr28
+              nbr29
+              nbr30
+              nbr31
+              nbr32
+              nbr33
+              nbr34
+              nbr35
+              nbr36
+              nbr37
+              nbr38
+              nbr39
+              nbr40
+              nbr41
+              nbr42
+              nbr43
+              nbr44
+              nbr45
+              nbr46
+              nbr47
+              nbr48
+              nbr49
+              nbr50
+              nbr51
+              nbr52
+              nbr53
+              nbr54
+              nbr55
+              nbr56
+              nbr57
+              nbr58
+              nbr59
+              nbr60
+              nbr61
+              nbr62
+              nbr63
+              class
+Test mode:user supplied test set: size unknown (reading incrementally)
+
+=== Classifier model (full training set) ===
+
+KStar Beta Verion (0.1b).
+Copyright (c) 1995-97 by Len Trigg (trigg@cs.waikato.ac.nz).
+Java port to Weka by Abdelaziz Mahoui (am14@cs.waikato.ac.nz).
+
+KStar options : -B 20 -M a  
+
+Time taken to build model: 0 seconds
+
+=== Evaluation on test set ===
+=== Summary ===
+
+Correctly Classified Instances           8              100      %
+Incorrectly Classified Instances         0                0      %
+Kappa statistic                          1     
+Mean absolute error                      0     
+Root mean squared error                  0     
+Relative absolute error                  0      %
+Root relative squared error              0      %
+Total Number of Instances                8     
+
+=== Detailed Accuracy By Class ===
+
+               TP Rate   FP Rate   Precision   Recall  F-Measure   ROC Area  Class
+                 1         0          1         1         1          1        0
+                 1         0          1         1         1          1        1
+                 1         0          1         1         1          1        2
+                 1         0          1         1         1          1        3
+                 0         0          0         0         0          ?        4
+                 0         0          0         0         0          ?        5
+                 1         0          1         1         1          1        6
+                 1         0          1         1         1          1        7
+                 0         0          0         0         0          ?        8
+                 0         0          0         0         0          ?        9
+Weighted Avg.    1         0          1         1         1          1    
+
+=== Confusion Matrix ===
+
+ a b c d e f g h i j   <-- classified as
+ 2 0 0 0 0 0 0 0 0 0 | a = 0
+ 0 2 0 0 0 0 0 0 0 0 | b = 1
+ 0 0 1 0 0 0 0 0 0 0 | c = 2
+ 0 0 0 1 0 0 0 0 0 0 | d = 3
+ 0 0 0 0 0 0 0 0 0 0 | e = 4
+ 0 0 0 0 0 0 0 0 0 0 | f = 5
+ 0 0 0 0 0 0 1 0 0 0 | g = 6
+ 0 0 0 0 0 0 0 1 0 0 | h = 7
+ 0 0 0 0 0 0 0 0 0 0 | i = 8
+ 0 0 0 0 0 0 0 0 0 0 | j = 9
+
+
